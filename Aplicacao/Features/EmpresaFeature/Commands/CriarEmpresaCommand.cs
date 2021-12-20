@@ -21,7 +21,6 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
             {
 
                 var empresa = new Empresa();
-                empresa.NomeEmpresa = request.empresa.NomeEmpresa;
                 empresa.CNPJ = request.empresa.CNPJ;
                 empresa.NomeFantasia = request.empresa.NomeFantasia;
                 empresa.RazaoSocial = request.empresa.RazaoSocial;
