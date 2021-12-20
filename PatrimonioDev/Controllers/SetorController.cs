@@ -8,9 +8,7 @@ namespace PatrimonioDev.Controllers
 {
     public class SetorController : BaseApiController
     {
-        [Route("setor/")]
-        [ApiExplorerSettings(GroupName = "v1")]
-        [HttpPost]
+        [HttpPost("/setor")]
         public async Task<IActionResult> CriarSetor(CriarSetorCommand command)
         {
             try
@@ -23,7 +21,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [ApiExplorerSettings(GroupName = "v1")]
+
         [HttpGet("/setor/{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
@@ -38,7 +36,6 @@ namespace PatrimonioDev.Controllers
         }
 
 
-        [ApiExplorerSettings(GroupName = "v1")]
         [HttpGet("/setor")]
         public async Task<IActionResult> ObterTodos()
         {
@@ -54,7 +51,6 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        [ApiExplorerSettings(GroupName = "v1")]
         [HttpDelete("/setor/{id}")]
         public async Task<IActionResult> DeletarSetor(int id)
         {
@@ -75,7 +71,6 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [ApiExplorerSettings(GroupName = "v1")]
         [HttpPut("/setor/[action]")]
         public async Task<IActionResult> AtualizarSetor(AtualizarSetorCommand command)
         {

@@ -1,17 +1,15 @@
-﻿using Aplicacao.Features.EmpresaFeature.Commands;
-using Aplicacao.Features.EmpresaFeature.Queries;
+﻿using Aplicacao.Features.FabricanteFeature.Commands;
+using Aplicacao.Features.FabricanteFeature.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    public class EmpresaController : BaseApiController
+    public class FabricanteController : BaseApiController
     {
-
-        [Route("/empresa")]
-        [HttpPost]
-        public async Task<IActionResult> CriarEmpresa(CriarEmpresaCommand command)
+        [HttpPost("/fabricante")]
+        public async Task<IActionResult> CriarFabricante(CriarFabricanteCommand command)
         {
             try
             {
@@ -24,13 +22,12 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        [Route("/empresa")]
-        [HttpGet]
-        public async Task<IActionResult> ListarTodasEmpresas()
+        [HttpGet("/fabricante")]
+        public async Task<IActionResult> ListarTodosFabricantes()
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodasEmpresas()));
+                return Ok(await Mediator.Send(new ObterTodosFabricantes()));
 
             }
             catch (Exception ex)
@@ -39,12 +36,12 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpGet("/empresa/{id}")]
-        public async Task<IActionResult> ListarEmpresaPorId(int id)
+        [HttpGet("/fabricante/{id}")]
+        public async Task<IActionResult> ListarFabricantePorId(int id)
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterApenasUmaEmpresa { Id = id }));
+                return Ok(await Mediator.Send(new ObterApenasUmFabricante { Id = id }));
 
             }
             catch (Exception ex)
@@ -53,8 +50,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpPut("/empresa/[action]")]
-        public async Task<IActionResult> AtualizarEmpresa(AtualizarEmpresaCommand command)
+        [HttpPut("/fabricante/[action]")]
+        public async Task<IActionResult> AtualizarFabricante(AtualizarFabricanteCommand command)
         {
 
             try
@@ -75,12 +72,12 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpDelete("/empresa/{id}")]
+        [HttpDelete("/fabricante/{id}")]
         public async Task<IActionResult> DeletarTipoEquipamento(int id)
         {
             try
             {
-                var statusCode = StatusCode(await Mediator.Send(new DeletarEmpresaCommand() { Id = id }));
+                var statusCode = StatusCode(await Mediator.Send(new DeletarFabricanteCommand() { Id = id }));
 
                 if (statusCode.StatusCode == 404)
                     return NotFound("Não foi encontrado registro para deletar");
