@@ -33,13 +33,12 @@ namespace PatrimonioDev
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
-                        Title = "REST API's From 0 to Azure with ASP.NET Core 5 and Docker",
+                        Title = "REST API",
                         Version = "v1",
-                        Description = "API RESTFULL developed in course 'REST API's From 0 to Azure with ASP.NET Core 5 and Docker'",
+                        Description = "REST API",
                         Contact = new OpenApiContact
                         {
-                            Name = "Guilherme Abreu",
-                            Url = new Uri("https://github.com/guilhermesabreu")
+                            Name = "Adolfo Poiatti",
                         }
                     });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
@@ -56,7 +55,7 @@ namespace PatrimonioDev
             {
 
                 c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "REST API's From 0 to Azure with ASP.NET Core 5 and Docker - v1");
+                    "REST API - v1");
             });
 
 

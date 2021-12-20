@@ -11,7 +11,7 @@ namespace Aplicacao.Interfaces
 
         DbSet<Empresa> Empresa { get; set; }
 
-        //DbSet<Setor> Setor { get; set; }
+        DbSet<Setor> Setor { get; set; }
 
         //DbSet<Usuario> Usuario { get; set; }
 
