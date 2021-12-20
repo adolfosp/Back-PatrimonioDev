@@ -19,7 +19,7 @@ namespace Aplicacao.Interfaces
 
         //DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
 
-        //DbSet<InformacaoAdicional> InformacaoAdicional { get; set; }
+        DbSet<InformacaoAdicional> InformacaoAdicional { get; set; }
 
 
         Task<int> SaveChangesAsync();

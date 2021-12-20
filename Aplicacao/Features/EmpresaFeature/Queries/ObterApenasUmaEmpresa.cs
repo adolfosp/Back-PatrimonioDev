@@ -27,9 +27,8 @@ namespace Aplicacao.Features.EmpresaFeature.Queries
                 var listaEmpresa = await _context.Empresa.Where(x => x.CodigoEmpresa == query.Id).FirstOrDefaultAsync();
 
                 if (listaEmpresa == null)
-                {
                     return null;
-                }
+                
 
                 return listaEmpresa;
             }

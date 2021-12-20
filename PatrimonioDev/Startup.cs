@@ -25,7 +25,7 @@ namespace PatrimonioDev
         {
             services.AddApplication();
             services.AddPersistence(Configuration);
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
             //Versionning API
 
