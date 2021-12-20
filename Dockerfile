@@ -14,7 +14,7 @@ COPY ./Aplicacao ./Aplicacao
 
 COPY ["Persistence/Persistence.csproj", "Persistence/"]
 RUN dotnet restore "Persistence/Persistence.csproj"
-COPY ./Aplicacao ./Aplicacao
+COPY ./Persistence ./Persistence
 
 COPY ["PatrimonioDev/PatrimonioDev.csproj", "PatrimonioDev/"]
 RUN dotnet restore "PatrimonioDev/PatrimonioDev.csproj"
