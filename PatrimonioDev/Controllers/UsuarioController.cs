@@ -1,5 +1,5 @@
-﻿using Aplicacao.Features.SetorFeature.Commands;
-using Aplicacao.Features.SetorFeature.Queries;
+﻿using Aplicacao.Features.UsuarioFeature.Commands;
+using Aplicacao.Features.UsuarioFeature.Queries;
 using Microsoft.AspNetCore.Mvc;
 using PatrimonioDev.Helpers;
 using System;
@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    public class SetorController : BaseApiController
+    public class UsuarioController : BaseApiController
     {
-        [HttpPost("/setor")]
-        public async Task<IActionResult> CriarSetor(CriarSetorCommand command)
+        [HttpPost("/usuario")]
+        public async Task<IActionResult> CriarUsuario(CriarUsuarioCommand command)
         {
             try
             {
@@ -23,14 +23,30 @@ namespace PatrimonioDev.Controllers
         }
 
 
-        [HttpGet("/setor/{id}")]
+        [HttpGet("/usuario/{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
             try
             {
-                var setor = await Mediator.Send(new ObterApenasUmSetor { Id = id });
+                var usuario = await Mediator.Send(new ObterApenasUm { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(setor));
+                return StatusCode(HTTPStatus.RetornaStatus(usuario));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
+            }
+        }
+
+        [HttpGet("/usuario/[action]")]
+        public async Task<IActionResult> ObterUsuarioPorLogin(string email, string senha)
+        {
+            try
+            {
+                var usuario = await Mediator.Send(new ObterUsuarioPorLogin { senha = senha, email = email });
+
+                return StatusCode(HTTPStatus.RetornaStatus(usuario));
             }
             catch (Exception ex)
             {
@@ -39,12 +55,12 @@ namespace PatrimonioDev.Controllers
         }
 
 
-        [HttpGet("/setor")]
+        [HttpGet("/usuario")]
         public async Task<IActionResult> ObterTodos()
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodosSetores()));
+                return Ok(await Mediator.Send(new ObterTodosUsuarios()));
 
             }
             catch (Exception ex)
@@ -54,12 +70,12 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        [HttpDelete("/setor/{id}")]
-        public async Task<IActionResult> DeletarSetor(int id)
+        [HttpDelete("/usuario/{id}")]
+        public async Task<IActionResult> DeletarUsuario(int id)
         {
             try
             {
-                var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
+                var statusCode = StatusCode(await Mediator.Send(new RemoverUsuarioCommand { Id = id }));
 
                 if (statusCode.StatusCode == 404)
                     return NotFound("Não foi encontrado registro para deletar");
@@ -74,8 +90,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpPut("/setor/[action]")]
-        public async Task<IActionResult> AtualizarSetor(AtualizarSetorCommand command)
+        [HttpPut("/usuario/[action]")]
+        public async Task<IActionResult> AtualizarUsuario(AtualizarUsuarioCommand command)
         {
             try
             {
@@ -96,3 +112,4 @@ namespace PatrimonioDev.Controllers
         }
     }
 }
+

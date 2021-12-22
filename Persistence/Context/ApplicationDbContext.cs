@@ -19,8 +19,8 @@ namespace Persistence.Context
         public DbSet<Setor> Setor { get; set; }
         public DbSet<Fabricante> Fabricante { get; set; }
 
-        //public DbSet<Usuario> Usuario { get; set; }
-        //public DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
         public DbSet<InformacaoAdicional> InformacaoAdicional { get; set; }
 
         public async Task<int> SaveChangesAsync()

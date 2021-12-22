@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211221015200_tabelaUsuarioPermissao")]
+    partial class tabelaUsuarioPermissao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,50 +108,6 @@ namespace Persistence.Migrations
                     b.ToTable("Setor");
                 });
 
-            modelBuilder.Entity("Domain.Entidades.Usuario", b =>
-                {
-                    b.Property<int>("CodigoUsuario")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CodigoEmpresa")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CodigoPermissao")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CodigoSetor")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.HasKey("CodigoUsuario");
-
-                    b.HasIndex("CodigoEmpresa");
-
-                    b.HasIndex("CodigoPermissao");
-
-                    b.HasIndex("CodigoSetor");
-
-                    b.ToTable("Usuario");
-                });
-
             modelBuilder.Entity("Domain.Entidades.UsuarioPermissao", b =>
                 {
                     b.Property<int>("CodigoUsuarioPermissao")
@@ -168,33 +126,6 @@ namespace Persistence.Migrations
                     b.HasKey("CodigoUsuarioPermissao");
 
                     b.ToTable("UsuarioPermissao");
-                });
-
-            modelBuilder.Entity("Domain.Entidades.Usuario", b =>
-                {
-                    b.HasOne("Domain.Entidades.Empresa", "Empresa")
-                        .WithMany()
-                        .HasForeignKey("CodigoEmpresa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
-                        .WithMany()
-                        .HasForeignKey("CodigoPermissao")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entidades.Setor", "Setor")
-                        .WithMany()
-                        .HasForeignKey("CodigoSetor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Empresa");
-
-                    b.Navigation("Setor");
-
-                    b.Navigation("UsuarioPermissao");
                 });
 #pragma warning restore 612, 618
         }

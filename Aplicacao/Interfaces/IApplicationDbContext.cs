@@ -15,9 +15,9 @@ namespace Aplicacao.Interfaces
         DbSet<Fabricante> Fabricante { get; set; }
 
 
-        //DbSet<Usuario> Usuario { get; set; }
+        DbSet<Usuario> Usuario { get; set; }
 
-        //DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
+        DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
 
         DbSet<InformacaoAdicional> InformacaoAdicional { get; set; }
 

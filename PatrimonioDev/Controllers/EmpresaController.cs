@@ -1,5 +1,6 @@
 ﻿using Aplicacao.Features.EmpresaFeature.Commands;
 using Aplicacao.Features.EmpresaFeature.Queries;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -9,8 +10,7 @@ namespace PatrimonioDev.Controllers
     public class EmpresaController : BaseApiController
     {
 
-        [Route("/empresa")]
-        [HttpPost]
+        [HttpPost("/empresa")]
         public async Task<IActionResult> CriarEmpresa(CriarEmpresaCommand command)
         {
             try
@@ -19,13 +19,12 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
 
         }
 
-        [Route("/empresa")]
-        [HttpGet]
+        [HttpGet("/empresa")]
         public async Task<IActionResult> ListarTodasEmpresas()
         {
             try
@@ -35,7 +34,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
         }
 
@@ -44,12 +43,13 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterApenasUmaEmpresa { Id = id }));
+                var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
 
+                return StatusCode(HTTPStatus.RetornaStatus(empresa));
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
         }
 
@@ -71,12 +71,12 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.InnerException}");
             }
         }
 
         [HttpDelete("/empresa/{id}")]
-        public async Task<IActionResult> DeletarTipoEquipamento(int id)
+        public async Task<IActionResult> DeletarEmpresa(int id)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace PatrimonioDev.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
         }
     }

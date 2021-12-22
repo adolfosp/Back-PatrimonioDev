@@ -1,5 +1,6 @@
 ﻿using Aplicacao.Features.FabricanteFeature.Commands;
 using Aplicacao.Features.FabricanteFeature.Queries;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
 
         }
@@ -32,7 +33,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
         }
 
@@ -41,12 +42,14 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterApenasUmFabricante { Id = id }));
+                var fabricante = await Mediator.Send(new ObterApenasUmFabricante { Id = id });
+
+                return StatusCode(HTTPStatus.RetornaStatus(fabricante));
 
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
         }
 
@@ -68,7 +71,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.InnerException}");
             }
         }
 
@@ -90,7 +93,7 @@ namespace PatrimonioDev.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
             }
         }
     }
