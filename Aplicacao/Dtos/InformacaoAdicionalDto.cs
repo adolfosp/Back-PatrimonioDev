@@ -1,11 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aplicacao.Dtos
 {
     public class InformacaoAdicionalDto
     {
-     
+        [Required(ErrorMessage = "É necessário informar o {0}.")]
         public decimal ValorPago { get; set; }
+        [Required(ErrorMessage ="É necessário informar a data de compra.")]
         public DateTime DataCompra { get; set; }
         public DateTime? DataExpericaoGarantia { get; set; }
         public string? Antivirus { get; set; }
