@@ -29,7 +29,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodasEmpresas()));
+                var empresa = await Mediator.Send(new ObterTodasEmpresas());
+
+                return StatusCode(HTTPStatus.RetornaStatus(empresa));
 
             }
             catch (Exception ex)

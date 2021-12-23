@@ -60,7 +60,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodosUsuarios()));
+                var usuario = await Mediator.Send(new ObterTodosUsuarios());
+
+                return StatusCode(HTTPStatus.RetornaStatus(usuario));
 
             }
             catch (Exception ex)

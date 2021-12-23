@@ -5,7 +5,7 @@
         public static int RetornaStatus(object classe)
         {
             if (classe is null)
-                return 404;
+                return 204;
 
             return 200;
         }

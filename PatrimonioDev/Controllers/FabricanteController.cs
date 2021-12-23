@@ -28,7 +28,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodosFabricantes()));
+                var fabricante = await Mediator.Send(new ObterTodosFabricantes());
+
+                return StatusCode(HTTPStatus.RetornaStatus(fabricante));
 
             }
             catch (Exception ex)

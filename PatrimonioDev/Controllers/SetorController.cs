@@ -44,8 +44,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodosSetores()));
+                var setor =await Mediator.Send(new ObterTodosSetores());
 
+                return StatusCode(HTTPStatus.RetornaStatus(setor));
             }
             catch (Exception ex)
             {
