@@ -30,7 +30,7 @@ namespace PatrimonioDev.Controllers
             {
                 var usuario = await Mediator.Send(new ObterApenasUm { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario),usuario);
+                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
 
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace PatrimonioDev.Controllers
             {
                 var usuario = await Mediator.Send(new ObterUsuarioPorLogin { senha = senha, email = email });
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario));
+                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace PatrimonioDev.Controllers
             {
                 var usuario = await Mediator.Send(new ObterTodosUsuarios());
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario));
+                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
 
             }
             catch (Exception ex)

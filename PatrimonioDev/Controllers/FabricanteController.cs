@@ -30,7 +30,7 @@ namespace PatrimonioDev.Controllers
             {
                 var fabricante = await Mediator.Send(new ObterTodosFabricantes());
 
-                return StatusCode(HTTPStatus.RetornaStatus(fabricante));
+                return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
 
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace PatrimonioDev.Controllers
             {
                 var fabricante = await Mediator.Send(new ObterApenasUmFabricante { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(fabricante));
+                return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
 
             }
             catch (Exception ex)

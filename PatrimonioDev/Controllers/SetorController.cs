@@ -30,7 +30,7 @@ namespace PatrimonioDev.Controllers
             {
                 var setor = await Mediator.Send(new ObterApenasUmSetor { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(setor));
+                return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace PatrimonioDev.Controllers
             {
                 var setor =await Mediator.Send(new ObterTodosSetores());
 
-                return StatusCode(HTTPStatus.RetornaStatus(setor));
+                return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
             }
             catch (Exception ex)
             {

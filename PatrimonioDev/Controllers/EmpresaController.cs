@@ -31,7 +31,7 @@ namespace PatrimonioDev.Controllers
             {
                 var empresa = await Mediator.Send(new ObterTodasEmpresas());
 
-                return StatusCode(HTTPStatus.RetornaStatus(empresa));
+                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
 
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace PatrimonioDev.Controllers
             {
                 var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(empresa));
+                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
             }
             catch (Exception ex)
             {

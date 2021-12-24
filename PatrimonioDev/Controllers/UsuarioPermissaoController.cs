@@ -3,6 +3,7 @@ using Aplicacao.Features.UsuarioPermissaoFeature.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Domain.Helpers;
 
 namespace PatrimonioDev.Controllers
 {
@@ -27,8 +28,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(new ObterTodasPermissoes()));
+                var permissoes = await Mediator.Send(new ObterTodasPermissoes());
 
+                return StatusCode(HTTPStatus.RetornaStatus(permissoes), permissoes);
             }
             catch (Exception ex)
             {
