@@ -1,31 +1,77 @@
-﻿using Aplicacao.Interfaces.Persistence;
+﻿using Aplicacao.Interfaces;
+using Aplicacao.Interfaces.Persistence;
 using Domain.Entidades;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Aplicacao.Dtos;
+using AutoMapper;
 
 namespace Persistence
 {
     public class EquipamentoPersistence : IEquipamentoPersistence
     {
-        public Task<Equipamento> CriarEquipamento(Equipamento equipamento)
+        private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public EquipamentoPersistence(IApplicationDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
         }
 
-        public Task<int> DeletarEquipamento(int codigoEquipamento)
+        public async Task<Equipamento> CriarEquipamento(Equipamento equipamento)
         {
-            throw new NotImplementedException();
+            _context.Equipamento.Add(equipamento);
+
+            await _context.SaveChangesAsync();
+
+            return equipamento;
         }
 
-        public Task<Equipamento> ObterEquipamentoPorId()
+        public async Task<int> DeletarEquipamento(int codigoEquipamento)
         {
-            throw new NotImplementedException();
+            var equipamento = await _context.Equipamento.Where(x => x.CodigoTipoEquipamento == codigoEquipamento).FirstOrDefaultAsync();
+
+            if (equipamento == null) return 404;
+
+            _context.Equipamento.Remove(equipamento);
+
+            await _context.SaveChangesAsync();
+
+            return 200;
         }
 
-        public Task<IEnumerable<Equipamento>> ObterTodosEquipamentos()
+        public async Task<Equipamento> ObterEquipamentoPorId(int codigoEquipamento)
         {
-            throw new NotImplementedException();
+            var equipamento = await _context.Equipamento.Where(x => x.CodigoTipoEquipamento == codigoEquipamento).Select(x => x).FirstOrDefaultAsync();
+
+            if (equipamento is null) return null;
+
+            return equipamento;
+        }
+
+        public async Task<int> AtualizarEquipamento(int codigoEquipamento, EquipamentoDto equipamentoDto)
+        {
+            var equipamento = await _context.Equipamento.Where(x => x.CodigoTipoEquipamento == codigoEquipamento ).Select(x => x).FirstOrDefaultAsync();
+
+            if (equipamento is null) return 404;
+
+            _mapper.Map(equipamentoDto, equipamento);
+
+            await _context.SaveChangesAsync();
+
+            return 200;
+        }
+
+        public async Task<IEnumerable<Equipamento>> ObterTodosEquipamentos()
+        {
+            var equipamento = await _context.Equipamento.ToListAsync();
+
+            if (equipamento == null) return null;
+
+            return equipamento.AsReadOnly();
         }
     }
 }

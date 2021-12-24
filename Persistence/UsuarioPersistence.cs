@@ -29,15 +29,6 @@ namespace Persistence
 
             _mapper.Map(usuarioDto, usuario);
 
-            //usuario.Nome = usuarioDto.Nome;
-            //usuario.Senha = usuarioDto.Senha;
-            //usuario.Ativo = usuarioDto.Ativo;
-            //usuario.Email = usuarioDto.Email;
-            //usuario.CodigoEmpresa = usuarioDto.CodigoEmpresa;
-            //usuario.CodigoSetor = usuarioDto.CodigoSetor;
-            //usuario.CodigoPermissao = usuarioDto.CodigoPermissao;
-
-
             await _context.SaveChangesAsync();
 
             return 200;

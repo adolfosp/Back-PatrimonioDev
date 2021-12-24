@@ -1,6 +1,7 @@
 ﻿using Domain.Entidades;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Aplicacao.Dtos;
 
 namespace Aplicacao.Interfaces.Persistence
 {
@@ -9,7 +10,8 @@ namespace Aplicacao.Interfaces.Persistence
         Task<int> DeletarEquipamento(int codigoEquipamento);
         Task<Equipamento> CriarEquipamento(Equipamento equipamento);
         Task<IEnumerable<Equipamento>> ObterTodosEquipamentos();
-        Task<Equipamento> ObterEquipamentoPorId();
+        Task<Equipamento> ObterEquipamentoPorId(int codigoEquipamento);
+        Task<int> AtualizarEquipamento(int codigoEquipamento, EquipamentoDto equipamento);
 
 
     }

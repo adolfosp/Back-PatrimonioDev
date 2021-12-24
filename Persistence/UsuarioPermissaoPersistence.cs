@@ -4,15 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Persistence
 {
     public class UsuarioPermissaoPersistence : IUsuarioPermissaoPersistence
     {
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UsuarioPermissaoPersistence(IApplicationDbContext context)
-            => _context = context;
+        public UsuarioPermissaoPersistence(IApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        
 
         public async Task<UsuarioPermissao> CriarUsuarioPermissao(UsuarioPermissao usuarioPermissao)
         {
@@ -21,7 +28,7 @@ namespace Persistence
             usuario.DescricaoPermissao = usuarioPermissao.DescricaoPermissao;
             usuario.Ativo = usuarioPermissao.Ativo;
 
-
+           
             _context.UsuarioPermissao.Add(usuario);
 
             await _context.SaveChangesAsync();
