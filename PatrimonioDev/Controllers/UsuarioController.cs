@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Features.UsuarioFeature.Commands;
 using Aplicacao.Features.UsuarioFeature.Queries;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using PatrimonioDev.Helpers;
 using System;
 using System.Threading.Tasks;
 
@@ -30,7 +30,7 @@ namespace PatrimonioDev.Controllers
             {
                 var usuario = await Mediator.Send(new ObterApenasUm { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario));
+                return StatusCode(HTTPStatus.RetornaStatus(usuario),usuario);
 
             }
             catch (Exception ex)

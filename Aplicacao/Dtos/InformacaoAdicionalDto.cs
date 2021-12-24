@@ -5,6 +5,7 @@ namespace Aplicacao.Dtos
 {
     public class InformacaoAdicionalDto
     {
+        [Display(Name = "Valor pago")]
         [Required(ErrorMessage = "É necessário informar o {0}.")]
         public decimal ValorPago { get; set; }
         [Required(ErrorMessage ="É necessário informar a data de compra.")]

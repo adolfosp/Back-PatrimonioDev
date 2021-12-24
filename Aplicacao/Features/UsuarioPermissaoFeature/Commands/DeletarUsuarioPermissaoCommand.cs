@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Aplicacao.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

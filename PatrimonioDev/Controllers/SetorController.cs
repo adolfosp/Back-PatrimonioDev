@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Features.SetorFeature.Commands;
 using Aplicacao.Features.SetorFeature.Queries;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using PatrimonioDev.Helpers;
 using System;
 using System.Threading.Tasks;
 

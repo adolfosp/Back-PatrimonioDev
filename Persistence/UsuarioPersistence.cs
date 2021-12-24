@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces;
+using AutoMapper;
 using Domain.Entidades;
-using Domain.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,14 @@ namespace Persistence
     public class UsuarioPersistence : IUsuarioPersistence
     {
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UsuarioPersistence(IApplicationDbContext context)
-            => _context = context;
+        public UsuarioPersistence(IApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+             
 
         public async Task<int> AtualizarUsuario(UsuarioDto usuarioDto, int id)
         {
@@ -22,13 +27,15 @@ namespace Persistence
 
             if (usuario is null) return 404;
 
-            usuario.Nome = usuarioDto.Nome;
-            usuario.Senha = usuarioDto.Senha;
-            usuario.Ativo = usuarioDto.Ativo;
-            usuario.Email = usuarioDto.Email;
-            usuario.CodigoEmpresa = usuarioDto.CodigoEmpresa;
-            usuario.CodigoSetor = usuarioDto.CodigoSetor;
-            usuario.CodigoPermissao = usuarioDto.CodigoPermissao;
+            _mapper.Map(usuarioDto, usuario);
+
+            //usuario.Nome = usuarioDto.Nome;
+            //usuario.Senha = usuarioDto.Senha;
+            //usuario.Ativo = usuarioDto.Ativo;
+            //usuario.Email = usuarioDto.Email;
+            //usuario.CodigoEmpresa = usuarioDto.CodigoEmpresa;
+            //usuario.CodigoSetor = usuarioDto.CodigoSetor;
+            //usuario.CodigoPermissao = usuarioDto.CodigoPermissao;
 
 
             await _context.SaveChangesAsync();

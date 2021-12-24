@@ -1,5 +1,6 @@
 using Aplicacao;
-using Domain.Interfaces;
+using Aplicacao.Interfaces;
+using Aplicacao.Interfaces.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
@@ -28,7 +29,9 @@ namespace PatrimonioDev
             services.AddPersistence(Configuration);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IUsuarioPermissaoPersistence, UsuarioPermissaoPersistence>();
-            services.AddScoped<Domain.Interfaces.Persistence.IUsuarioPersistence, UsuarioPersistence>();
+            services.AddScoped<IUsuarioPersistence, UsuarioPersistence>();
+            services.AddScoped<IEquipamentoPersistence, EquipamentoPersistence>();
+
 
 
             services.AddControllers();

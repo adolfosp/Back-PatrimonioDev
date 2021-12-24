@@ -1,8 +1,8 @@
 ﻿using Domain.Entidades;
-using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Aplicacao.Interfaces;
 
 namespace Aplicacao.Features.UsuarioFeature.Queries
 {

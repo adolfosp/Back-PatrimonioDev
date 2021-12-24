@@ -1,5 +1,5 @@
 ﻿using Aplicacao.Dtos;
-using Domain.Interfaces.Persistence;
+using Aplicacao.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

@@ -1,7 +1,5 @@
 ﻿using Aplicacao.Interfaces;
-using Domain.Interfaces.Persistence;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 

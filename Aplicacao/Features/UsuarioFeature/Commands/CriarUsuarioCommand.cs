@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entidades;
-using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

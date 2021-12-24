@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces
+namespace Aplicacao.Interfaces
 {
     public interface IUsuarioPermissaoPersistence
     {

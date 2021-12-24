@@ -3,7 +3,7 @@ using Domain.Entidades;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces.Persistence
+namespace Aplicacao.Interfaces
 {
     public interface IUsuarioPersistence
     {
