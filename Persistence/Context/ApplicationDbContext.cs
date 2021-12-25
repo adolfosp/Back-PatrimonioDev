@@ -20,6 +20,7 @@ namespace Persistence.Context
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
         public DbSet<InformacaoAdicional> InformacaoAdicional { get; set; }
+        public DbSet<Patrimonio> Patrimonio { get; set; }
 
         public async Task<int> SaveChangesAsync()
           => await base.SaveChangesAsync();
