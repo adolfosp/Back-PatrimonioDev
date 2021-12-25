@@ -15,6 +15,8 @@ namespace Aplicacao.Interfaces
         DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
         DbSet<InformacaoAdicional> InformacaoAdicional { get; set; } 
         DbSet<Patrimonio> Patrimonio { get; set; }
+        DbSet<PercaEquipamento> PercaEquipamento { get; set; }
+
 
         Task<int> SaveChangesAsync();
 
