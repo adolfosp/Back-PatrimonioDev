@@ -21,13 +21,14 @@ namespace Persistence
             _mapper = mapper;
         }
 
-        public async Task<Equipamento> CriarEquipamento(Equipamento equipamento)
+        public async Task<Equipamento> CriarEquipamento(EquipamentoDto equipamento)
         {
-            _context.Equipamento.Add(equipamento);
+            var equipamentoDominio = _mapper.Map<Equipamento>(equipamento);
+            _context.Equipamento.Add(equipamentoDominio);
 
             await _context.SaveChangesAsync();
 
-            return equipamento;
+            return equipamentoDominio;
         }
 
         public async Task<int> DeletarEquipamento(int codigoEquipamento)

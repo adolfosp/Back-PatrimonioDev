@@ -2,12 +2,12 @@
 
 namespace Persistence.Migrations
 {
-    public partial class tabelaPatrimonio : Migration
+    public partial class tabelaMestre : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Patrimonios",
+                name: "Patrimonio",
                 columns: table => new
                 {
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
@@ -29,21 +29,21 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patrimonios", x => x.CodigoPatrimonio);
+                    table.PrimaryKey("PK_Patrimonio", x => x.CodigoPatrimonio);
                     table.ForeignKey(
-                        name: "FK_Patrimonios_Equipamento_FabricanteCodigoTipoEquipamento",
+                        name: "FK_Patrimonio_Equipamento_FabricanteCodigoTipoEquipamento",
                         column: x => x.FabricanteCodigoTipoEquipamento,
                         principalTable: "Equipamento",
                         principalColumn: "CodigoTipoEquipamento",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Patrimonios_InformacaoAdicional_InformacaoAdicionalCodigoInformacao",
+                        name: "FK_Patrimonio_InformacaoAdicional_InformacaoAdicionalCodigoInformacao",
                         column: x => x.InformacaoAdicionalCodigoInformacao,
                         principalTable: "InformacaoAdicional",
                         principalColumn: "CodigoInformacao",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Patrimonios_Usuario_UsuarioCodigoUsuario",
+                        name: "FK_Patrimonio_Usuario_UsuarioCodigoUsuario",
                         column: x => x.UsuarioCodigoUsuario,
                         principalTable: "Usuario",
                         principalColumn: "CodigoUsuario",
@@ -51,25 +51,25 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patrimonios_FabricanteCodigoTipoEquipamento",
-                table: "Patrimonios",
+                name: "IX_Patrimonio_FabricanteCodigoTipoEquipamento",
+                table: "Patrimonio",
                 column: "FabricanteCodigoTipoEquipamento");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patrimonios_InformacaoAdicionalCodigoInformacao",
-                table: "Patrimonios",
+                name: "IX_Patrimonio_InformacaoAdicionalCodigoInformacao",
+                table: "Patrimonio",
                 column: "InformacaoAdicionalCodigoInformacao");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patrimonios_UsuarioCodigoUsuario",
-                table: "Patrimonios",
+                name: "IX_Patrimonio_UsuarioCodigoUsuario",
+                table: "Patrimonio",
                 column: "UsuarioCodigoUsuario");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Patrimonios");
+                name: "Patrimonio");
         }
     }
 }

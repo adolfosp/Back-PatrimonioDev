@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211225181804_tabelaPatrimonio")]
-    partial class tabelaPatrimonio
+    [Migration("20211225184121_tabelaMestre")]
+    partial class tabelaMestre
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,7 +174,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UsuarioCodigoUsuario");
 
-                    b.ToTable("Patrimonios");
+                    b.ToTable("Patrimonio");
                 });
 
             modelBuilder.Entity("Domain.Entidades.Setor", b =>

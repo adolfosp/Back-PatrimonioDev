@@ -172,7 +172,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UsuarioCodigoUsuario");
 
-                    b.ToTable("Patrimonios");
+                    b.ToTable("Patrimonio");
                 });
 
             modelBuilder.Entity("Domain.Entidades.Setor", b =>

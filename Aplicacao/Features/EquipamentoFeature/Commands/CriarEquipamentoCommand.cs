@@ -1,11 +1,10 @@
 ﻿using Aplicacao.Dtos;
-using Domain.Entidades;
-using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Aplicacao.Interfaces.Persistence;
 using AutoMapper;
+using Domain.Entidades;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Aplicacao.Features.EquipamentoFeature.Commands
 {
@@ -26,12 +25,7 @@ namespace Aplicacao.Features.EquipamentoFeature.Commands
                
 
             public Task<Equipamento> Handle(CriarEquipamentoCommand request, CancellationToken cancellationToken)
-            {
-                var equipamento = _mapper.Map<Equipamento>(request.Equipamento);
-
-                return _persistence.CriarEquipamento(equipamento);
-            }
-                
+                => _persistence.CriarEquipamento(request.Equipamento);
         }
     }
 }
