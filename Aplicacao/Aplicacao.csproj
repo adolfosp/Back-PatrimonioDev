@@ -23,4 +23,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\PercaEquipamentoFeature\Commands\" />
+    <Folder Include="Features\PercaEquipamentoFeature\Queries\" />
+  </ItemGroup>
+
 </Project>
