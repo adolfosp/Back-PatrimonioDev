@@ -16,6 +16,8 @@ namespace Aplicacao.Interfaces
         DbSet<InformacaoAdicional> InformacaoAdicional { get; set; } 
         DbSet<Patrimonio> Patrimonio { get; set; }
         DbSet<PercaEquipamento> PercaEquipamento { get; set; }
+        DbSet<MovimentacaoEquipamento> MovimentacaoEquipamento { get; set; }
+
 
 
         Task<int> SaveChangesAsync();
