@@ -16,6 +16,7 @@ namespace Persistence.Migrations
                     DataApropriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataEvolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MovimentacaoDoEquipamento = table.Column<int>(type: "int", nullable: false),
                     CodigoUsuario = table.Column<int>(type: "int", nullable: false),
                     UsuarioCodigoUsuario = table.Column<int>(type: "int", nullable: true),
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false),

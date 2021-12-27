@@ -134,6 +134,9 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DataEvolucao")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MovimentacaoDoEquipamento")
+                        .HasColumnType("int");
+
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
 

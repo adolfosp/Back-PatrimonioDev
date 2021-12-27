@@ -12,6 +12,7 @@ namespace Aplicacao.Helpers
             CreateMap<Domain.Entidades.Equipamento, Dtos.EquipamentoDto>().ReverseMap();
             CreateMap<Domain.Entidades.Patrimonio, Dtos.PatrimonioDto>().ReverseMap();
             CreateMap<Domain.Entidades.PercaEquipamento, Dtos.PercaEquipamentoDto>().ReverseMap();
+            CreateMap<Domain.Entidades.MovimentacaoEquipamento, Dtos.MovimentacaoEquipamentoDto>().ReverseMap();
 
         }
     }

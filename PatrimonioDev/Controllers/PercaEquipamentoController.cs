@@ -39,13 +39,13 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpPut("/perca/{id}")]
-        public async Task<IActionResult> AtualizarPercaEquipamento(int id)
+        [HttpPut("/perca/[action]")]
+        public async Task<IActionResult> AtualizarPercaEquipamento(AtualizarPercaEquipamentoCommand command)
         {
 
             try
             {
-                var statusCode = StatusCode(await Mediator.Send(new AtualizarPercaEquipamentoCommand(){Id = id}));
+                var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
                     return NotFound("Nenhum registro encontrado!");

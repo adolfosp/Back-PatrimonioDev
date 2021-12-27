@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Enums;
 
 namespace Domain.Entidades
 {
@@ -14,6 +15,9 @@ namespace Domain.Entidades
         public DateTime DataApropriacao { get; set; }
         public DateTime? DataEvolucao { get; set; }
         public string? Observacao { get; set; }
+
+        [Required(ErrorMessage = "É necessário informar qual movimentação foi realizada")]
+        public SituacaoMovimentacaoEquipamento MovimentacaoDoEquipamento { get; set; }
 
         [ForeignKey("CodigoUsuario")]
         public int CodigoUsuario { get; set; }

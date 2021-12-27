@@ -10,7 +10,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211227145321_tabelaMovimentacaoEquipamento")]
+    [Migration("20211227163743_tabelaMovimentacaoEquipamento")]
     partial class tabelaMovimentacaoEquipamento
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,6 +135,9 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime?>("DataEvolucao")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MovimentacaoDoEquipamento")
+                        .HasColumnType("int");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
