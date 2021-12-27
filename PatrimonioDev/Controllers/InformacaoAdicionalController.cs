@@ -18,7 +18,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
@@ -35,7 +35,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
@@ -57,7 +57,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.InnerException}");
+                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
@@ -78,7 +78,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.InnerException}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
             }
         }
     }

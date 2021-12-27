@@ -1,18 +1,17 @@
-﻿using Aplicacao.Features.EmpresaFeature.Commands;
-using Aplicacao.Features.EmpresaFeature.Queries;
-using Aplicacao.Features.PatrimonioFeature.Commands;
+﻿using Aplicacao.Features.PercaEquipamentoFeature.Commands;
+using Aplicacao.Features.PercaEquipamentoFeature.Queries;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Aplicacao.Features.PatrimonioFeature.Queries;
 
 namespace PatrimonioDev.Controllers
 {
-    public class PatrimonioController : BaseApiController
+    public class PercaEquipamentoController : BaseApiController
     {
-        [HttpPost("/patrimonio")]
-        public async Task<IActionResult> CriarPatrimonio(CriarPatrimonioCommand command)
+
+        [HttpPost("/perca")]
+        public async Task<IActionResult> CriarPercaEquipamento(CriarPercaEquipamentoCommand command)
         {
             try
             {
@@ -25,14 +24,14 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        [HttpGet("/patrimonio/{id}")]
-        public async Task<IActionResult> ListarPatrimonioPorId(int id)
+        [HttpGet("/perca/{id}")]
+        public async Task<IActionResult> ListarPercaEquipamentoPorId(int id)
         {
             try
             {
-                var patrimonio = await Mediator.Send(new ObterPatrimonioPorId() { Id = id });
+                var empresa = await Mediator.Send(new ObterPercaEquipamentoPorId() { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(patrimonio), patrimonio);
+                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
             }
             catch (Exception ex)
             {
@@ -40,19 +39,18 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpPut("/patrimonio/[action]")]
-        public async Task<IActionResult> AtualizarPatrimonio(AtualizarPatrimonioCommand command)
+        [HttpPut("/perca/{id}")]
+        public async Task<IActionResult> AtualizarPercaEquipamento(int id)
         {
 
             try
             {
-                var statusCode = StatusCode(await Mediator.Send(command));
+                var statusCode = StatusCode(await Mediator.Send(new AtualizarPercaEquipamentoCommand(){Id = id}));
 
                 if (statusCode.StatusCode == 404)
                     return NotFound("Nenhum registro encontrado!");
 
                 return Ok();
-
 
             }
             catch (Exception ex)
@@ -61,23 +59,21 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [HttpDelete("/patrimonio/{codigoPatrimonio}")]
-        public async Task<IActionResult> DeletarPatrimonio(int codigoPatrimonio)
+        [HttpDelete("/perca/{id}")]
+        public async Task<IActionResult> DeletarPercaEquipamento(int id)
         {
             try
             {
-                var statusCode = StatusCode(await Mediator.Send(new RemoverPatrimonioCommand() { Id = codigoPatrimonio }));
+                var statusCode = StatusCode(await Mediator.Send(new RemoverPercaEquipamentoCommand { Id = id }));
 
                 if (statusCode.StatusCode == 404)
                     return NotFound("Não foi encontrado registro para deletar");
 
                 return Ok();
 
-
             }
             catch (Exception ex)
             {
-
                 return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
