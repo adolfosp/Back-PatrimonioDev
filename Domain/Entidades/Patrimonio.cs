@@ -20,19 +20,19 @@ namespace Domain.Entidades
         [Required(ErrorMessage = "É necessário informar a {0}")]
         public SituacaoEquipamento SituacaoEquipamento { get; set; }
 
-        [ForeignKey("CodigoTipoEquipamento")]
         [Required(ErrorMessage = "É necessário informar o equipamento")]
         public int CodigoTipoEquipamento { get; set; }
-        public Equipamento Fabricante { get; set; }
+        [ForeignKey("CodigoTipoEquipamento")]
+        public Equipamento Equipamento { get; set; }
 
-        [ForeignKey("CodigoInformacao")]
         [Required(ErrorMessage = "É necessário informar as informações adicionais")]
         public int CodigoInformacao { get; set; }
+        [ForeignKey("CodigoInformacao")]
         public InformacaoAdicional InformacaoAdicional { get; set; }
 
-        [ForeignKey("CodigoUsuario")]
         [Required(ErrorMessage = "É necessário informar o usuário vinculado a este equipamento")]
         public int CodigoUsuario { get; set; }
+        [ForeignKey("CodigoUsuario")]
         public Usuario Usuario { get; set; }
     }
 }

@@ -4,11 +4,20 @@ using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Domain.Entidades;
+using Microsoft.AspNetCore.Http;
 
 namespace PatrimonioDev.Controllers
 {
     public class SetorController : BaseApiController
     {
+        /// <summary>
+        /// Método para criar setor
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/setor")]
         public async Task<IActionResult> CriarSetor(CriarSetorCommand command)
         {
@@ -18,11 +27,19 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
 
+        /// <summary>
+        /// Método para buscar setor específico
+        /// </summary>
+        /// <param name="id"> Id para buscar setor específico</param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("/setor/{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
@@ -34,27 +51,42 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
-
+        /// <summary>
+        /// Método para buscar todos os setores
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("/setor")]
         public async Task<IActionResult> ObterTodos()
         {
             try
             {
-                var setor =await Mediator.Send(new ObterTodosSetores());
+                var setor = await Mediator.Send(new ObterTodosSetores());
 
                 return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
 
         }
 
+        /// <summary>
+        /// Método para deletar um setor específico
+        /// </summary>
+        /// <param name="id"> Id para deletar setor específico</param>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("/setor/{id}")]
         public async Task<IActionResult> DeletarSetor(int id)
         {
@@ -65,16 +97,23 @@ namespace PatrimonioDev.Controllers
                 if (statusCode.StatusCode == 404)
                     return NotFound("Não foi encontrado registro para deletar");
 
-                else
-                    return Ok();
+                return Ok();
 
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Método para atualizar um setor específico
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("/setor/[action]")]
         public async Task<IActionResult> AtualizarSetor(AtualizarSetorCommand command)
         {
@@ -85,8 +124,7 @@ namespace PatrimonioDev.Controllers
                 if (statusCode.StatusCode == 404)
                     return NotFound("Nenhum registro encontrado!");
 
-                else
-                    return Ok();
+                return Ok();
 
 
             }

@@ -13,8 +13,10 @@ namespace Domain.Entidades
         [MaxLength(50)]
         public string TipoEquipamento { get; set; }
 
-        [ForeignKey("CodigoFabricante")]
         public int CodigoFabricante { get; set; }
+
+
+        [ForeignKey("CodigoFabricante")]
         public Fabricante Fabricante { get; set; }
     }
 }

@@ -4,11 +4,20 @@ using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Domain.Entidades;
+using Microsoft.AspNetCore.Http;
 
 namespace PatrimonioDev.Controllers
 {
     public class FabricanteController : BaseApiController
     {
+        /// <summary>
+        /// Método para cadastrar um fabricante
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/fabricante")]
         public async Task<IActionResult> CriarFabricante(CriarFabricanteCommand command)
         {
@@ -18,11 +27,19 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
 
         }
 
+        /// <summary>
+        /// Método para cadastrar um fabricante
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
+        [ProducesResponseType( StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("/fabricante")]
         public async Task<IActionResult> ListarTodosFabricantes()
         {
@@ -35,10 +52,18 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Método para listar fabricante específico
+        /// </summary>
+        /// <param name="id"> Id para buscar um fabricante específico </param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("/fabricante/{id}")]
         public async Task<IActionResult> ListarFabricantePorId(int id)
         {
@@ -51,10 +76,18 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Método para atualizar fabricante específico
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("/fabricante/[action]")]
         public async Task<IActionResult> AtualizarFabricante(AtualizarFabricanteCommand command)
         {
@@ -66,8 +99,7 @@ namespace PatrimonioDev.Controllers
                 if (statusCode.StatusCode == 404)
                     return NotFound("Nenhum registro encontrado!");
 
-                else
-                    return Ok();
+                return Ok();
 
 
             }
@@ -77,6 +109,14 @@ namespace PatrimonioDev.Controllers
             }
         }
 
+        /// <summary>
+        /// Método para deletar fabricante específico
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("/fabricante/{id}")]
         public async Task<IActionResult> DeletarTipoEquipamento(int id)
         {
@@ -87,15 +127,13 @@ namespace PatrimonioDev.Controllers
                 if (statusCode.StatusCode == 404)
                     return NotFound("Não foi encontrado registro para deletar");
 
-                else
-                    return Ok();
-
+                return Ok();
 
             }
             catch (Exception ex)
             {
 
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
     }

@@ -23,16 +23,16 @@ namespace Domain.Entidades
         [MinLength(10)]
         public string Email { get; set; }
 
-        [ForeignKey("Empresa")]
         public int CodigoEmpresa { get; set; }
+        [ForeignKey("CodigoEmpresa")]
         public Empresa Empresa { get; set; }
 
-        [ForeignKey("Setor")]
         public int CodigoSetor { get; set; }
+        [ForeignKey("CodigoSetor")]
         public Setor Setor { get; set; }
 
-        [ForeignKey("UsuarioPermissao")]
-        public int CodigoPermissao { get; set; }
+        public int CodigoUsuarioPermissao { get; set; }
+        [ForeignKey("CodigoUsuarioPermissao")]
         public UsuarioPermissao UsuarioPermissao { get; set; }
     }
 }

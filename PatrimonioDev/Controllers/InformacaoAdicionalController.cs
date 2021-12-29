@@ -4,11 +4,20 @@ using Domain.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Domain.Entidades;
+using Microsoft.AspNetCore.Http;
 
 namespace PatrimonioDev.Controllers
 {
     public class InformacaoAdicionalController : BaseApiController
     {
+        /// <summary>
+        /// Método para criar info adicional
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/info")]
         public async Task<IActionResult> CriarInformacaoAdicional(CriarInformacaoAdicionalCommand command)
         {
@@ -18,11 +27,19 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
 
+        /// <summary>
+        /// Método para listar info adicional específico
+        /// </summary>
+        /// <param name="id"> Id para buscar informacao adicional específica</param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("/info/{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
@@ -35,12 +52,20 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
 
 
+        /// <summary>
+        /// Método para deletar info adicional específico
+        /// </summary>
+        /// <param name="id"> Id para deletar informacao adicional específica</param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("/info/{id}")]
         public async Task<IActionResult> DeletarInformacaoAdicional(int id)
         {
@@ -51,16 +76,23 @@ namespace PatrimonioDev.Controllers
                 if (statusCode.StatusCode == 404)
                     return NotFound("Não foi encontrado registro para deletar");
 
-                else
-                    return Ok();
+                return Ok();
 
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Método para atualizar info adicional específico
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("/info/[action]")]
         public async Task<IActionResult> AtualizarInformacao(AtualizarInformacaoAdicionalCommand command)
         {
@@ -71,9 +103,7 @@ namespace PatrimonioDev.Controllers
                 if (statusCode.StatusCode == 404)
                     return NotFound("Nenhum registro encontrado!");
 
-                else
-                    return Ok();
-
+                return Ok();
 
             }
             catch (Exception ex)

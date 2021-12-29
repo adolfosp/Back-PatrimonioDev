@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211225184121_tabelaMestre")]
-    partial class tabelaMestre
+    [Migration("20211228151141_tabelaTodas")]
+    partial class tabelaTodas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,9 +58,6 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoFabricante")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FabricanteCodigoFabricante")
-                        .HasColumnType("int");
-
                     b.Property<string>("TipoEquipamento")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -68,7 +65,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("CodigoTipoEquipamento");
 
-                    b.HasIndex("FabricanteCodigoFabricante");
+                    b.HasIndex("CodigoFabricante");
 
                     b.ToTable("Equipamento");
                 });
@@ -117,6 +114,40 @@ namespace Persistence.Migrations
                     b.ToTable("InformacaoAdicional");
                 });
 
+            modelBuilder.Entity("Domain.Entidades.MovimentacaoEquipamento", b =>
+                {
+                    b.Property<int>("CodigoMovimentacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodigoPatrimonio")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodigoUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataApropriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataEvolucao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovimentacaoDoEquipamento")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CodigoMovimentacao");
+
+                    b.HasIndex("CodigoPatrimonio");
+
+                    b.HasIndex("CodigoUsuario");
+
+                    b.ToTable("MovimentacaoEquipamento");
+                });
+
             modelBuilder.Entity("Domain.Entidades.Patrimonio", b =>
                 {
                     b.Property<int>("CodigoPatrimonio")
@@ -134,12 +165,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CodigoUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FabricanteCodigoTipoEquipamento")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InformacaoAdicionalCodigoInformacao")
                         .HasColumnType("int");
 
                     b.Property<string>("MAC")
@@ -163,18 +188,37 @@ namespace Persistence.Migrations
                     b.Property<int>("SituacaoEquipamento")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioCodigoUsuario")
-                        .HasColumnType("int");
-
                     b.HasKey("CodigoPatrimonio");
 
-                    b.HasIndex("FabricanteCodigoTipoEquipamento");
+                    b.HasIndex("CodigoInformacao");
 
-                    b.HasIndex("InformacaoAdicionalCodigoInformacao");
+                    b.HasIndex("CodigoTipoEquipamento");
 
-                    b.HasIndex("UsuarioCodigoUsuario");
+                    b.HasIndex("CodigoUsuario");
 
                     b.ToTable("Patrimonio");
+                });
+
+            modelBuilder.Entity("Domain.Entidades.PercaEquipamento", b =>
+                {
+                    b.Property<int>("CodigoPerca")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodigoPatrimonio")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MotivoDaPerca")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("CodigoPerca");
+
+                    b.HasIndex("CodigoPatrimonio");
+
+                    b.ToTable("PercaEquipamento");
                 });
 
             modelBuilder.Entity("Domain.Entidades.Setor", b =>
@@ -206,10 +250,10 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoEmpresa")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoPermissao")
+                    b.Property<int>("CodigoSetor")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoSetor")
+                    b.Property<int>("CodigoUsuarioPermissao")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -230,9 +274,9 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CodigoEmpresa");
 
-                    b.HasIndex("CodigoPermissao");
-
                     b.HasIndex("CodigoSetor");
+
+                    b.HasIndex("CodigoUsuarioPermissao");
 
                     b.ToTable("Usuario");
                 });
@@ -261,30 +305,68 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entidades.Fabricante", "Fabricante")
                         .WithMany()
-                        .HasForeignKey("FabricanteCodigoFabricante");
+                        .HasForeignKey("CodigoFabricante")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Fabricante");
                 });
 
-            modelBuilder.Entity("Domain.Entidades.Patrimonio", b =>
+            modelBuilder.Entity("Domain.Entidades.MovimentacaoEquipamento", b =>
                 {
-                    b.HasOne("Domain.Entidades.Equipamento", "Fabricante")
+                    b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()
-                        .HasForeignKey("FabricanteCodigoTipoEquipamento");
-
-                    b.HasOne("Domain.Entidades.InformacaoAdicional", "InformacaoAdicional")
-                        .WithMany()
-                        .HasForeignKey("InformacaoAdicionalCodigoInformacao");
+                        .HasForeignKey("CodigoPatrimonio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioCodigoUsuario");
+                        .HasForeignKey("CodigoUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Fabricante");
+                    b.Navigation("Patrimonio");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Domain.Entidades.Patrimonio", b =>
+                {
+                    b.HasOne("Domain.Entidades.InformacaoAdicional", "InformacaoAdicional")
+                        .WithMany()
+                        .HasForeignKey("CodigoInformacao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entidades.Equipamento", "Equipamento")
+                        .WithMany()
+                        .HasForeignKey("CodigoTipoEquipamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("CodigoUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Equipamento");
 
                     b.Navigation("InformacaoAdicional");
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Domain.Entidades.PercaEquipamento", b =>
+                {
+                    b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
+                        .WithMany()
+                        .HasForeignKey("CodigoPatrimonio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patrimonio");
                 });
 
             modelBuilder.Entity("Domain.Entidades.Usuario", b =>
@@ -295,15 +377,15 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
-                        .WithMany()
-                        .HasForeignKey("CodigoPermissao")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entidades.Setor", "Setor")
                         .WithMany()
                         .HasForeignKey("CodigoSetor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
+                        .WithMany()
+                        .HasForeignKey("CodigoUsuarioPermissao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

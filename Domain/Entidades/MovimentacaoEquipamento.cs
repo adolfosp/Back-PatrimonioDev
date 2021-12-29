@@ -19,12 +19,12 @@ namespace Domain.Entidades
         [Required(ErrorMessage = "É necessário informar qual movimentação foi realizada")]
         public SituacaoMovimentacaoEquipamento MovimentacaoDoEquipamento { get; set; }
 
-        [ForeignKey("CodigoUsuario")]
         public int CodigoUsuario { get; set; }
+        [ForeignKey("CodigoUsuario")]
         public Usuario Usuario { get; set; }
 
-        [ForeignKey("CodigoPatrimonio")]
         public int CodigoPatrimonio { get; set; }
+        [ForeignKey("CodigoPatrimonio")]
         public Patrimonio Patrimonio{ get; set; }
 
     }

@@ -12,8 +12,8 @@ namespace Domain.Entidades
         public string MotivoDaPerca { get; set; }
 
         [Required]
-        [ForeignKey("CodigoPatrimonio")]
         public int CodigoPatrimonio { get; set; }
+        [ForeignKey("CodigoPatrimonio")]
         public Patrimonio Patrimonio { get; set; }
     }
 }

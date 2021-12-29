@@ -7,6 +7,10 @@
     <StartupObject />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\AdolfoPoiatti\Documents\MEGA\Projetos\PatrimonioDev\Domain\Domain.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />

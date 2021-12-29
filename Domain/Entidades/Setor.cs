@@ -8,6 +8,7 @@ namespace Domain.Entidades
         public int CodigoSetor { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Nome { get; set; }
     }
 }

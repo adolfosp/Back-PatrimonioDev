@@ -2,6 +2,8 @@
 
 namespace Domain.Entidades
 {
+   
+   
     public class Empresa
     {
         [Key]

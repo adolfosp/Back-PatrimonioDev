@@ -56,9 +56,6 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoFabricante")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FabricanteCodigoFabricante")
-                        .HasColumnType("int");
-
                     b.Property<string>("TipoEquipamento")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -66,7 +63,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("CodigoTipoEquipamento");
 
-                    b.HasIndex("FabricanteCodigoFabricante");
+                    b.HasIndex("CodigoFabricante");
 
                     b.ToTable("Equipamento");
                 });
@@ -140,17 +137,11 @@ namespace Persistence.Migrations
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatrimonioCodigoPatrimonio")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioCodigoUsuario")
-                        .HasColumnType("int");
-
                     b.HasKey("CodigoMovimentacao");
 
-                    b.HasIndex("PatrimonioCodigoPatrimonio");
+                    b.HasIndex("CodigoPatrimonio");
 
-                    b.HasIndex("UsuarioCodigoUsuario");
+                    b.HasIndex("CodigoUsuario");
 
                     b.ToTable("MovimentacaoEquipamento");
                 });
@@ -174,12 +165,6 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FabricanteCodigoTipoEquipamento")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InformacaoAdicionalCodigoInformacao")
-                        .HasColumnType("int");
-
                     b.Property<string>("MAC")
                         .HasColumnType("nvarchar(max)");
 
@@ -201,16 +186,13 @@ namespace Persistence.Migrations
                     b.Property<int>("SituacaoEquipamento")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioCodigoUsuario")
-                        .HasColumnType("int");
-
                     b.HasKey("CodigoPatrimonio");
 
-                    b.HasIndex("FabricanteCodigoTipoEquipamento");
+                    b.HasIndex("CodigoInformacao");
 
-                    b.HasIndex("InformacaoAdicionalCodigoInformacao");
+                    b.HasIndex("CodigoTipoEquipamento");
 
-                    b.HasIndex("UsuarioCodigoUsuario");
+                    b.HasIndex("CodigoUsuario");
 
                     b.ToTable("Patrimonio");
                 });
@@ -230,12 +212,9 @@ namespace Persistence.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int?>("PatrimonioCodigoPatrimonio")
-                        .HasColumnType("int");
-
                     b.HasKey("CodigoPerca");
 
-                    b.HasIndex("PatrimonioCodigoPatrimonio");
+                    b.HasIndex("CodigoPatrimonio");
 
                     b.ToTable("PercaEquipamento");
                 });
@@ -269,10 +248,10 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoEmpresa")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoPermissao")
+                    b.Property<int>("CodigoSetor")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoSetor")
+                    b.Property<int>("CodigoUsuarioPermissao")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -293,9 +272,9 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CodigoEmpresa");
 
-                    b.HasIndex("CodigoPermissao");
-
                     b.HasIndex("CodigoSetor");
+
+                    b.HasIndex("CodigoUsuarioPermissao");
 
                     b.ToTable("Usuario");
                 });
@@ -324,7 +303,9 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entidades.Fabricante", "Fabricante")
                         .WithMany()
-                        .HasForeignKey("FabricanteCodigoFabricante");
+                        .HasForeignKey("CodigoFabricante")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Fabricante");
                 });
@@ -333,11 +314,15 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()
-                        .HasForeignKey("PatrimonioCodigoPatrimonio");
+                        .HasForeignKey("CodigoPatrimonio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioCodigoUsuario");
+                        .HasForeignKey("CodigoUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Patrimonio");
 
@@ -346,19 +331,25 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entidades.Patrimonio", b =>
                 {
-                    b.HasOne("Domain.Entidades.Equipamento", "Fabricante")
-                        .WithMany()
-                        .HasForeignKey("FabricanteCodigoTipoEquipamento");
-
                     b.HasOne("Domain.Entidades.InformacaoAdicional", "InformacaoAdicional")
                         .WithMany()
-                        .HasForeignKey("InformacaoAdicionalCodigoInformacao");
+                        .HasForeignKey("CodigoInformacao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entidades.Equipamento", "Equipamento")
+                        .WithMany()
+                        .HasForeignKey("CodigoTipoEquipamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioCodigoUsuario");
+                        .HasForeignKey("CodigoUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Fabricante");
+                    b.Navigation("Equipamento");
 
                     b.Navigation("InformacaoAdicional");
 
@@ -369,7 +360,9 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()
-                        .HasForeignKey("PatrimonioCodigoPatrimonio");
+                        .HasForeignKey("CodigoPatrimonio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Patrimonio");
                 });
@@ -382,15 +375,15 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
-                        .WithMany()
-                        .HasForeignKey("CodigoPermissao")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entidades.Setor", "Setor")
                         .WithMany()
                         .HasForeignKey("CodigoSetor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
+                        .WithMany()
+                        .HasForeignKey("CodigoUsuarioPermissao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
