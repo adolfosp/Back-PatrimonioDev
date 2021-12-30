@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PatrimonioDev.Controllers
 {
+    [Route("api/[controller]")]
     public class MovimentacaoEquipamentoController : BaseApiController
     {
         /// <summary>

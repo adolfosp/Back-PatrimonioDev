@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PatrimonioDev.Controllers
 {
+    [Route("api/[controller]")]
     public class SetorController : BaseApiController
     {
         /// <summary>

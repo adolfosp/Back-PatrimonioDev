@@ -9,6 +9,7 @@ using Domain.Entidades;
 
 namespace PatrimonioDev.Controllers
 {
+    [Route("api/[controller]")]
     public class EquipamentoController : BaseApiController
     {
 

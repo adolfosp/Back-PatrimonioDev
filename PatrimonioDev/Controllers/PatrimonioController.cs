@@ -1,16 +1,15 @@
-﻿using Aplicacao.Features.EmpresaFeature.Commands;
-using Aplicacao.Features.EmpresaFeature.Queries;
-using Aplicacao.Features.PatrimonioFeature.Commands;
+﻿using Aplicacao.Features.PatrimonioFeature.Commands;
+using Aplicacao.Features.PatrimonioFeature.Queries;
+using Domain.Entidades;
 using Domain.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Aplicacao.Features.PatrimonioFeature.Queries;
-using Domain.Entidades;
-using Microsoft.AspNetCore.Http;
 
 namespace PatrimonioDev.Controllers
 {
+    [Route("api/[controller]")]
     public class PatrimonioController : BaseApiController
     {
 
