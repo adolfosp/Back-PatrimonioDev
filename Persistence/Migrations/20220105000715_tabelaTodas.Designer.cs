@@ -10,7 +10,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211228151141_tabelaTodas")]
+    [Migration("20220105000715_tabelaTodas")]
     partial class tabelaTodas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,6 +97,9 @@ namespace Persistence.Migrations
                     b.Property<string>("Antivirus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CodigoPatrimonio")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("datetime2");
 
@@ -110,6 +113,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CodigoInformacao");
+
+                    b.HasIndex("CodigoPatrimonio");
 
                     b.ToTable("InformacaoAdicional");
                 });
@@ -158,9 +163,6 @@ namespace Persistence.Migrations
                     b.Property<string>("Armazenamento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CodigoInformacao")
-                        .HasColumnType("int");
-
                     b.Property<int>("CodigoTipoEquipamento")
                         .HasColumnType("int");
 
@@ -189,8 +191,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CodigoPatrimonio");
-
-                    b.HasIndex("CodigoInformacao");
 
                     b.HasIndex("CodigoTipoEquipamento");
 
@@ -230,7 +230,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("CodigoSetor");
 
@@ -312,6 +313,17 @@ namespace Persistence.Migrations
                     b.Navigation("Fabricante");
                 });
 
+            modelBuilder.Entity("Domain.Entidades.InformacaoAdicional", b =>
+                {
+                    b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
+                        .WithMany()
+                        .HasForeignKey("CodigoPatrimonio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patrimonio");
+                });
+
             modelBuilder.Entity("Domain.Entidades.MovimentacaoEquipamento", b =>
                 {
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
@@ -333,12 +345,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entidades.Patrimonio", b =>
                 {
-                    b.HasOne("Domain.Entidades.InformacaoAdicional", "InformacaoAdicional")
-                        .WithMany()
-                        .HasForeignKey("CodigoInformacao")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entidades.Equipamento", "Equipamento")
                         .WithMany()
                         .HasForeignKey("CodigoTipoEquipamento")
@@ -352,8 +358,6 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Equipamento");
-
-                    b.Navigation("InformacaoAdicional");
 
                     b.Navigation("Usuario");
                 });

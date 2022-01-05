@@ -25,11 +25,6 @@ namespace Domain.Entidades
         [ForeignKey("CodigoTipoEquipamento")]
         public Equipamento Equipamento { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar as informações adicionais")]
-        public int CodigoInformacao { get; set; }
-        [ForeignKey("CodigoInformacao")]
-        public InformacaoAdicional InformacaoAdicional { get; set; }
-
         [Required(ErrorMessage = "É necessário informar o usuário vinculado a este equipamento")]
         public int CodigoUsuario { get; set; }
         [ForeignKey("CodigoUsuario")]

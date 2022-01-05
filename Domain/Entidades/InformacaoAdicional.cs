@@ -16,5 +16,10 @@ namespace Domain.Entidades
         public DateTime? DataExpericaoGarantia { get; set; }
         public string? Antivirus { get; set; }
         public string? VersaoWindows { get; set; }
+
+        [Required(ErrorMessage = "É necessário informar o patrimonio")]
+        public int CodigoPatrimonio { get; set; }
+        [ForeignKey("CodigoPatrimonio")]
+        public Patrimonio Patrimonio { get; set; }
     }
 }

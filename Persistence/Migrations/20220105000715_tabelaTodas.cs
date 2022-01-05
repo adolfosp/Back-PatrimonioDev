@@ -36,29 +36,12 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InformacaoAdicional",
-                columns: table => new
-                {
-                    CodigoInformacao = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ValorPago = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataExpericaoGarantia = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Antivirus = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VersaoWindows = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InformacaoAdicional", x => x.CodigoInformacao);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Setor",
                 columns: table => new
                 {
                     CodigoSetor = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,7 +134,6 @@ namespace Persistence.Migrations
                     MemoriaRAM = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SituacaoEquipamento = table.Column<int>(type: "int", nullable: false),
                     CodigoTipoEquipamento = table.Column<int>(type: "int", nullable: false),
-                    CodigoInformacao = table.Column<int>(type: "int", nullable: false),
                     CodigoUsuario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -164,16 +146,34 @@ namespace Persistence.Migrations
                         principalColumn: "CodigoTipoEquipamento",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Patrimonio_InformacaoAdicional_CodigoInformacao",
-                        column: x => x.CodigoInformacao,
-                        principalTable: "InformacaoAdicional",
-                        principalColumn: "CodigoInformacao",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Patrimonio_Usuario_CodigoUsuario",
                         column: x => x.CodigoUsuario,
                         principalTable: "Usuario",
                         principalColumn: "CodigoUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InformacaoAdicional",
+                columns: table => new
+                {
+                    CodigoInformacao = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ValorPago = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataExpericaoGarantia = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Antivirus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VersaoWindows = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InformacaoAdicional", x => x.CodigoInformacao);
+                    table.ForeignKey(
+                        name: "FK_InformacaoAdicional_Patrimonio_CodigoPatrimonio",
+                        column: x => x.CodigoPatrimonio,
+                        principalTable: "Patrimonio",
+                        principalColumn: "CodigoPatrimonio",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -233,6 +233,11 @@ namespace Persistence.Migrations
                 column: "CodigoFabricante");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InformacaoAdicional_CodigoPatrimonio",
+                table: "InformacaoAdicional",
+                column: "CodigoPatrimonio");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovimentacaoEquipamento_CodigoPatrimonio",
                 table: "MovimentacaoEquipamento",
                 column: "CodigoPatrimonio");
@@ -241,11 +246,6 @@ namespace Persistence.Migrations
                 name: "IX_MovimentacaoEquipamento_CodigoUsuario",
                 table: "MovimentacaoEquipamento",
                 column: "CodigoUsuario");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Patrimonio_CodigoInformacao",
-                table: "Patrimonio",
-                column: "CodigoInformacao");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patrimonio_CodigoTipoEquipamento",
@@ -281,6 +281,9 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "InformacaoAdicional");
+
+            migrationBuilder.DropTable(
                 name: "MovimentacaoEquipamento");
 
             migrationBuilder.DropTable(
@@ -291,9 +294,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Equipamento");
-
-            migrationBuilder.DropTable(
-                name: "InformacaoAdicional");
 
             migrationBuilder.DropTable(
                 name: "Usuario");
