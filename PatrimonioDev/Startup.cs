@@ -41,6 +41,7 @@ namespace PatrimonioDev
 
             services.AddControllers();
             //Versionning API
+            services.AddCors();
 
             services.AddSwaggerGen(c =>
             {
@@ -83,6 +84,11 @@ namespace PatrimonioDev
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(cors => cors.AllowAnyHeader()
+                             .AllowAnyMethod()
+                             .AllowAnyOrigin()
+            );
 
             app.UseEndpoints(endpoints =>
             {
