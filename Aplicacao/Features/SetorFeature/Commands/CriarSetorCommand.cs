@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -8,7 +9,7 @@ namespace Aplicacao.Features.SetorFeature.Commands
 {
     public class CriarSetorCommand : IRequest<Setor>
     {
-        public Setor Setor { get; set; }
+        public SetorDto Setor { get; set; }
 
         public class CriarSetorCommandHandler : IRequestHandler<CriarSetorCommand, Setor>
         {

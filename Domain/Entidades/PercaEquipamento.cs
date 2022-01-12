@@ -8,6 +8,7 @@ namespace Domain.Entidades
         [Key]
         public int CodigoPerca { get; set; }
         [Required(ErrorMessage = "É necessário informar o motivo da perca"),
+         MinLength(30, ErrorMessage = "O tamanho mínimo de caracteres é 30"),
          MaxLength(300, ErrorMessage = "O tamanho máximo de caracteres é 300")]
         public string MotivoDaPerca { get; set; }
 

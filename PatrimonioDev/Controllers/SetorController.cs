@@ -19,8 +19,9 @@ namespace PatrimonioDev.Controllers
         /// <returns></returns>
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/setor")]
-        public async Task<IActionResult> CriarSetor(CriarSetorCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarSetor([FromBody]CriarSetorCommand command)
         {
             try
             {
