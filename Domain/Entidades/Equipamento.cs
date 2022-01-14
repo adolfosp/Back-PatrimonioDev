@@ -14,9 +14,12 @@ namespace Domain.Entidades
         public string TipoEquipamento { get; set; }
 
         public int CodigoFabricante { get; set; }
-
-
         [ForeignKey("CodigoFabricante")]
         public Fabricante Fabricante { get; set; }
+
+        public int CodigoCategoria { get; set; }
+        [ForeignKey("CodigoCategoria")]
+        public CategoriaEquipamento Categoria { get; set; }
+
     }
 }
