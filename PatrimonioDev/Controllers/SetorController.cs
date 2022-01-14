@@ -65,7 +65,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/setor")]
+        [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
             try
@@ -89,7 +89,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/setor/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarSetor(int id)
         {
             try
