@@ -17,6 +17,7 @@ namespace Aplicacao.Interfaces
         DbSet<Patrimonio> Patrimonio { get; set; }
         DbSet<PercaEquipamento> PercaEquipamento { get; set; }
         DbSet<MovimentacaoEquipamento> MovimentacaoEquipamento { get; set; }
+        DbSet<CategoriaEquipamento> CategoriaEquipamento { get; set; }
 
 
 
