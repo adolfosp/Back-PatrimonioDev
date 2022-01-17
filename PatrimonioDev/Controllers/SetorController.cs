@@ -6,17 +6,15 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
     [Route("api/[controller]")]
     public class SetorController : BaseApiController
     {
-        /// <summary>
-        /// Método para criar setor
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para criar setor")]
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
@@ -33,12 +31,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-
-        /// <summary>
-        /// Método para buscar setor específico
-        /// </summary>
-        /// <param name="id"> Id para buscar setor específico</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para buscar setor específico")]
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,11 +50,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para buscar todos os setores
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+ 
+        [SwaggerOperation(Summary = "Método para buscar todos os setores")]
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -81,11 +71,8 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para deletar um setor específico
-        /// </summary>
-        /// <param name="id"> Id para deletar setor específico</param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para deletar um setor específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -108,11 +95,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar um setor específico
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar um setor específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

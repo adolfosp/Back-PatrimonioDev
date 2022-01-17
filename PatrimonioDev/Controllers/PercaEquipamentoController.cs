@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
@@ -13,11 +14,7 @@ namespace PatrimonioDev.Controllers
     public class PercaEquipamentoController : BaseApiController
     {
 
-        /// <summary>
-        /// Método para criar perca de equipamento
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para criar perca de equipamento")]
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/perca")]
@@ -34,11 +31,7 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para buscar perca de equipamento específico
-        /// </summary>
-        /// <param name="id"> Id para buscar por perca de equipamento específico</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para buscar perca de equipamento específico")]
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,11 +50,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar perca de equipamento específico
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar perca de equipamento específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -85,11 +74,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para deletar perca de equipamento específico
-        /// </summary>
-        /// <param name="id"> Id para deletar perca de equipamento</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para deletar perca de equipamento específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -6,17 +6,15 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
     [Route("api/[controller]")]
     public class MovimentacaoEquipamentoController : BaseApiController
     {
-        /// <summary>
-        /// Método para criar movimentação do equipamento
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para criar movimentação do equipamento")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/movimentacao")]
@@ -32,12 +30,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-
-        /// <summary>
-        /// Método para criar movimentação do equipamento
-        /// </summary>
-        /// <param name="codigoPatrimonio"> Id para buscar todas as movimentações do patrimonio</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para criar movimentação do equipamento")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,11 +50,7 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para atualizar movimentação do patrimonio
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar movimentação do patrimonio")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

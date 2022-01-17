@@ -4,6 +4,7 @@ using Domain.Entidades;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
 
@@ -13,11 +14,7 @@ namespace PatrimonioDev.Controllers
     public class PatrimonioController : BaseApiController
     {
 
-        /// <summary>
-        /// Método para criar patrimonio
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para criar patrimonio")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/patrimonio")]
@@ -34,11 +31,8 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para buscar por patrimonio específico
-        /// </summary>
-        /// <param name="id"> Id para buscar o patrimonio específico</param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para buscar por patrimonio específico")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,11 +51,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar patrimonio específico
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar patrimonio específico")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -85,11 +75,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para deletar patrimonio específico
-        /// </summary>
-        /// <param name="id"> Id para deletar o patrimonio específico</param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para deletar patrimonio específico")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

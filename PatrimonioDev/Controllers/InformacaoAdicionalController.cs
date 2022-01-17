@@ -6,17 +6,15 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
     [Route("api/[controller]")]
     public class InformacaoAdicionalController : BaseApiController
     {
-        /// <summary>
-        /// Método para criar info adicional
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para criar info adicional")]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/info")]
@@ -33,11 +31,7 @@ namespace PatrimonioDev.Controllers
         }
 
 
-        /// <summary>
-        /// Método para listar info adicional específico
-        /// </summary>
-        /// <param name="id"> Id para buscar informacao adicional específica</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para listar info adicional específico")]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,13 +51,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-
-
-        /// <summary>
-        /// Método para deletar info adicional específico
-        /// </summary>
-        /// <param name="id"> Id para deletar informacao adicional específica</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para deletar info adicional específico")]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -86,11 +74,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar info adicional específico
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar info adicional específico")]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

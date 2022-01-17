@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
@@ -13,11 +14,8 @@ namespace PatrimonioDev.Controllers
     public class EmpresaController : BaseApiController
     {
 
-        /// <summary>
-        /// Método para cadastrar uma empresa
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para cadastrar uma empresa")]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/empresa")]
@@ -35,11 +33,8 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para listar todas as empresas
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para listar todas as empresas")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -59,11 +54,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para a empresa por Id
-        /// </summary>
-        /// <param name="id"> Id da empresa</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para a empresa por Id")]
+
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -82,11 +74,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar a empresa
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns>teste</returns>
+        [SwaggerOperation(Summary = "Método para atualizar a empresa")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -111,11 +99,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para remover a empresa
-        /// </summary>
-        /// <param name="id"> Id da empresa para deletar</param>
-        /// <returns>teste</returns>
+
+        [SwaggerOperation(Summary = "Método para remover a empresa")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

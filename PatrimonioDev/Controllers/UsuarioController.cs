@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
@@ -13,11 +14,8 @@ namespace PatrimonioDev.Controllers
     public class UsuarioController : BaseApiController
     {
 
-        /// <summary>
-        /// Método para criar um usuário
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para criar um usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/usuario")]
@@ -33,12 +31,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-
-        /// <summary>
-        /// Método para buscar um usuário específico
-        /// </summary>
-        /// <param name="id"> Id para buscar o usuário específico</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para buscar um usuário específico")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,13 +50,8 @@ namespace PatrimonioDev.Controllers
                 return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
-
-        /// <summary>
-        /// Método para buscar um usuário por email e senha 
-        /// </summary>
-        /// <param name="email"> E-mail do usuário</param>
-        /// <param name="senha"> Senha do usuário</param>
-        /// <returns></returns>
+       
+        [SwaggerOperation(Summary = "Método para buscar um usuário por email e senha ")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -82,11 +70,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para buscar todos os usuário 
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+    
+        [SwaggerOperation(Summary = "Método para buscar todos os usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -107,11 +92,7 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para buscar todos os usuário 
-        /// </summary>
-        /// <param name="id"> Id para deletar o usuário específico</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para buscar todos os usuário ")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -134,11 +115,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar o usuário específico 
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar o usuário específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

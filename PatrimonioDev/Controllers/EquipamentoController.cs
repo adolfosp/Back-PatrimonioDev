@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
@@ -13,11 +14,8 @@ namespace PatrimonioDev.Controllers
     public class EquipamentoController : BaseApiController
     {
 
-        /// <summary>
-        /// Método para cadastrar um equipamento
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para cadastrar um equipamento")]
         [ProducesResponseType(typeof(Equipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/equipamento")]
@@ -34,11 +32,8 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para listar todos os equipamentos
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para listar todos os equipamentos")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Equipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -58,11 +53,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para listar equipamento específico
-        /// </summary>
-        /// <param name="id"> Id para listar o equipamento</param>
-        /// <returns>Retonra algo</returns>
+
+        [SwaggerOperation(Summary = "Método para listar equipamento específico")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Equipamento),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -81,11 +73,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar o equipamento
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para atualizar o equipamento")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -110,15 +98,11 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para remover o equipamento
-        /// </summary>
-        /// <param name="id"> Id para remover o equipamento</param>
-        /// <returns></returns>
+ 
+        [SwaggerOperation(Summary = "Método para remover o equipamento")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
         [HttpDelete("/equipamento/{id}")]
         public async Task<IActionResult> DeletarEquipamento(int id)
         {

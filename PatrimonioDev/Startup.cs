@@ -45,11 +45,7 @@ namespace PatrimonioDev
 
             services.AddSwaggerGen(c =>
             {
-                string caminhoAplicacao = PlatformServices.Default.Application.ApplicationBasePath;
-                string nomeAplicacao = PlatformServices.Default.Application.ApplicationName;
-                string caminhoDocumentacao = Path.Combine(caminhoAplicacao, $"{ nomeAplicacao}.xml");
-                c.IncludeXmlComments(caminhoDocumentacao);
-
+                c.EnableAnnotations();
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
                     {

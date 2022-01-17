@@ -6,17 +6,15 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
     [Route("api/[controller]")]
     public class FabricanteController : BaseApiController
     {
-        /// <summary>
-        /// Método para cadastrar um fabricante
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para cadastrar um fabricante")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/fabricante")]
@@ -33,11 +31,8 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para cadastrar um fabricante
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para cadastrar um fabricante")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType( StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,11 +52,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para listar fabricante específico
-        /// </summary>
-        /// <param name="id"> Id para buscar um fabricante específico </param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para listar fabricante específico")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -81,11 +73,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para atualizar fabricante específico
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para atualizar fabricante específico")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -110,11 +99,8 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para deletar fabricante específico
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
+
+        [SwaggerOperation(Summary = "Método para deletar fabricante específico")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

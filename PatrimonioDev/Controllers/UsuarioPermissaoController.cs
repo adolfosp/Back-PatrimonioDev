@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Domain.Entidades;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PatrimonioDev.Controllers
 {
@@ -13,11 +14,7 @@ namespace PatrimonioDev.Controllers
     public class UsuarioPermissaoController : BaseApiController
     {
 
-        /// <summary>
-        /// Método para criar permissão 
-        /// </summary>
-        /// <param name=""> </param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para criar permissão")]
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("/permissao")]
@@ -34,11 +31,7 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        /// <summary>
-        /// Método para obter todas as permissões 
-        /// </summary>
-        /// <param name=""> </param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para obter todas as permissões ")]
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,11 +50,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        /// <summary>
-        /// Método para deletar permissão 
-        /// </summary>
-        /// <param name="id">  Id para deletar permissão</param>
-        /// <returns></returns>
+        [SwaggerOperation(Summary = "Método para deletar permissão")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
