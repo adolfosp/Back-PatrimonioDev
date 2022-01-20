@@ -10,7 +10,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220105000715_tabelaTodas")]
+    [Migration("20220119003642_tabelaTodas")]
     partial class tabelaTodas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,23 @@ namespace Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Domain.Entidades.CategoriaEquipamento", b =>
+                {
+                    b.Property<int>("CodigoCategoria")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("CodigoCategoria");
+
+                    b.ToTable("CategoriaEquipamento");
+                });
 
             modelBuilder.Entity("Domain.Entidades.Empresa", b =>
                 {
@@ -55,6 +72,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CodigoCategoria")
+                        .HasColumnType("int");
+
                     b.Property<int>("CodigoFabricante")
                         .HasColumnType("int");
 
@@ -64,6 +84,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("CodigoTipoEquipamento");
+
+                    b.HasIndex("CodigoCategoria");
 
                     b.HasIndex("CodigoFabricante");
 
@@ -304,11 +326,19 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entidades.Equipamento", b =>
                 {
+                    b.HasOne("Domain.Entidades.CategoriaEquipamento", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CodigoCategoria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entidades.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("CodigoFabricante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Categoria");
 
                     b.Navigation("Fabricante");
                 });

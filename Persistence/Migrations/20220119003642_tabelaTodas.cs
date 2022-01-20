@@ -8,6 +8,19 @@ namespace Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "CategoriaEquipamento",
+                columns: table => new
+                {
+                    CodigoCategoria = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoriaEquipamento", x => x.CodigoCategoria);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Empresa",
                 columns: table => new
                 {
@@ -69,11 +82,18 @@ namespace Persistence.Migrations
                     CodigoTipoEquipamento = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TipoEquipamento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CodigoFabricante = table.Column<int>(type: "int", nullable: false)
+                    CodigoFabricante = table.Column<int>(type: "int", nullable: false),
+                    CodigoCategoria = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipamento", x => x.CodigoTipoEquipamento);
+                    table.ForeignKey(
+                        name: "FK_Equipamento_CategoriaEquipamento_CodigoCategoria",
+                        column: x => x.CodigoCategoria,
+                        principalTable: "CategoriaEquipamento",
+                        principalColumn: "CodigoCategoria",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Equipamento_Fabricante_CodigoFabricante",
                         column: x => x.CodigoFabricante,
@@ -92,8 +112,8 @@ namespace Persistence.Migrations
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodigoEmpresa = table.Column<int>(type: "int", nullable: false),
-                    CodigoSetor = table.Column<int>(type: "int", nullable: false),
+                    CodigoEmpresa = table.Column<int>(type: "int", nullable: true),
+                    CodigoSetor = table.Column<int>(type: "int", nullable: true),
                     CodigoUsuarioPermissao = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -198,7 +218,7 @@ namespace Persistence.Migrations
                         column: x => x.CodigoPatrimonio,
                         principalTable: "Patrimonio",
                         principalColumn: "CodigoPatrimonio",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MovimentacaoEquipamento_Usuario_CodigoUsuario",
                         column: x => x.CodigoUsuario,
@@ -226,6 +246,11 @@ namespace Persistence.Migrations
                         principalColumn: "CodigoPatrimonio",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipamento_CodigoCategoria",
+                table: "Equipamento",
+                column: "CodigoCategoria");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipamento_CodigoFabricante",
@@ -297,6 +322,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuario");
+
+            migrationBuilder.DropTable(
+                name: "CategoriaEquipamento");
 
             migrationBuilder.DropTable(
                 name: "Fabricante");

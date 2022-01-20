@@ -36,6 +36,7 @@ namespace PatrimonioDev
             services.AddScoped<IPatrimonioPersistence, PatrimonioPersistence>();
             services.AddScoped<IPercaEquipamentoPersistence, PercaEquipamentoPersistence>();
             services.AddScoped<IMovimentacaoEquipamentoPersistence, MovimentacaoEquipamentoPersistence>();
+            services.AddScoped<ICategoriaPersistence, CategoriaPersistence>();
 
 
 
