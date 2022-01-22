@@ -4,10 +4,10 @@ namespace Domain.Enums
 {
     public enum SituacaoMovimentacaoEquipamento
     {
-        [Description("DEVOLVEU")]
-        DEVOLVEU = 1,
+        [Description("ENTREGUE")]
+        ENTREGUE = 1,
 
-        [Description("PEGOU")]
-        PEGOU = 2
+        [Description("EM USO")]
+        EMUSO = 2
     }
 }
