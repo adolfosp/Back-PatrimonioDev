@@ -18,6 +18,7 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
             public DeletarFabricanteHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(DeletarFabricanteCommand command, CancellationToken cancellationToken)
             {
                 var fabricante = await _context.Fabricante.Where(x => x.CodigoFabricante == command.Id).FirstOrDefaultAsync();

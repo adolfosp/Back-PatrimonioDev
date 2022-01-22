@@ -20,6 +20,7 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Queries
             public ObterInformacaoAdicionalPorIdHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<InformacaoAdicional> Handle(ObterInformacaoAdicionalPorId request, CancellationToken cancellationToken)
             {
                 var informacaoAdicional = await _context.InformacaoAdicional.Where(x => x.CodigoInformacao == request.Id).FirstOrDefaultAsync();

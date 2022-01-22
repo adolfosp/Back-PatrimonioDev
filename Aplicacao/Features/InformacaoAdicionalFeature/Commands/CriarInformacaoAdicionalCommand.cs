@@ -23,6 +23,8 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Commands
                 _context = context;
                 _mapper = mapper;
             }
+
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<InformacaoAdicional> Handle(CriarInformacaoAdicionalCommand request, CancellationToken cancellationToken)
             {
                 var informacaoAdicional = new InformacaoAdicional();

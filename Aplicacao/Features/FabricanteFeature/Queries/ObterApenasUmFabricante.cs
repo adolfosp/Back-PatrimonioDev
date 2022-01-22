@@ -19,6 +19,7 @@ namespace Aplicacao.Features.FabricanteFeature.Queries
             public ObterApenasUmFabricanteHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<Fabricante> Handle(ObterApenasUmFabricante request, CancellationToken cancellationToken)
             {
                 var listaDeFabricantes = await _context.Fabricante.Where(x => x.CodigoFabricante == request.Id).FirstOrDefaultAsync();

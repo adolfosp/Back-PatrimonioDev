@@ -20,6 +20,8 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
             public AtualizarFabricanteHandler(IApplicationDbContext context)
                 => _context = context;
 
+
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(AtualizarFabricanteCommand command, CancellationToken cancellationToken)
             {
 

@@ -19,6 +19,7 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Commands
             public RemoverInformacaoAdicionalHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(RemoverInformacaoAdicionalCommand request, CancellationToken cancellationToken)
             {
                 var informacaoAdicional = await _context.InformacaoAdicional.Where(x => x.CodigoInformacao == request.Id).FirstOrDefaultAsync();

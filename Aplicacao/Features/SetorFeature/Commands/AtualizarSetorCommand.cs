@@ -22,6 +22,7 @@ namespace Aplicacao.Features.SetorFeature.Commands
             public AtualizarSetorCommandHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(AtualizarSetorCommand request, CancellationToken cancellationToken)
             {
                 var setor = await _context.Setor.Where(x => x.CodigoSetor == request.Id).Select(x => x).FirstOrDefaultAsync();

@@ -18,6 +18,7 @@ namespace Aplicacao.Features.SetorFeature.Commands
             public DeletarSetorCommandHandler(IApplicationDbContext context)
                  => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(DeletarSetorCommand command, CancellationToken cancellationToken)
             {
                 var setor = await _context.Setor.Where(x => x.CodigoSetor == command.Id).FirstOrDefaultAsync();

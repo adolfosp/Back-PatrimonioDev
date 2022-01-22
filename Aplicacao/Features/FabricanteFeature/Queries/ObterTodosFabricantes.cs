@@ -18,6 +18,7 @@ namespace Aplicacao.Features.FabricanteFeature.Queries
             public ObterTodosFabricantesHanlder(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<IEnumerable<Fabricante>> Handle(ObterTodosFabricantes request, CancellationToken cancellationToken)
             {
                 var listaDeFabricantes = await _context.Fabricante.ToListAsync();

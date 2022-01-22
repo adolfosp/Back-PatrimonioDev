@@ -17,7 +17,7 @@ namespace Aplicacao.Features.SetorFeature.Commands
             public CriarSetorCommandHandler(IApplicationDbContext context)
                 => _context = context;
 
-
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<Setor> Handle(CriarSetorCommand request, CancellationToken cancellationToken)
             {
                 var setor = new Setor();

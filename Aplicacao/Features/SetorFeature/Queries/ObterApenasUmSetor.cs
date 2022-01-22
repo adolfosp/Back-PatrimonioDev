@@ -19,6 +19,7 @@ namespace Aplicacao.Features.SetorFeature.Queries
             public ObterApenasUmSetorHandler(IApplicationDbContext context)
                  => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<Setor> Handle(ObterApenasUmSetor query, CancellationToken cancellationToken)
             {
                 var setor = await _context.Setor.Where(x => x.CodigoSetor == query.Id).FirstOrDefaultAsync();

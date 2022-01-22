@@ -20,6 +20,7 @@ namespace Aplicacao.Features.EmpresaFeature.Queries
                 _context = context;
             }
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<IEnumerable<Empresa>> Handle(ObterTodasEmpresas query, CancellationToken cancellationToken)
             {
 

@@ -22,6 +22,7 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
             public AtualizarEmpresaCommandHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(AtualizarEmpresaCommand command, CancellationToken cancellationToken)
             {
 

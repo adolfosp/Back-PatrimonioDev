@@ -21,6 +21,7 @@ namespace Aplicacao.Features.EmpresaFeature.Queries
                 _context = context;
             }
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<Empresa> Handle(ObterApenasUmaEmpresa query, CancellationToken cancellationToken)
             {
 

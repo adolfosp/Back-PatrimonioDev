@@ -17,6 +17,7 @@ namespace Aplicacao.Features.CategoriaFeature.Commands
             public CriarEquipamentoCommandHandler(IApplicationDbContext context)
                  => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<CategoriaEquipamento> Handle(CriarCategoriaCommand request, CancellationToken cancellationToken)
             {
 

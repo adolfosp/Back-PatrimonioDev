@@ -18,6 +18,7 @@ namespace Aplicacao.Features.SetorFeature.Queries
             public ObterTodosSetoresQueryHandler(IApplicationDbContext context)
                 => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<IEnumerable<Setor>> Handle(ObterTodosSetores request, CancellationToken cancellationToken)
             {
                 var listaSetor = await _context.Setor.ToListAsync();

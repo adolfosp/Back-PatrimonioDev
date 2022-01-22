@@ -17,6 +17,7 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
             public CriarEquipamentoCommandHandler(IApplicationDbContext context)
                  => _context = context;
 
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<Empresa> Handle(CriarEmpresaCommand request, CancellationToken cancellationToken)
             {
 

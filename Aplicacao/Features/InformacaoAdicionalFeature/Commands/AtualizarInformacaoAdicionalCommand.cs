@@ -27,8 +27,9 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Commands
                 _context = context;
                 _mapper = mapper;
             }
-            
 
+
+            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(AtualizarInformacaoAdicionalCommand request, CancellationToken cancellationToken)
             {
                 var informacaoAdicional = await _context.InformacaoAdicional.Where(x => x.CodigoInformacao == request.Id).FirstOrDefaultAsync();
