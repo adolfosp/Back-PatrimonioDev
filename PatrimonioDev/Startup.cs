@@ -39,10 +39,10 @@ namespace PatrimonioDev
             services.AddScoped<ICategoriaPersistence, CategoriaPersistence>();
 
 
+            services.AddCors();
 
             services.AddControllers();
             //Versionning API
-            services.AddCors();
 
             services.AddSwaggerGen(c =>
             {

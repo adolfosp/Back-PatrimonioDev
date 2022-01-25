@@ -35,7 +35,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/setor/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
             try
@@ -99,11 +99,13 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/setor/[action]")]
-        public async Task<IActionResult> AtualizarSetor(AtualizarSetorCommand command)
+        [HttpPut("{codigoSetor}")]
+        public async Task<IActionResult> AtualizarSetor(int codigoSetor, [FromBody]AtualizarSetorCommand command)
         {
             try
             {
+                command.Id = codigoSetor;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
