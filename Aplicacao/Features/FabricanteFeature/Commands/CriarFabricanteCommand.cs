@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -8,7 +9,7 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
 {
     public class CriarFabricanteCommand : IRequest<Fabricante>
     {
-        public Fabricante Fabricante { get; set; }
+        public FabricanteDto Fabricante { get; set; }
 
         public class CriarFabricanteHandler : IRequestHandler<CriarFabricanteCommand, Fabricante>
 
@@ -23,7 +24,7 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
             {
                 var fabricante = new Fabricante();
 
-                fabricante = request.Fabricante;
+                fabricante.NomeFabricante = request.Fabricante.NomeFabricante;
 
                 await _context.Fabricante.AddAsync(fabricante);
 
