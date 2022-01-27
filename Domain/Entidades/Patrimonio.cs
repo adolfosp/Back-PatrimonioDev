@@ -8,8 +8,13 @@ namespace Domain.Entidades
     {
         [Key]
         public int CodigoPatrimonio { get; set; }
-        public string? Modelo { get; set; }
-        public string? ServiceTag { get; set; }
+
+        [Required(ErrorMessage = "É necessário informar o modelo")]
+        public string Modelo { get; set; }
+
+        [Required(ErrorMessage = "É necessário informar a service tag")]
+        public string ServiceTag { get; set; }
+
         public string? Armazenamento { get; set; }
         public string? Processador { get; set; }
         public string? PlacaDeVideo { get; set; }

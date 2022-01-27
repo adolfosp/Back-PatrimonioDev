@@ -17,8 +17,9 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar um fabricante")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/fabricante")]
-        public async Task<IActionResult> CriarFabricante(CriarFabricanteCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarFabricante([FromBody]CriarFabricanteCommand command)
         {
             try
             {
@@ -36,7 +37,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType( StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/fabricante")]
+        [HttpGet]
         public async Task<IActionResult> ListarTodosFabricantes()
         {
             try
@@ -104,7 +105,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/fabricante/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarTipoEquipamento(int id)
         {
             try
