@@ -18,10 +18,8 @@ namespace Aplicacao.Interfaces
         DbSet<PercaEquipamento> PercaEquipamento { get; set; }
         DbSet<MovimentacaoEquipamento> MovimentacaoEquipamento { get; set; }
         DbSet<CategoriaEquipamento> CategoriaEquipamento { get; set; }
-
-
+        DbSet<Funcionario> Funcionario { get; set; }
 
         Task<int> SaveChangesAsync();
-
     }
 }
