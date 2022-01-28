@@ -6,6 +6,7 @@ namespace Aplicacao.Helpers
     {
         public PatrimonioDevProfile()
         {
+
             CreateMap<Domain.Entidades.Empresa, Dtos.EmpresaDto>().ReverseMap();
             CreateMap<Domain.Entidades.InformacaoAdicional, Dtos.InformacaoAdicionalDto>().ReverseMap();
             CreateMap<Domain.Entidades.Usuario, Dtos.UsuarioDto>().ReverseMap();
@@ -13,7 +14,8 @@ namespace Aplicacao.Helpers
             CreateMap<Domain.Entidades.Patrimonio, Dtos.PatrimonioDto>().ReverseMap();
             CreateMap<Domain.Entidades.PercaEquipamento, Dtos.PercaEquipamentoDto>().ReverseMap();
             CreateMap<Domain.Entidades.MovimentacaoEquipamento, Dtos.MovimentacaoEquipamentoDto>().ReverseMap();
-            CreateMap<Domain.Entidades.Funcionario, Dtos.FabricanteDto>().ReverseMap();
+            CreateMap<Domain.Entidades.Funcionario, Dtos.FuncionarioDto>().ReverseMap();
+
 
         }
     }

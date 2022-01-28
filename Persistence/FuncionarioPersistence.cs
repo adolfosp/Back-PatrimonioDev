@@ -60,7 +60,7 @@ namespace Persistence
 
         public async Task<Funcionario> ObterFuncionarioPorId(int codigoFuncionario)
         {
-            var funcionario = await _context.Funcionario.Where(x => x.CodigoFuncionario == codigoFuncionario).Select(x => x).FirstOrDefaultAsync();
+            var funcionario = await _context.Funcionario.Where(x => x.CodigoFuncionario == codigoFuncionario && x.Ativo == true).Select(x => x).FirstOrDefaultAsync();
 
             if (funcionario is null) return null;
 

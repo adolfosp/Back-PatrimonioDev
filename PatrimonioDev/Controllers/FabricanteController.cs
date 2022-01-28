@@ -33,7 +33,7 @@ namespace PatrimonioDev.Controllers
         }
 
 
-        [SwaggerOperation(Summary = "Método para cadastrar um fabricante")]
+        [SwaggerOperation(Summary = "Método para buscar todos os fabricantes")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType( StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
