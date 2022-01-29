@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
     {
         public int Id { get; set; }
 
-        public string Nome { get; set; }
+        public FabricanteDto Fabricante { get; set; }
 
         public class AtualizarFabricanteHandler : IRequestHandler<AtualizarFabricanteCommand, int>
         {
@@ -29,7 +30,7 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
 
                 if (fabricante == null) return 404;
 
-                fabricante.NomeFabricante = command.Nome;
+                fabricante.NomeFabricante = command.Fabricante.NomeFabricante;
 
                 await _context.SaveChangesAsync();
 

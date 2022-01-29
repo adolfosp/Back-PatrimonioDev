@@ -58,7 +58,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/fabricante/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ListarFabricantePorId(int id)
         {
             try
@@ -79,12 +79,14 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/fabricante/[action]")]
-        public async Task<IActionResult> AtualizarFabricante(AtualizarFabricanteCommand command)
+        [HttpPut("{codigoFabricante}")]
+        public async Task<IActionResult> AtualizarFabricante(int codigoFabricante, [FromBody]AtualizarFabricanteCommand command)
         {
 
             try
             {
+                command.Id = codigoFabricante;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
