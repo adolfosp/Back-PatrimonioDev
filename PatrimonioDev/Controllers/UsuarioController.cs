@@ -18,8 +18,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar um usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/usuario")]
-        public async Task<IActionResult> CriarUsuario(CriarUsuarioCommand command)
+        [HttpPost]
+        public async Task<IActionResult> CriarUsuario([FromBody]CriarUsuarioCommand command)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/usuario/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
             try
@@ -55,7 +55,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/usuario/[action]")]
+        [HttpGet("{email}/{senha}")]
         public async Task<IActionResult> ObterUsuarioPorLogin(string email, string senha)
         {
             try
@@ -75,7 +75,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/usuario")]
+        [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
             try
@@ -96,7 +96,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/usuario/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuario(int id)
         {
             try
@@ -119,8 +119,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/usuario/[action]")]
-        public async Task<IActionResult> AtualizarUsuario(AtualizarUsuarioCommand command)
+        [HttpPut("{codigoFuncionario}")]
+        public async Task<IActionResult> AtualizarUsuario(int codigoFuncionario, [FromBody]AtualizarUsuarioCommand command)
         {
             try
             {
