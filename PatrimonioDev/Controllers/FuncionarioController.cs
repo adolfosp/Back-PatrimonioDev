@@ -32,7 +32,6 @@ namespace PatrimonioDev.Controllers
 
         }
 
-
         [SwaggerOperation(Summary = "Método para listar todos os funcionario")]
         [ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

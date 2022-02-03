@@ -13,5 +13,9 @@ namespace Aplicacao.Dtos
         public DateTime? DataExpericaoGarantia { get; set; }
         public string? Antivirus { get; set; }
         public string? VersaoWindows { get; set; }
+
+        [Required(ErrorMessage = "É necessário o código do patrimônio.")]
+        public int CodigoPatrimonio { get; set; }
+
     }
 }
