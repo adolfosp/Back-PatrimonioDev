@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Swashbuckle.AspNetCore.Annotations;
+using Aplicacao.Dtos;
 
 namespace PatrimonioDev.Controllers
 {
@@ -16,10 +17,11 @@ namespace PatrimonioDev.Controllers
 
 
         [SwaggerOperation(Summary = "Método para cadastrar um equipamento")]
-        [ProducesResponseType(typeof(Equipamento), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EquipamentoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/equipamento")]
-        public async Task<IActionResult> CriarEquipamento(CriarEquipamentoCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarEquipamento([FromBody]CriarEquipamentoCommand command)
         {
             try
             {
@@ -27,7 +29,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message} {ex.InnerException}");
             }
 
         }
@@ -37,7 +39,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Equipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/equipamento")]
+        [HttpGet]
         public async Task<IActionResult> ListarTodosEquipamento()
         {
             try
@@ -58,7 +60,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Equipamento),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/equipamento/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ListarEquipamentoPorId(int id)
         {
             try
@@ -77,12 +79,14 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/equipamento/[action]")]
-        public async Task<IActionResult> AtualizarEquipamento(AtualizarEquipamentoCommand command)
+        [HttpPut("{codigoEquipamento}")]
+        public async Task<IActionResult> AtualizarEquipamento(int codigoEquipamento, [FromBody]AtualizarEquipamentoCommand command)
         {
 
             try
             {
+                command.Id = codigoEquipamento;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -94,7 +98,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -103,7 +107,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/equipamento/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarEquipamento(int id)
         {
             try

@@ -19,7 +19,6 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-
         public async Task<IActionResult> ObterTodasCategorias()
         {
             try
@@ -38,8 +37,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar categoria")]
         [ProducesResponseType(typeof(CategoriaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
         [HttpPost]
-
         public async Task<IActionResult> CriarCategoria(CriarCategoriaCommand command)
         {
             try
@@ -48,7 +47,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
     }

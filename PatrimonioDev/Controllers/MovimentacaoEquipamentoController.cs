@@ -17,8 +17,9 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar movimentação do equipamento")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/movimentacao")]
-        public async Task<IActionResult> CriarMovimentacaoEquipamento(CriarMovimentacaoEquipamentoCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody]CriarMovimentacaoEquipamentoCommand command)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -34,7 +35,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/movimentacao/{codigoPatrimonio}")]
+        [HttpGet("{codigoPatrimonio}")]
         public async Task<IActionResult> ObterTodasMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
             try
@@ -54,11 +55,13 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/movimentacao/[action]")]
-        public async Task<IActionResult> AtualizarMovimentacao(AtualizarMovimentacaoEquipamentoCommand command)
+        [HttpPut("{codigoPatrimonio}")]
+        public async Task<IActionResult> AtualizarMovimentacao(int codigoPatrimonio, [FromBody]AtualizarMovimentacaoEquipamentoCommand command)
         {
             try
             {
+                command.Id = codigoPatrimonio;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -69,7 +72,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
     }

@@ -17,7 +17,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar permissão")]
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/permissao")]
+        [Produces("application/json")]
+        [HttpPost]
         public async Task<IActionResult> CriarUsuarioPermissao(CriarUsuarioPermissaoCommand command)
         {
             try
@@ -26,7 +27,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
 
         }
@@ -35,7 +36,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/permissao")]
+        [HttpGet]
         public async Task<IActionResult> ObterTodasPermissoes()
         {
             try
@@ -54,7 +55,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/permissao/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuarioPermissao(int id)
         {
             try

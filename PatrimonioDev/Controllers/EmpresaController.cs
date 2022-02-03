@@ -18,9 +18,9 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar uma empresa")]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/empresa")]
-        
-        public async Task<IActionResult> CriarEmpresa(CriarEmpresaCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarEmpresa([FromBody]CriarEmpresaCommand command)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
 
         }
@@ -38,7 +38,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/empresa")]
+        [HttpGet]
         public async Task<IActionResult> ListarTodasEmpresas()
         {
             try
@@ -59,7 +59,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/empresa/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ListarEmpresaPorId(int id)
         {
             try
@@ -78,12 +78,14 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/empresa/[action]")]
-        public async Task<IActionResult> AtualizarEmpresa(AtualizarEmpresaCommand command)
+        [HttpPut("{codigoEmpresa}")]
+        public async Task<IActionResult> AtualizarEmpresa(int codigoEmpresa, [FromBody]AtualizarEmpresaCommand command)
         {
 
             try
             {
+                command.Id = codigoEmpresa;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -95,7 +97,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -104,7 +106,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/empresa/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarEmpresa(int id)
         {
             try

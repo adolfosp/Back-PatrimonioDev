@@ -18,6 +18,7 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar um usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarUsuario([FromBody]CriarUsuarioCommand command)
         {
@@ -27,7 +28,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -124,6 +125,8 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
+                command.Id = codigoFuncionario; 
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -134,7 +137,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
     }

@@ -11,5 +11,9 @@ namespace Aplicacao.Dtos
 
         [Required(ErrorMessage = "É necessário informar o fabricante.")]
         public int CodigoFabricante { get; set; }
+
+        [Required(ErrorMessage = "É necessário informar a categoria.")]
+        public int CodigoCategoria { get; set; }
+
     }
 }

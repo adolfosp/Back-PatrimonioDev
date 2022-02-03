@@ -17,8 +17,9 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar info adicional")]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/info")]
-        public async Task<IActionResult> CriarInformacaoAdicional(CriarInformacaoAdicionalCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarInformacaoAdicional([FromBody]CriarInformacaoAdicionalCommand command)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -35,7 +36,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/info/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
             try
@@ -55,7 +56,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/info/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarInformacaoAdicional(int id)
         {
             try
@@ -78,11 +79,13 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/info/[action]")]
-        public async Task<IActionResult> AtualizarInformacao(AtualizarInformacaoAdicionalCommand command)
+        [HttpPut("{codigoInfo}")]
+        public async Task<IActionResult> AtualizarInformacao(int codigoInfo, [FromBody]AtualizarInformacaoAdicionalCommand command)
         {
             try
             {
+                command.Id = codigoInfo;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -93,7 +96,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
     }

@@ -15,10 +15,11 @@ namespace PatrimonioDev.Controllers
     {
 
         [SwaggerOperation(Summary = "Método para cadastrar um funcionário")]
-        //[ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarFabricante([FromBody] CriarFuncionarioCommand command)
+        public async Task<IActionResult> CriarFuncionario([FromBody] CriarFuncionarioCommand command)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
 
         }
@@ -37,7 +38,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        public async Task<IActionResult> ListarTodosFabricantes()
+        public async Task<IActionResult> ListarTodosFuncionario()
         {
             try
             {
@@ -58,7 +59,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> ListarFabricantePorId(int id)
+        public async Task<IActionResult> ListarFuncionarioPorId(int id)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("{codigoFuncionario}")]
-        public async Task<IActionResult> AtualizarFabricante(int codigoFuncionario, [FromBody]AtualizarFuncionarioCommand command)
+        public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody]AtualizarFuncionarioCommand command)
         {
 
             try
@@ -97,7 +98,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -107,7 +108,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletarTipoEquipamento(int id)
+        public async Task<IActionResult> DeletarFuncionario(int id)
         {
             try
             {

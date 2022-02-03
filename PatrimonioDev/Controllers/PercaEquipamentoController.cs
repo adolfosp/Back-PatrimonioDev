@@ -17,8 +17,9 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar perca de equipamento")]
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/perca")]
-        public async Task<IActionResult> CriarPercaEquipamento(CriarPercaEquipamentoCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarPercaEquipamento([FromBody]CriarPercaEquipamentoCommand command)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
 
         }
@@ -35,7 +36,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/perca/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ListarPercaEquipamentoPorId(int id)
         {
             try
@@ -54,12 +55,14 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/perca/[action]")]
-        public async Task<IActionResult> AtualizarPercaEquipamento(AtualizarPercaEquipamentoCommand command)
+        [HttpPut("{codigoPerda}")]
+        public async Task<IActionResult> AtualizarPercaEquipamento(int codigoPerda, [FromBody]AtualizarPercaEquipamentoCommand command)
         {
 
             try
             {
+                command.Id = codigoPerda;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -70,7 +73,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -78,7 +81,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/perca/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarPercaEquipamento(int id)
         {
             try

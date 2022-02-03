@@ -17,8 +17,9 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar patrimonio")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("/patrimonio")]
-        public async Task<IActionResult> CriarPatrimonio(CriarPatrimonioCommand command)
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<IActionResult> CriarPatrimonio([FromBody]CriarPatrimonioCommand command)
         {
             try
             {
@@ -26,17 +27,16 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
 
         }
-
 
         [SwaggerOperation(Summary = "Método para buscar por patrimonio específico")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("/patrimonio/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ListarPatrimonioPorId(int id)
         {
             try
@@ -55,12 +55,14 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut("/patrimonio/[action]")]
-        public async Task<IActionResult> AtualizarPatrimonio(AtualizarPatrimonioCommand command)
+        [HttpPut("{codigoPatrimonio}")]
+        public async Task<IActionResult> AtualizarPatrimonio(int codigoPatrimonio, [FromBody]AtualizarPatrimonioCommand command)
         {
 
             try
             {
+                command.Id = codigoPatrimonio;
+
                 var statusCode = StatusCode(await Mediator.Send(command));
 
                 if (statusCode.StatusCode == 404)
@@ -71,7 +73,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message}");
+                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
             }
         }
 
@@ -80,7 +82,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("/patrimonio/{codigoPatrimonio}")]
+        [HttpDelete("{codigoPatrimonio}")]
         public async Task<IActionResult> DeletarPatrimonio(int codigoPatrimonio)
         {
             try
