@@ -12,6 +12,7 @@ namespace Aplicacao.Interfaces
         Task<IEnumerable<Usuario>> ObterTodosUsuario();
         Task<Usuario> ObterApenasUm(int id);
         Task<Usuario> ObterUsuarioLogin(string email, string senha);
+        Task<bool> ObterUsuarioPorEmail(string email);
         Task<Usuario> CriarUsuario(Usuario usuario);
     }
 }

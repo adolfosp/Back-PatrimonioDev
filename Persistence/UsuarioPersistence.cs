@@ -82,5 +82,14 @@ namespace Persistence
 
             return usuarioCadastrar;
         }
+
+        public async Task<bool> ObterUsuarioPorEmail(string email)
+        {
+            var usuario = await _context.Usuario.Where(x => x.Email == email).Select(x => x).FirstOrDefaultAsync();
+
+            if (usuario is null) return false;
+
+            return true;
+        }
     }
 }

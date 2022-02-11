@@ -20,10 +20,15 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarUsuario([FromBody]CriarUsuarioCommand command)
+        public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
         {
             try
             {
+                var usuario = await ObterUsuarioPorEmail(command.Usuario.Email);
+
+                if (usuario)
+                    return StatusCode(500, new { mensagem = $"Não é possível realizar o cadastro pois o e-mail já foi utilizado em outro registro." });
+
                 return Ok(await Mediator.Send(command));
             }
             catch (Exception ex)
@@ -31,6 +36,11 @@ namespace PatrimonioDev.Controllers
                 return StatusCode(500, new { mensagem = $"Erro interno no servidor. Mensagem:  {ex.Message} {ex.InnerException}" });
             }
         }
+
+        [NonAction]
+        public async Task<bool> ObterUsuarioPorEmail(string email)
+             => await Mediator.Send(new ObterUsuarioPorEmail { Email = email });
+
 
         [SwaggerOperation(Summary = "Método para buscar um usuário específico")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
@@ -51,7 +61,7 @@ namespace PatrimonioDev.Controllers
                 return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
             }
         }
-       
+
         [SwaggerOperation(Summary = "Método para buscar um usuário por email e senha ")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -63,6 +73,9 @@ namespace PatrimonioDev.Controllers
             {
                 var usuario = await Mediator.Send(new ObterUsuarioPorLogin { senha = senha, email = email });
 
+                if (usuario is null)
+                    return StatusCode(204, new { mensagem = "Não existe este e-mail cadastro" });
+
                 return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
             }
             catch (Exception ex)
@@ -71,7 +84,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-    
+
         [SwaggerOperation(Summary = "Método para buscar todos os usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -121,11 +134,11 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("{codigoFuncionario}")]
-        public async Task<IActionResult> AtualizarUsuario(int codigoFuncionario, [FromBody]AtualizarUsuarioCommand command)
+        public async Task<IActionResult> AtualizarUsuario(int codigoFuncionario, [FromBody] AtualizarUsuarioCommand command)
         {
             try
             {
-                command.Id = codigoFuncionario; 
+                command.Id = codigoFuncionario;
 
                 var statusCode = StatusCode(await Mediator.Send(command));
 
