@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Domain.Entidades;
 using Swashbuckle.AspNetCore.Annotations;
 using Aplicacao.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -19,6 +20,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar um equipamento")]
         [ProducesResponseType(typeof(EquipamentoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarEquipamento([FromBody]CriarEquipamentoCommand command)
@@ -39,6 +42,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Equipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ListarTodosEquipamento()
         {
@@ -60,6 +65,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Equipamento),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarEquipamentoPorId(int id)
         {
@@ -79,6 +86,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpPut("{codigoEquipamento}")]
         public async Task<IActionResult> AtualizarEquipamento(int codigoEquipamento, [FromBody]AtualizarEquipamentoCommand command)
         {
@@ -107,6 +116,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarEquipamento(int id)
         {

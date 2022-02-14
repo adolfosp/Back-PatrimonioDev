@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -18,6 +19,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpPost]
         public async Task<IActionResult> CriarSetor([FromBody]CriarSetorCommand command)
         {
@@ -35,6 +39,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
@@ -55,6 +62,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
@@ -76,6 +86,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarSetor(int id)
         {
@@ -99,6 +112,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpPut("{codigoSetor}")]
         public async Task<IActionResult> AtualizarSetor(int codigoSetor, [FromBody]AtualizarSetorCommand command)
         {

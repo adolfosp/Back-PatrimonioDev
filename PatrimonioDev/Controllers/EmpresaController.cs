@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entidades;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -19,6 +20,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpPost]
         public async Task<IActionResult> CriarEmpresa([FromBody]CriarEmpresaCommand command)
         {
@@ -38,6 +42,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> ListarTodasEmpresas()
         {
@@ -59,6 +66,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarEmpresaPorId(int id)
         {
@@ -78,6 +88,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpPut("{codigoEmpresa}")]
         public async Task<IActionResult> AtualizarEmpresa(int codigoEmpresa, [FromBody]AtualizarEmpresaCommand command)
         {
@@ -106,6 +119,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarEmpresa(int id)
         {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -17,6 +18,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar perca de equipamento")]
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarPercaEquipamento([FromBody]CriarPercaEquipamentoCommand command)
@@ -36,6 +39,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarPercaEquipamentoPorId(int id)
         {
@@ -55,6 +60,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpPut("{codigoPerda}")]
         public async Task<IActionResult> AtualizarPercaEquipamento(int codigoPerda, [FromBody]AtualizarPercaEquipamentoCommand command)
         {
@@ -81,6 +88,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarPercaEquipamento(int id)
         {

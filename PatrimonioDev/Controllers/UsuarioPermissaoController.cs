@@ -7,6 +7,7 @@ using Domain.Entidades;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -18,6 +19,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1,2")]
         [HttpPost]
         public async Task<IActionResult> CriarUsuarioPermissao(CriarUsuarioPermissaoCommand command)
         {
@@ -36,6 +40,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UsuarioPermissao), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1,2")]
         [HttpGet]
         public async Task<IActionResult> ObterTodasPermissoes()
         {
@@ -55,6 +62,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1,2")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuarioPermissao(int id)
         {

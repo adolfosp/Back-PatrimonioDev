@@ -1,15 +1,18 @@
 using Aplicacao;
 using Aplicacao.Interfaces;
 using Aplicacao.Interfaces.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace PatrimonioDev
 {
@@ -37,11 +40,62 @@ namespace PatrimonioDev
             services.AddScoped<IFuncionarioPersistence, FuncionarioPersistence>();
 
             services.AddControllers();
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
 
-            services.AddCors();
+                    //ValidIssuer = "https://locahost:44380",
+                    //ValidAudience = "https://locahost:44380",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"))
+                };
+            });
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             services.AddSwaggerGen(c =>
             {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+
                 c.EnableAnnotations();
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
@@ -56,6 +110,8 @@ namespace PatrimonioDev
                     });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,13 +131,11 @@ namespace PatrimonioDev
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.UseCors(cors => cors.AllowAnyHeader()
-                             .AllowAnyMethod()
-                             .AllowAnyOrigin()
-                            
-            );
+            app.UseCors("EnableCORS");
 
             app.UseEndpoints(endpoints =>
             {

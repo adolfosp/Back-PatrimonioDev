@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -17,6 +18,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar um fabricante")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarFabricante([FromBody]CriarFabricanteCommand command)
@@ -37,6 +40,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType( StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ListarTodosFabricantes()
         {
@@ -58,6 +63,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarFabricantePorId(int id)
         {
@@ -79,6 +86,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpPut("{codigoFabricante}")]
         public async Task<IActionResult> AtualizarFabricante(int codigoFabricante, [FromBody]AtualizarFabricanteCommand command)
         {
@@ -107,6 +116,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarTipoEquipamento(int id)
         {

@@ -2,6 +2,7 @@
 using Aplicacao.Features.CategoriaFeature.Queries;
 using Domain.Entidades;
 using Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -18,6 +19,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(CategoriaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ObterTodasCategorias()
         {
@@ -37,6 +40,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar categoria")]
         [ProducesResponseType(typeof(CategoriaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarCategoria(CriarCategoriaCommand command)

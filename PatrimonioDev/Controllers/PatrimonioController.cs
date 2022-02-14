@@ -2,6 +2,7 @@
 using Aplicacao.Features.PatrimonioFeature.Queries;
 using Domain.Entidades;
 using Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +18,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar patrimonio")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarPatrimonio([FromBody]CriarPatrimonioCommand command)
@@ -36,6 +39,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarPatrimonioPorId(int id)
         {
@@ -55,6 +60,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpPut("{codigoPatrimonio}")]
         public async Task<IActionResult> AtualizarPatrimonio(int codigoPatrimonio, [FromBody]AtualizarPatrimonioCommand command)
         {
@@ -82,6 +89,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpDelete("{codigoPatrimonio}")]
         public async Task<IActionResult> DeletarPatrimonio(int codigoPatrimonio)
         {

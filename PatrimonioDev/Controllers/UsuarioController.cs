@@ -1,12 +1,17 @@
 ﻿using Aplicacao.Features.UsuarioFeature.Commands;
 using Aplicacao.Features.UsuarioFeature.Queries;
-using Domain.Helpers;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 using Domain.Entidades;
+using Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
@@ -18,7 +23,10 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar um usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Produces("application/json")]
+        [Authorize(Roles = "1")]
         [HttpPost]
         public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
         {
@@ -45,7 +53,10 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para buscar um usuário específico")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Roles = "1")]
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
@@ -66,6 +77,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [AllowAnonymous]
         [HttpGet("{email}/{senha}")]
         public async Task<IActionResult> ObterUsuarioPorLogin(string email, string senha)
         {
@@ -74,7 +86,25 @@ namespace PatrimonioDev.Controllers
                 var usuario = await Mediator.Send(new ObterUsuarioPorLogin { senha = senha, email = email });
 
                 if (usuario is null)
-                    return StatusCode(204, new { mensagem = "Não existe este e-mail cadastro" });
+                    return StatusCode(400, new { mensagem = "Não existe este e-mail cadastro" });
+
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                var tokenOptios = new JwtSecurityToken(
+                    issuer: "https://localhost:5001",
+                    audience: "https://localhost:5001",
+                    claims: new[] {
+                        new Claim(ClaimTypes.Name,usuario.Nome),
+                        new Claim(ClaimTypes.Role,usuario.CodigoUsuarioPermissao.ToString())
+                    },
+                    expires: DateTime.Now.AddMinutes(5),
+                    signingCredentials: signinCredentials);;
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
+
+
+                usuario.Token = tokenString;
 
                 return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
             }
@@ -89,6 +119,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
@@ -110,6 +143,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuario(int id)
         {
@@ -133,6 +169,9 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
         [HttpPut("{codigoFuncionario}")]
         public async Task<IActionResult> AtualizarUsuario(int codigoFuncionario, [FromBody] AtualizarUsuarioCommand command)
         {

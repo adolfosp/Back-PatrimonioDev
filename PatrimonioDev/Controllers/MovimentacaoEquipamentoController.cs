@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
@@ -17,6 +18,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para criar movimentação do equipamento")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody]CriarMovimentacaoEquipamentoCommand command)
@@ -35,6 +38,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet("{codigoPatrimonio}")]
         public async Task<IActionResult> ObterTodasMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
@@ -55,6 +60,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpPut("{codigoPatrimonio}")]
         public async Task<IActionResult> AtualizarMovimentacao(int codigoPatrimonio, [FromBody]AtualizarMovimentacaoEquipamentoCommand command)
         {

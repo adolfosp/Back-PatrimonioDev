@@ -19,6 +19,9 @@ namespace Domain.Entidades
         [MaxLength(25)]
         public string Senha { get; set; }
 
+        [NotMapped]
+        public string Token { get; set; }
+
         [Required]
         [MinLength(10)]
         public string Email { get; set; }

@@ -2,6 +2,7 @@
 using Aplicacao.Features.FuncionarioFeature.Queries;
 using Domain.Entidades;
 using Domain.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +18,8 @@ namespace PatrimonioDev.Controllers
         [SwaggerOperation(Summary = "Método para cadastrar um funcionário")]
         [ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarFuncionario([FromBody] CriarFuncionarioCommand command)
@@ -36,6 +39,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ListarTodosFuncionario()
         {
@@ -57,6 +62,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarFuncionarioPorId(int id)
         {
@@ -78,6 +85,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpPut("{codigoFuncionario}")]
         public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody]AtualizarFuncionarioCommand command)
         {
@@ -106,6 +115,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarFuncionario(int id)
         {
