@@ -27,6 +27,8 @@ namespace PatrimonioDev
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddApplication();
             services.AddPersistence(Configuration);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -53,19 +55,8 @@ namespace PatrimonioDev
                     ValidateIssuerSigningKey = true,
                     ValidateLifetime = true,
 
-                    //ValidIssuer = "https://locahost:44380",
-                    //ValidAudience = "https://locahost:44380",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"))
                 };
-            });
-
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("EnableCORS", builder =>
-                {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                });
             });
 
             services.AddSwaggerGen(c =>
@@ -135,7 +126,10 @@ namespace PatrimonioDev
 
             app.UseAuthorization();
 
-            app.UseCors("EnableCORS");
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetIsOriginAllowed((host) => true);
+            });
 
             app.UseEndpoints(endpoints =>
             {
