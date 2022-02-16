@@ -86,7 +86,7 @@ namespace PatrimonioDev.Controllers
                 var usuario = await Mediator.Send(new ObterUsuarioPorLogin { senha = senha, email = email });
 
                 if (usuario is null)
-                    return StatusCode(400, new { mensagem = "Não existe este e-mail cadastro" });
+                    return StatusCode(400, new { mensagem = "Não foi encontrado usuário com as credencias informadas" });
 
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
