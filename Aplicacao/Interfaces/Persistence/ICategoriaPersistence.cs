@@ -8,6 +8,8 @@ namespace Aplicacao.Interfaces.Persistence
     {
         Task<IEnumerable<CategoriaEquipamento>> ObterTodasCategorias();
         Task<CategoriaEquipamento> CriarCategoria(CategoriaEquipamento categoria);
+        Task<int> DeletarCategoria(int codigoCategoria);
+        Task<int> AtualizarEquipamento(int codigoCategoria, CategoriaEquipamento categoria);
 
     }
 }
