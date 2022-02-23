@@ -10,6 +10,12 @@ namespace Aplicacao.Features.UsuarioFeature.Queries
     {
         public string email { get; set; }
         public string senha { get; set; }
+        private bool _autenticacaoAuth;
+
+        public ObterUsuarioPorLogin(bool autenticacaoAuth)
+        {
+            _autenticacaoAuth = autenticacaoAuth;
+        }
 
         public class ObterUsuarioPorLoginHandler : IRequestHandler<ObterUsuarioPorLogin, Usuario>
         {
@@ -19,7 +25,7 @@ namespace Aplicacao.Features.UsuarioFeature.Queries
                 => _persistence = persistence;
 
             public async Task<Usuario> Handle(ObterUsuarioPorLogin request, CancellationToken cancellationToken)
-                => await _persistence.ObterUsuarioLogin(request.email, request.senha);
+                => await _persistence.ObterUsuarioLogin(request.email, request.senha, request._autenticacaoAuth);
         }
     }
 }

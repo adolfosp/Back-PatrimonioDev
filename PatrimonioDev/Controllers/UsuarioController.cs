@@ -26,7 +26,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Produces("application/json")]
-        [Authorize(Roles = "1")]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
         {
@@ -47,7 +47,19 @@ namespace PatrimonioDev.Controllers
 
         [NonAction]
         public async Task<bool> ObterUsuarioPorEmail(string email)
-             => await Mediator.Send(new ObterUsuarioPorEmail { Email = email });
+        {
+            try
+            {
+
+               return await Mediator.Send(new ObterUsuarioPorEmail { Email = email });
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro interno no servidor. Mensagem:  {ex.Message} {ex.InnerException}");
+            }
+
+        }
 
 
         [SwaggerOperation(Summary = "Método para buscar um usuário específico")]
@@ -78,12 +90,12 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [AllowAnonymous]
-        [HttpGet("{email}/{senha}")]
-        public async Task<IActionResult> ObterUsuarioPorLogin(string email, string senha)
+        [HttpPost("{emailUsuario}/{senha}")]
+        public async Task<IActionResult> ObterUsuarioPorLogin(string emailUsuario, string senha, [FromBody]bool autenticacaoAuth = false)
         {
             try
             {
-                var usuario = await Mediator.Send(new ObterUsuarioPorLogin { senha = senha, email = email });
+                var usuario = await Mediator.Send(new ObterUsuarioPorLogin(autenticacaoAuth) { senha = senha, email = emailUsuario });
 
                 if (usuario is null)
                     return StatusCode(400, new { mensagem = "Não foi encontrado usuário com as credencias informadas" });
@@ -110,7 +122,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}" });
             }
         }
 

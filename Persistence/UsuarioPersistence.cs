@@ -65,9 +65,16 @@ namespace Persistence
             return usuario.AsReadOnly();
         }
 
-        public async Task<Usuario> ObterUsuarioLogin(string email, string senha)
+        public async Task<Usuario> ObterUsuarioLogin(string email, string senha, bool autenticacaoAuth)
         {
-            var usuario = await _context.Usuario.Where(x => x.Email == email && x.Senha == senha).Select(x => x).FirstOrDefaultAsync();
+
+            Usuario usuario; 
+
+            if(autenticacaoAuth)
+                 usuario = await _context.Usuario.Where(x => x.Email == email).Select(x => x).FirstOrDefaultAsync();
+            else
+                usuario = await _context.Usuario.Where(x => x.Email == email && x.Senha == senha).Select(x => x).FirstOrDefaultAsync();
+
 
             if (usuario == null) return null;
 

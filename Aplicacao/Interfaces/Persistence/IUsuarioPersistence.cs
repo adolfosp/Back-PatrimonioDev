@@ -11,7 +11,7 @@ namespace Aplicacao.Interfaces
         Task<int> DeletarUsuario(int id);
         Task<IEnumerable<Usuario>> ObterTodosUsuario();
         Task<Usuario> ObterApenasUm(int id);
-        Task<Usuario> ObterUsuarioLogin(string email, string senha);
+        Task<Usuario> ObterUsuarioLogin(string email, string senha, bool autenticacaoAuth);
         Task<bool> ObterUsuarioPorEmail(string email);
         Task<Usuario> CriarUsuario(Usuario usuario);
     }
