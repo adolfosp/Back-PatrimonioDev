@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
     working_directory: ~/PatrimonioDev/PatrimonioDev.csproj
+    command: echo "Current directory: $(pwd)"
     steps:
       - checkout
       - run: dotnet restore
