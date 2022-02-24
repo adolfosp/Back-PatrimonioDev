@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/PatrimonioDev/PatrimonioDev
     steps:
       - checkout:
-        path: ~/PatrimonioDev
+          path: ~/PatrimonioDev
       - run: 
           command: echo "Current directory $(ls)"
       - run: dotnet restore
