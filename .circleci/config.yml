@@ -1,5 +1,4 @@
-version: 2
-
+version: 2.1
 jobs:
   build-and-test:
     docker:
@@ -7,9 +6,9 @@ jobs:
     working_directory: ~/PatrimonioDev/PatrimonioDev.csproj
     steps:
       - checkout
+      - run: 
+          command: echo "Current directory: $(pwd)"
       - run: dotnet restore
-          command: |
-            echo "Current directory: $(pwd)"
       - run: dotnet build
       - run: dotnet run
 
