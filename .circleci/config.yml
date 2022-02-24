@@ -10,6 +10,8 @@ jobs:
       - run: 
           command: echo "Current directory $(ls)"
       - run: dotnet restore
+      - run: dotnet dev-certs https --clean
+      - run: dotnet dev-certs https -t
       - run: dotnet build
       - run: dotnet run
 
