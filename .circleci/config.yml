@@ -3,9 +3,10 @@ jobs:
   build-and-test:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
-    working_directory: ~/PatrimonioDev/Aplicacao/
+    working_directory: ~/PatrimonioDev/PatrimonioDev
     steps:
       - checkout
+        path: ~/PatrimonioDev
       - run: 
           command: echo "Current directory $(ls)"
       - run: dotnet restore
