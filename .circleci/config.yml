@@ -1,0 +1,46 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0
+    steps:
+      - checkout
+      - run: dotnet restore
+      - run: dotnet build
+      - run: dotnet run
+
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn add @timbeyer/commitlint-circle --dev
+      - save_cache:
+          key: deps-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build
+          command: yarn commitlint-circle
+      - run:
+          name: release
+          command: yarn run semantic-release || true
+
+  deployss:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - run:
+          name: Publish package
+          command: npm publish --acess=public
+          
+workflows:
+  sample: 
+    jobs:
+      - build
+      - build-and-test
