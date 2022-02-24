@@ -1,5 +1,4 @@
-version: 2.1
-application: climate-change
+version: 2
 
 jobs:
   build-and-test:
