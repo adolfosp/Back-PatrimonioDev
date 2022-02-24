@@ -13,8 +13,6 @@ jobs:
       - run: dotnet dev-certs https --clean
       - run: dotnet dev-certs https -t
       - run: dotnet build
-      - run: dotnet run
-
 
   build:
     docker:
