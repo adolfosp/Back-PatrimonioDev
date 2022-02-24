@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: 
-          command: echo "Current directory $(pwd) $(ls -R)"
+          command: echo "Current directory $(pwd) $(ls)"
       - run: dotnet restore
       - run: dotnet build
       - run: dotnet run
