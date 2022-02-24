@@ -115,7 +115,6 @@ namespace PatrimonioDev.Controllers
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
 
-
                 usuario.Token = tokenString;
 
                 return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
