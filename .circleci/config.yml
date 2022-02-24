@@ -4,14 +4,12 @@ jobs:
   build-and-test:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
+    working_directory: ~/PatrimonioDev/PatrimonioDev.csproj
     steps:
       - checkout
       - run: dotnet restore
-          working_directory: ~/PatrimonioDev/PatrimonioDev.csproj
       - run: dotnet build
-          working_directory: ~/PatrimonioDev/PatrimonioDev.csproj
       - run: dotnet run
-          working_directory: ~/PatrimonioDev/PatrimonioDev.csproj
 
 
   build:
