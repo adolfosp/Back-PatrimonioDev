@@ -3,7 +3,7 @@ jobs:
   build-and-test:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
-    working_directory: ~/PatrimonioDev/
+    working_directory: ~/PatrimonioDev/PatrimonioDev/
     steps:
       - checkout
       - run: 
