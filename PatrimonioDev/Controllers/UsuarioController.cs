@@ -108,10 +108,11 @@ namespace PatrimonioDev.Controllers
                     audience: "https://localhost:5001",
                     claims: new[] {
                         new Claim(ClaimTypes.Name,usuario.Nome),
-                        new Claim(ClaimTypes.Role,usuario.CodigoUsuarioPermissao.ToString())
+                        new Claim(ClaimTypes.Role,usuario.CodigoUsuarioPermissao.ToString()),
+                        new Claim("codigoUsuario",usuario.CodigoUsuario.ToString())
                     },
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials);;
+                    expires: DateTime.Now.AddMinutes(20),
+                    signingCredentials: signinCredentials);
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
 

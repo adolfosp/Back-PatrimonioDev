@@ -25,6 +25,7 @@ namespace Persistence.Context
         public DbSet<MovimentacaoEquipamento> MovimentacaoEquipamento { get; set; }
         public DbSet<CategoriaEquipamento> CategoriaEquipamento { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<PerfilUsuario> PerfilUsuario { get; set; }
 
         public async Task<int> SaveChangesAsync()
           => await base.SaveChangesAsync();
