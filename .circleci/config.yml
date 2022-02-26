@@ -29,6 +29,9 @@ jobs:
           paths:
             - node_modules
       - run:
+          name: Install dependencies
+          command: yarn add @timbeyer/commitlint-circle --dev
+      - run:
           name: Build
           command: yarn commitlint-circle
       - run:
