@@ -34,16 +34,12 @@ jobs:
       - run:
           name: release
           command: yarn run semantic-release || true
-  deploy:
-    docker:
-      - image: circleci/node:latest
-    steps:
       - run:
           name: Publish package
-          command: npm publish --acess=public    
+          command: npm publish --acess=public
+  
 workflows:
   sample: 
     jobs:
       - build
       - build-and-test
-      - deploy
