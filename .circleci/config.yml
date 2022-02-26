@@ -23,7 +23,7 @@ jobs:
           key: deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn add @timbeyer/commitlint-circle --dev
+          command: yarn add
       - save_cache:
           key: deps-{{ checksum "yarn.lock" }}
           paths:
@@ -34,9 +34,9 @@ jobs:
       - run:
           name: release
           command: yarn run semantic-release || true
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
+      - run: 
+          name: Auth With NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
       - run:
           name: Publish package
           command: npm publish --acess=public
