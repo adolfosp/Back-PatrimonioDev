@@ -1,6 +1,5 @@
 version: 2.1
 jobs:
-
   build-and-test:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
