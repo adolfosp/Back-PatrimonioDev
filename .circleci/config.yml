@@ -23,7 +23,7 @@ jobs:
           key: deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn add
+          command: npm install
       - save_cache:
           key: deps-{{ checksum "yarn.lock" }}
           paths:
