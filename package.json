@@ -18,5 +18,10 @@
   "homepage": "https://github.com/adolfosp/Back-PatrimonioDev#readme",
   "dependencies": {
     "commitlint": "^16.2.1"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
