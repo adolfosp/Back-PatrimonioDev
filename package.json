@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/adolfosp/Back-PatrimonioDev/issues"
   },
-  "homepage": "https://github.com/adolfosp/Back-PatrimonioDev#readme"
+  "homepage": "https://github.com/adolfosp/Back-PatrimonioDev#readme",
+  "dependencies": {
+    "commitlint": "^16.2.1"
+  }
 }
