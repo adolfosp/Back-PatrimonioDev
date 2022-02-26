@@ -1,0 +1,19 @@
+{
+  "name": "back-patrimoniodev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adolfosp/Back-PatrimonioDev.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adolfosp/Back-PatrimonioDev/issues"
+  },
+  "homepage": "https://github.com/adolfosp/Back-PatrimonioDev#readme"
+}
