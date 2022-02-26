@@ -34,7 +34,6 @@ jobs:
       - run:
           name: release
           command: yarn run semantic-release || true
-
   deploy:
     docker:
       - image: circleci/node:latest
