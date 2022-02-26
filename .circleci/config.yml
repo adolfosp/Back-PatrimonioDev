@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build-and-test:
+  build:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
     working_directory: ~/PatrimonioDev/PatrimonioDev
@@ -14,7 +14,7 @@ jobs:
       - run: dotnet dev-certs https -t
       - run: dotnet build
 
-  build:
+  build-and-test:
     docker:
       - image: circleci/node:latest
     steps:
@@ -35,7 +35,7 @@ jobs:
           name: release
           command: yarn run semantic-release || true
 
-  deployss:
+  deploy:
     docker:
       - image: circleci/node:latest
     steps:
@@ -48,3 +48,4 @@ workflows:
     jobs:
       - build
       - build-and-test
+      - deploy
