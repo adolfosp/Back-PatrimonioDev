@@ -37,12 +37,12 @@ jobs:
       - run:
           name: Build
           command: yarn commitlint-circle
-      - run:
-          name: release
-          command: yarn run semantic-release || true
       - run: 
           name: Auth With NPM
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
+          name: release
+          command: yarn run semantic-release || true
       - run:
           name: Publish package
           command: npm publish
