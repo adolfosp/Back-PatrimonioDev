@@ -26,6 +26,9 @@
     "hooks": "^0.3.2",
     "husky": "^7.0.4"
   },
+  "release": {
+    "branch": "main"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY-GIT-PARAMS"
