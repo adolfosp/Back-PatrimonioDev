@@ -1,7 +1,6 @@
 version: 2.1
 jobs:
-
-  build-and-test:
+  build:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
     working_directory: ~/PatrimonioDev/PatrimonioDev
@@ -15,7 +14,7 @@ jobs:
       - run: dotnet dev-certs https -t
       - run: dotnet build
 
-  build:
+  build-and-test:
     docker:
       - image: circleci/node:latest
     steps:
@@ -24,26 +23,29 @@ jobs:
           key: deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn add @timbeyer/commitlint-circle --dev
+          command: npm install
       - save_cache:
           key: deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - run:
+          name: Install dependence commitlint-circle 
+          command: yarn add @timbeyer/commitlint-circle --dev
+      - run:
+          name: Install dependence semantic-release 
+          command: yarn add semantic-release --dev
+      - run:
           name: Build
           command: yarn commitlint-circle
       - run:
           name: release
-          command: yarn run semantic-release || true
-
-  deployss:
-    docker:
-      - image: circleci/node:latest
-    steps:
+          command: npx semantic-release --branches main
+      - run: 
+          name: Auth With NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
       - run:
           name: Publish package
           command: npm publish --acess=public
-          
 workflows:
   sample: 
     jobs:

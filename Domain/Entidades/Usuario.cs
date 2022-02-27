@@ -37,5 +37,7 @@ namespace Domain.Entidades
         public int CodigoUsuarioPermissao { get; set; }
         [ForeignKey("CodigoUsuarioPermissao")]
         public UsuarioPermissao UsuarioPermissao { get; set; }
+
+
     }
 }
