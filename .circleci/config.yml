@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Install dependence commitlint-circle 
           command: yarn add @timbeyer/commitlint-circle --dev
-       - run:
+      - run:
           name: Install dependence semantic-release 
           command: yarn add semantic-release --dev
       - run:
