@@ -45,6 +45,10 @@ jobs:
           name: Run commitlint
           command: yarn commitlint-circle
 
+      - run:
+          name: WHOAMI 
+          command: npm whoami
+          
       - run: 
           name: Auth With NPM
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
