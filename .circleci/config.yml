@@ -1,5 +1,7 @@
 version: 2.1
+
 jobs:
+
   build:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
@@ -14,40 +16,49 @@ jobs:
       - run: dotnet dev-certs https -t
       - run: dotnet build
 
-  build-and-test:
+  publish:
     docker:
       - image: circleci/node:latest
     steps:
       - checkout
       - restore_cache:
           key: deps-{{ checksum "yarn.lock" }}
+
       - run:
-          name: Install dependencies
+          name: Install all Dependecies
           command: npm install
+
       - save_cache:
           key: deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+
       - run:
           name: Install dependence commitlint-circle 
           command: yarn add @timbeyer/commitlint-circle --dev
+
       - run:
           name: Install dependence semantic-release 
           command: yarn add semantic-release --dev
+
       - run:
-          name: Build
+          name: Run commitlint
           command: yarn commitlint-circle
+
       - run: 
           name: Auth With NPM
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+
       - run:
-          name: release
+          name: Release
           command: yarn run semantic-release || true 
+
       - run:
           name: Publish package
           command: npm publish
+
 workflows:
   sample: 
     jobs:
       - build
-      - build-and-test
+      - publish
