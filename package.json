@@ -30,6 +30,9 @@
   "release": {
     "branch": "main"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY-GIT-PARAMS"
