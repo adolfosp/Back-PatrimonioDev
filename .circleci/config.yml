@@ -57,10 +57,6 @@ jobs:
           name: Release
           command: yarn run semantic-release || true 
 
-      - run:
-          name: Publish package
-          command: npm publish
-
 workflows:
   sample: 
     jobs:
