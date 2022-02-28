@@ -47,8 +47,8 @@ jobs:
 
       - run:
           name: WHOAMI 
-          command: npm whoami
-          
+          command: npm config set _auth $NPM_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=email@email.com
+
       - run: 
           name: Auth With NPM
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
