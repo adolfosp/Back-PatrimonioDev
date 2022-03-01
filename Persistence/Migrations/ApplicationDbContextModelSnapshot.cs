@@ -265,6 +265,39 @@ namespace Persistence.Migrations
                     b.ToTable("PercaEquipamento");
                 });
 
+            modelBuilder.Entity("Domain.Entidades.PerfilUsuario", b =>
+                {
+                    b.Property<int>("CodigoUsuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DescricaoPermissao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagemUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeSetor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeUsuario")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RazaoSocial")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Senha")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CodigoUsuario");
+
+                    b.ToTable("PerfilUsuario");
+                });
+
             modelBuilder.Entity("Domain.Entidades.Setor", b =>
                 {
                     b.Property<int>("CodigoSetor")
@@ -292,10 +325,10 @@ namespace Persistence.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CodigoEmpresa")
+                    b.Property<int?>("CodigoEmpresa")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoSetor")
+                    b.Property<int?>("CodigoSetor")
                         .HasColumnType("int");
 
                     b.Property<int>("CodigoUsuarioPermissao")
@@ -303,6 +336,9 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagemUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
@@ -429,15 +465,11 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entidades.Empresa", "Empresa")
                         .WithMany()
-                        .HasForeignKey("CodigoEmpresa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CodigoEmpresa");
 
                     b.HasOne("Domain.Entidades.Setor", "Setor")
                         .WithMany()
-                        .HasForeignKey("CodigoSetor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CodigoSetor");
 
                     b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
                         .WithMany()

@@ -19,7 +19,6 @@ namespace Aplicacao.Interfaces
         DbSet<MovimentacaoEquipamento> MovimentacaoEquipamento { get; set; }
         DbSet<CategoriaEquipamento> CategoriaEquipamento { get; set; }
         DbSet<Funcionario> Funcionario { get; set; }
-        DbSet<PerfilUsuario> PerfilUsuario { get; set; }
 
         Task<int> SaveChangesAsync();
     }
