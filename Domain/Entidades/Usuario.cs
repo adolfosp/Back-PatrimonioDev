@@ -26,6 +26,8 @@ namespace Domain.Entidades
         [MinLength(10)]
         public string Email { get; set; }
 
+        public string ImagemUrl { get; set; }
+
         public int? CodigoEmpresa { get; set; }
         [ForeignKey("CodigoEmpresa")]
         public Empresa Empresa { get; set; }

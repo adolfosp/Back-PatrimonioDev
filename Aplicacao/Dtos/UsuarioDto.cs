@@ -11,6 +11,7 @@ namespace Aplicacao.Dtos
         public string Senha { get; set; }
         [EmailAddress(ErrorMessage ="É preciso informar um e-mail válido")]
         public string Email { get; set; }
+        public string ImagemUrl { get; set; }
         public int? CodigoEmpresa { get; set; }
         public int? CodigoSetor { get; set; }
         public int CodigoUsuarioPermissao { get; set; }

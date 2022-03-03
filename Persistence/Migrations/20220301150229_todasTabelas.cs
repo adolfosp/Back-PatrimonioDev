@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class tabelaTodas : Migration
+    public partial class todasTabelas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,40 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fabricante", x => x.CodigoFabricante);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Funcionario",
+                columns: table => new
+                {
+                    CodigoFuncionario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomeFuncionario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcionario", x => x.CodigoFuncionario);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PerfilUsuario",
+                columns: table => new
+                {
+                    CodigoUsuario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomeUsuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NomeSetor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RazaoSocial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescricaoPermissao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PerfilUsuario", x => x.CodigoUsuario);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,6 +146,7 @@ namespace Persistence.Migrations
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodigoEmpresa = table.Column<int>(type: "int", nullable: true),
                     CodigoSetor = table.Column<int>(type: "int", nullable: true),
                     CodigoUsuarioPermissao = table.Column<int>(type: "int", nullable: false)
@@ -124,13 +159,13 @@ namespace Persistence.Migrations
                         column: x => x.CodigoEmpresa,
                         principalTable: "Empresa",
                         principalColumn: "CodigoEmpresa",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Usuario_Setor_CodigoSetor",
                         column: x => x.CodigoSetor,
                         principalTable: "Setor",
                         principalColumn: "CodigoSetor",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Usuario_UsuarioPermissao_CodigoUsuarioPermissao",
                         column: x => x.CodigoUsuarioPermissao,
@@ -145,8 +180,8 @@ namespace Persistence.Migrations
                 {
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ServiceTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceTag = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Armazenamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Processador = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlacaDeVideo = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -218,7 +253,7 @@ namespace Persistence.Migrations
                         column: x => x.CodigoPatrimonio,
                         principalTable: "Patrimonio",
                         principalColumn: "CodigoPatrimonio",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MovimentacaoEquipamento_Usuario_CodigoUsuario",
                         column: x => x.CodigoUsuario,
@@ -306,6 +341,9 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Funcionario");
+
+            migrationBuilder.DropTable(
                 name: "InformacaoAdicional");
 
             migrationBuilder.DropTable(
@@ -313,6 +351,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PercaEquipamento");
+
+            migrationBuilder.DropTable(
+                name: "PerfilUsuario");
 
             migrationBuilder.DropTable(
                 name: "Patrimonio");

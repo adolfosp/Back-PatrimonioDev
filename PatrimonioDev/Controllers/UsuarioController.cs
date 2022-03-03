@@ -111,7 +111,7 @@ namespace PatrimonioDev.Controllers
                         new Claim(ClaimTypes.Role,usuario.CodigoUsuarioPermissao.ToString()),
                         new Claim("codigoUsuario",usuario.CodigoUsuario.ToString())
                     },
-                    expires: DateTime.Now.AddMinutes(20),
+                    expires: DateTime.Now.AddMinutes(150),
                     signingCredentials: signinCredentials);
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
