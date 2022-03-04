@@ -1,5 +1,4 @@
-﻿using Aplicacao.Features.PerfilUsuarioFeature;
-using Aplicacao.Features.PerfilUsuarioFeature.Commands;
+﻿using Aplicacao.Features.PerfilUsuarioFeature.Commands;
 using Aplicacao.Features.PerfilUsuarioFeature.Queries;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -92,7 +91,7 @@ namespace PatrimonioDev.Controllers
 
                 if (file.Length > 0)
                 {
-                    DeletarImagem(usuario.ImagemUrl);
+                    new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
 
                     usuario.ImagemUrl = await SalvarImagem(file);
                 }
@@ -131,19 +130,6 @@ namespace PatrimonioDev.Controllers
             }
 
             return nomeImagem;
-        }
-
-        [NonAction]
-        private void DeletarImagem(string imagemUrl)
-        {
-            if (imagemUrl is null) return;
-
-            var imagemPath = Path.Combine(_host.ContentRootPath, @"Resources/Imagens", imagemUrl);
-
-            if (System.IO.File.Exists(imagemPath))
-            {
-                System.IO.File.Delete(imagemPath);
-            }
         }
     }
 }

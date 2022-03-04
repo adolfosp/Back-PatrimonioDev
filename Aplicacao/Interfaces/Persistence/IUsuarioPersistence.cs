@@ -8,7 +8,7 @@ namespace Aplicacao.Interfaces
     public interface IUsuarioPersistence
     {
         Task<int> AtualizarUsuario(UsuarioDto usuario, int id);
-        Task<int> DeletarUsuario(int id);
+        Task<Usuario> DeletarUsuario(int id);
         Task<IEnumerable<Usuario>> ObterTodosUsuario();
         Task<Usuario> ObterApenasUm(int id);
         Task<Usuario> ObterUsuarioLogin(string email, string senha, bool autenticacaoAuth);

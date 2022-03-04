@@ -34,17 +34,17 @@ namespace Persistence
             return 200;
         }
 
-        public async Task<int> DeletarUsuario(int id)
+        public async Task<Usuario> DeletarUsuario(int id)
         {
             var usuario = await _context.Usuario.Where(x => x.CodigoUsuario == id).FirstOrDefaultAsync();
 
-            if (usuario == null) return 404;
+            if (usuario == null) return new Usuario();
 
             usuario.Ativo = false;
 
             await _context.SaveChangesAsync();
 
-            return 200;
+            return usuario;
         }
 
         public async Task<Usuario> ObterApenasUm(int id)
