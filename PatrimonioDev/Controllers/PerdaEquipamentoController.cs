@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
-    public class PercaEquipamentoController : BaseApiController
+    [Route("api/perdas")]
+    public class PerdaEquipamentoController : BaseApiController
     {
 
-        [SwaggerOperation(Summary = "Método para criar perca de equipamento")]
+        [SwaggerOperation(Summary = "Método para criar perdas de equipamento")]
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -35,7 +35,7 @@ namespace PatrimonioDev.Controllers
 
         }
 
-        [SwaggerOperation(Summary = "Método para buscar perca de equipamento específico")]
+        [SwaggerOperation(Summary = "Método para buscar perdas de equipamento específico")]
         [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -56,7 +56,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [SwaggerOperation(Summary = "Método para atualizar perca de equipamento específico")]
+        [SwaggerOperation(Summary = "Método para atualizar perdas de equipamento específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -84,7 +84,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [SwaggerOperation(Summary = "Método para deletar perca de equipamento específico")]
+        [SwaggerOperation(Summary = "Método para deletar perdas de equipamento específico")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

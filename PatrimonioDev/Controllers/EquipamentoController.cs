@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/equipamentos")]
     public class EquipamentoController : BaseApiController
     {
 

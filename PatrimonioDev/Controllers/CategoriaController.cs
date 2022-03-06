@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PatrimonioDev.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/categorias")]
     public class CategoriaController : BaseApiController
     {
         [SwaggerOperation(Summary = "Método para obter todas as categorias")]

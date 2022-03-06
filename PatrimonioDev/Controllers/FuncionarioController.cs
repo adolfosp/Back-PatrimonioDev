@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/funcionarios")]
     public class FuncionarioController: BaseApiController
     {
 

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/perfils")]
     public class PerfilUsuarioController: BaseApiController
     {
         private readonly IWebHostEnvironment _host;

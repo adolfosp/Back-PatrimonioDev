@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/patrimonios")]
     public class PatrimonioController : BaseApiController
     {
 
