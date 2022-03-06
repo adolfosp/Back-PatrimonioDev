@@ -1,7 +1,8 @@
 ﻿using Domain.Entidades;
+using Domain.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Domain.Helpers.Tests
+namespace DomainTests.TestesUnitario.Helpers
 {
     [TestClass()]
     public class HTTPStatusTests

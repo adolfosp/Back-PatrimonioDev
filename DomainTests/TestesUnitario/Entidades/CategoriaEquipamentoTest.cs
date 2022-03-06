@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DomainTests.Entidades
+namespace DomainTests.TestesUnitario.Entidades
 {
     [TestClass]
     public class CategoriaEquipamentoTest

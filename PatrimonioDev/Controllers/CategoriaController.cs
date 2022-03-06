@@ -20,7 +20,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ObterTodasCategorias()
         {
