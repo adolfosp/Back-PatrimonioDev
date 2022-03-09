@@ -114,9 +114,9 @@ namespace PatrimonioDev.Controllers
                     issuer: "https://localhost:44380",
                     audience: "https://localhost:44380",
                     claims: new[] {
-                        new Claim(ClaimTypes.Name,usuario.Nome),
-                        new Claim(ClaimTypes.Role,usuario.CodigoUsuarioPermissao.ToString()),
-                        new Claim("codigoUsuario",usuario.CodigoUsuario.ToString())
+                        new Claim(ClaimTypes.Name, usuario.Nome),
+                        new Claim(ClaimTypes.Role, usuario.CodigoUsuarioPermissao.ToString()),
+                        new Claim("codigoUsuario", usuario.CodigoUsuario.ToString())
                     },
                     expires: DateTime.Now.AddMinutes(150),
                     signingCredentials: signinCredentials);
@@ -164,7 +164,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "2")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuario(int id)
         {

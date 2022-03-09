@@ -23,7 +23,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "1,2")]
         [HttpPost]
-        public async Task<IActionResult> CriarUsuarioPermissao(CriarUsuarioPermissaoCommand command)
+        public async Task<IActionResult> CriarUsuarioPermissao([FromBody]CriarUsuarioPermissaoCommand command)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}"});
             }
 
         }
@@ -54,7 +54,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}" });
             }
         }
 
@@ -81,7 +81,7 @@ namespace PatrimonioDev.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}"});
             }
         }
     }

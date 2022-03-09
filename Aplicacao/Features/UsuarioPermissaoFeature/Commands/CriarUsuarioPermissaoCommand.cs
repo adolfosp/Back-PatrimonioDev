@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -8,7 +9,7 @@ namespace Aplicacao.Features.UsuarioPermissaoFeature.Commands
 {
     public class CriarUsuarioPermissaoCommand : IRequest<UsuarioPermissao>
     {
-        public string DescricaoPermissao { get; set; }
+        public UsuarioPermissaoDto UsuarioPermissao { get; set; }
 
         public class CriarUsuarioPermissaoHandler : IRequestHandler<CriarUsuarioPermissaoCommand, UsuarioPermissao>
         {
@@ -18,7 +19,7 @@ namespace Aplicacao.Features.UsuarioPermissaoFeature.Commands
                 => _persistence = persistence;
 
             public Task<UsuarioPermissao> Handle(CriarUsuarioPermissaoCommand request, CancellationToken cancellationToken)
-                => _persistence.CriarUsuarioPermissao(new UsuarioPermissao() { DescricaoPermissao = request.DescricaoPermissao, Ativo = true });
+                => _persistence.CriarUsuarioPermissao(new UsuarioPermissao() { DescricaoPermissao = request.UsuarioPermissao.DescricaoPermissao, Ativo = true });
         }
     }
 }

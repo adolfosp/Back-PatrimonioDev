@@ -126,7 +126,7 @@ namespace PatrimonioDev.Controllers
                 var statusCode = StatusCode(await Mediator.Send(new DeletarFabricanteCommand() { Id = id }));
 
                 if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+                    return NotFound(new {mensagem = "Não foi encontrado registro para deletar" });
 
                 return Ok();
 
