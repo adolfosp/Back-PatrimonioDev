@@ -3,6 +3,7 @@ using Aplicacao.Interfaces;
 using Aplicacao.Interfaces.Persistence;
 using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Helper;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Persistence
 
                 usuarioPerfil.ImagemUrl = perfil.ImagemUrl;
                 usuarioPerfil.Nome = perfil.NomeUsuario;
-                usuarioPerfil.Senha = perfil.Senha;
+                usuarioPerfil.Senha = CriptografiaHelper.Criptografar(perfil.Senha);
 
                 await _context.SaveChangesAsync();
 
@@ -55,7 +56,7 @@ namespace Persistence
                         DescricaoPermissao = p.DescricaoPermissao,
                         RazaoSocial = e.RazaoSocial,
                         Email = u.Email,
-                        Senha = u.Senha,
+                        Senha = CriptografiaHelper.Descriptografar(u.Senha),
                         ImagemUrl = u.ImagemUrl
                     }).FirstOrDefault();
         }
