@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -8,7 +9,7 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
 {
     public class CriarEmpresaCommand : IRequest<Empresa>
     {
-        public Empresa empresa { get; set; }
+        public EmpresaDto Empresa { get; set; }
 
         public class CriarEquipamentoCommandHandler : IRequestHandler<CriarEmpresaCommand, Empresa>
         {
@@ -22,9 +23,9 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
             {
 
                 var empresa = new Empresa();
-                empresa.CNPJ = request.empresa.CNPJ;
-                empresa.NomeFantasia = request.empresa.NomeFantasia;
-                empresa.RazaoSocial = request.empresa.RazaoSocial;
+                empresa.CNPJ = request.Empresa.CNPJ;
+                empresa.NomeFantasia = request.Empresa.NomeFantasia;
+                empresa.RazaoSocial = request.Empresa.RazaoSocial;
 
                 await _context.Empresa.AddAsync(empresa);
 

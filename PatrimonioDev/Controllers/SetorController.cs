@@ -8,6 +8,7 @@ using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Enums;
 
 namespace PatrimonioDev.Controllers
 {
@@ -94,6 +95,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
 
                 if (statusCode.StatusCode == 404)
@@ -120,6 +124,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, codigoSetor))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 command.Id = codigoSetor;
 
                 var statusCode = StatusCode(await Mediator.Send(command));

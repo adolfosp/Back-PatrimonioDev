@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class todasTabelas : Migration
+    public partial class addTudo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -144,7 +144,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodigoEmpresa = table.Column<int>(type: "int", nullable: true),

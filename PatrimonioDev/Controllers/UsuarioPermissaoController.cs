@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Aplicacao.Features.UsuarioFeature.Queries;
+using Domain.Enums;
 
 namespace PatrimonioDev.Controllers
 {
@@ -65,6 +66,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "1,2")]
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
@@ -88,12 +90,16 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "1,2")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuarioPermissao(int id)
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, id))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 var statusCode = StatusCode(await Mediator.Send(new DeletarUsuarioPermissaoCommand() { Id = id }));
 
                 if (statusCode.StatusCode == 404)
@@ -115,12 +121,16 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "1,2")]
         [HttpPut("{codigoPermissao}")]
         public async Task<IActionResult> AtualizarPermissaoUsuario(int codigoPermissao, [FromBody] AtualizarPermissaoCommand command)
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, codigoPermissao))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 command.Id = codigoPermissao;
 
                 var statusCode = StatusCode(await Mediator.Send(command));

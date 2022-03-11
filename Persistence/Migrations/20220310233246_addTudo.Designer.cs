@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220301150229_todasTabelas")]
-    partial class todasTabelas
+    [Migration("20220310233246_addTudo")]
+    partial class addTudo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -350,8 +350,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("CodigoUsuario");
 
