@@ -8,6 +8,8 @@ namespace Domain.Entidades
         public int CodigoFuncionario { get; set; }
 
         [Required(ErrorMessage = "Nome do funcionário é obrigatório")]
+        [MaxLength(100)]
+        [MinLength(10)]
         public string NomeFuncionario { get; set; }
 
         public bool Ativo { get; set; }

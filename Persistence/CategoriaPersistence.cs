@@ -45,7 +45,18 @@ namespace Persistence
 
             _context.CategoriaEquipamento.Remove(categoria);
 
+            await _context.SaveChangesAsync();
+
             return 200;
+        }
+
+        public async Task<CategoriaEquipamento> ObterApenasUmaCategoria(int codigoCategoria)
+        {
+            var categoria = await _context.CategoriaEquipamento.Where(x => x.CodigoCategoria == codigoCategoria).Select(x => x).FirstOrDefaultAsync();
+
+            if (categoria is null) return null;
+
+            return categoria;
         }
 
         public async Task<IEnumerable<CategoriaEquipamento>> ObterTodasCategorias()

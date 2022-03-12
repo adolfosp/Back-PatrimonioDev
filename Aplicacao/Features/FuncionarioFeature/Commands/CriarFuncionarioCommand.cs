@@ -9,7 +9,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
 {
     public class CriarFuncionarioCommand : IRequest<Funcionario>
     {
-        public FuncionarioDto FuncionarioDto { get; set; }
+        public FuncionarioDto Funcionario { get; set; }
 
         public class CriarFuncionarioCommandHandler : IRequestHandler<CriarFuncionarioCommand, Funcionario>
         {
@@ -19,7 +19,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
                 => _persistence = persistence;
 
             public Task<Funcionario> Handle(CriarFuncionarioCommand request, CancellationToken cancellationToken)
-                => _persistence.CriarFuncionario(request.FuncionarioDto);
+                => _persistence.CriarFuncionario(request.Funcionario);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarCategoria(CriarCategoriaCommand command)
+        public async Task<IActionResult> CriarCategoria([FromBody]CriarCategoriaCommand command)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}"});
             }
         }
 
@@ -109,6 +109,30 @@ namespace PatrimonioDev.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para buscar uma categoria específica")]
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterApenasUm(int id)
+        {
+            try
+            {
+                var usuario = await Mediator.Send(new ObterApenasUmaCategoria { Id = id });
+
+                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}" });
             }
         }
     }

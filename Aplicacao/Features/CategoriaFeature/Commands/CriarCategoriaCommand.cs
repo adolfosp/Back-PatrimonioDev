@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -8,7 +9,7 @@ namespace Aplicacao.Features.CategoriaFeature.Commands
 {
     public class CriarCategoriaCommand: IRequest<CategoriaEquipamento>
     {
-        public CategoriaEquipamento Categoria { get; set; }
+        public CategoriaDto Categoria { get; set; }
 
         public class CriarEquipamentoCommandHandler : IRequestHandler<CriarCategoriaCommand, CategoriaEquipamento>
         {
