@@ -1,5 +1,6 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces;
+using Aplicacao.Interfaces.Persistence;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -13,26 +14,14 @@ namespace Aplicacao.Features.CategoriaFeature.Commands
 
         public class CriarEquipamentoCommandHandler : IRequestHandler<CriarCategoriaCommand, CategoriaEquipamento>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly ICategoriaPersistence _context;
 
-            public CriarEquipamentoCommandHandler(IApplicationDbContext context)
+            public CriarEquipamentoCommandHandler(ICategoriaPersistence context)
                  => _context = context;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<CategoriaEquipamento> Handle(CriarCategoriaCommand request, CancellationToken cancellationToken)
-            {
-
-                var categoria = new CategoriaEquipamento();
-
-                categoria.Descricao = request.Categoria.Descricao ;
-               
-                await _context.CategoriaEquipamento.AddAsync(categoria);
-
-                await _context.SaveChangesAsync();
-
-                return categoria;
-
-            }
+                => await _context.CriarCategoria(request.Categoria);
+            
         }
     }
 }

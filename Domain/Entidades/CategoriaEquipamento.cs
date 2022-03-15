@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Aplicacao.Dtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entidades
 {
@@ -9,5 +10,11 @@ namespace Domain.Entidades
 
         [Required(ErrorMessage = "A descrição é obrigatória"),MinLength(5), MaxLength(50)]
         public string Descricao { get; set; }
+
+        public static implicit operator CategoriaEquipamento(CategoriaDto categoria)
+        {
+            return new CategoriaEquipamento() { Descricao = categoria.Descricao };
+        }
+
     }
 }

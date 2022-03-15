@@ -48,7 +48,10 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(command));
+                var categoria = await Mediator.Send(command);
+
+                return StatusCode(HTTPStatus.RetornaStatus(categoria), categoria);
+
             }
             catch (Exception ex)
             {
@@ -90,7 +93,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize]
         [HttpPut("{codigoCategoria}")]
-        public async Task<IActionResult> AtualizarEmpresa(int codigoCategoria, [FromBody] AtualizarCategoriaCommand command)
+        public async Task<IActionResult> AtualizarCategoria(int codigoCategoria, [FromBody] AtualizarCategoriaCommand command)
         {
 
             try

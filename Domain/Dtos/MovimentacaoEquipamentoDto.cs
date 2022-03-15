@@ -1,8 +1,7 @@
 ﻿using Domain.Enums;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json;
 
 namespace Aplicacao.Dtos
 {

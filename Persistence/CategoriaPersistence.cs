@@ -30,7 +30,7 @@ namespace Persistence
 
         public async Task<CategoriaEquipamento> CriarCategoria(CategoriaEquipamento categoria)
         {
-            _context.CategoriaEquipamento.Add(categoria);
+            await _context.CategoriaEquipamento.AddAsync(categoria);
 
             await _context.SaveChangesAsync();
 
@@ -39,6 +39,7 @@ namespace Persistence
 
         public async Task<int> DeletarCategoria(int codigoCategoria)
         {
+            //TODO: VALIDAR RETORNO PARA ACTIONRESULT
             var categoria = await _context.CategoriaEquipamento.Where(x => x.CodigoCategoria == codigoCategoria).FirstOrDefaultAsync();
 
             if (categoria is null) return 404;

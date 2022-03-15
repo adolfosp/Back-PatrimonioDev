@@ -11,30 +11,28 @@ namespace DomainTests.TestesIntegracao.Repositories
     {
         public Task<int> AtualizarEquipamento(int codigoCategoria, CategoriaEquipamento categoria)
         {
-                throw new NotImplementedException();
+            return Task.FromResult<int>(200);
         }
-        
+
         public Task<CategoriaEquipamento> CriarCategoria(CategoriaEquipamento categoria)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<CategoriaEquipamento>(new CategoriaEquipamento());
         }
 
         public Task<int> DeletarCategoria(int codigoCategoria)
         {
-           return Task.FromResult<int>(1);
+           return Task.FromResult<int>(200);
+        }
+
+        public Task<CategoriaEquipamento> ObterApenasUmaCategoria(int codigoCategoria)
+        {
+            return Task.FromResult<CategoriaEquipamento>(new CategoriaEquipamento());
+
         }
 
         public Task<IEnumerable<CategoriaEquipamento>> ObterTodasCategorias()
         {
             return Task.FromResult<IEnumerable<CategoriaEquipamento>>(null) ;
-        }
-
-        public Task<IEnumerable<CategoriaEquipamento>> ObterValorNulo()
-        {
-            var categoria = new List<CategoriaEquipamento>();
-            categoria.Add(new CategoriaEquipamento() { Descricao = "adolfo", CodigoCategoria = 1 });
-
-            return Task.FromResult<IEnumerable<CategoriaEquipamento>>(categoria);
         }
     }
 }

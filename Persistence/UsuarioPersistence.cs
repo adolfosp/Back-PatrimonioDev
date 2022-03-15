@@ -83,7 +83,7 @@ namespace Persistence
         }
 
         public async Task<Usuario> CriarUsuario(Usuario usuarioCadastrar)
-        {
+        { 
 
             usuarioCadastrar.Senha = CriptografiaHelper.Criptografar(usuarioCadastrar.Senha);
 
