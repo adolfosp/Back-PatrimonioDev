@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class PerfilUsuarioPersistence : IPerfilUsuario
+    public class PerfilUsuarioPersistence : IPerfilUsuarioPersistence
     {
         private readonly IApplicationDbContext _context;
 

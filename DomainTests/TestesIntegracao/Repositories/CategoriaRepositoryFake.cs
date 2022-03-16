@@ -32,7 +32,7 @@ namespace DomainTests.TestesIntegracao.Repositories
 
         public Task<IEnumerable<CategoriaEquipamento>> ObterTodasCategorias()
         {
-            return Task.FromResult<IEnumerable<CategoriaEquipamento>>(null) ;
+            return Task.FromResult<IEnumerable<CategoriaEquipamento>>(new List<CategoriaEquipamento>()) ;
         }
     }
 }
