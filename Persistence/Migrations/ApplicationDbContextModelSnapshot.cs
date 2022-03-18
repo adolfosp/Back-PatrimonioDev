@@ -119,7 +119,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("NomeFuncionario")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");

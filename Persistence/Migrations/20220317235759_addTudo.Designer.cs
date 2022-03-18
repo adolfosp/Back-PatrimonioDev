@@ -10,7 +10,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220310233246_addTudo")]
+    [Migration("20220317235759_addTudo")]
     partial class addTudo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("NomeFuncionario")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
