@@ -114,9 +114,10 @@ namespace PatrimonioDev.Controllers
                     issuer: "https://localhost:44380",
                     audience: "https://localhost:44380",
                     claims: new[] {
-                        new Claim(ClaimTypes.Name, usuario.Nome),
                         new Claim(ClaimTypes.Role, usuario.CodigoUsuarioPermissao.ToString()),
-                        new Claim("codigoUsuario", usuario.CodigoUsuario.ToString())
+                        new Claim("codigoUsuario", usuario.CodigoUsuario.ToString()),
+                        new Claim("nomeUsuario", usuario.Nome)
+
                     },
                     expires: DateTime.Now.AddMinutes(150),
                     signingCredentials: signinCredentials);
