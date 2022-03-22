@@ -19,7 +19,7 @@ jobs:
   build-test:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
-    working_directory: ~/PatrimonioDev/Testes
+    working_directory: ~/PatrimonioDev/Testes/DomainTests
     steps:
       - checkout:
           path: ~/PatrimonioDev/Testes
