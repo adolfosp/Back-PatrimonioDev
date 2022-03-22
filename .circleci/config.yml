@@ -16,6 +16,18 @@ jobs:
       - run: dotnet dev-certs https -t
       - run: dotnet build
 
+  build-test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0
+    working_directory: ~/PatrimonioDev/Testes
+    steps:
+      - checkout:
+          path: ~/PatrimonioDev/Testes
+      - run: 
+          command: echo "Current directory $(ls)"
+      - run: dotnet restore
+      - run: dotnet build
+
   publish:
     docker:
       - image: circleci/node:latest
@@ -61,4 +73,5 @@ workflows:
   sample: 
     jobs:
       - build
+      - build-test
       - publish
