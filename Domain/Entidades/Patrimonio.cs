@@ -34,5 +34,8 @@ namespace Domain.Entidades
         public int CodigoUsuario { get; set; }
         [ForeignKey("CodigoUsuario")]
         public Usuario Usuario { get; set; }
+        public int CodigoFuncionario { get; set; }
+        [ForeignKey("CodigoFuncionario")]
+        public Funcionario Funcionario { get; set; }
     }
 }
