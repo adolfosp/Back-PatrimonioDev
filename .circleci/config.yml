@@ -87,8 +87,8 @@ workflows:
       - build-api
       - build-test-domain
       - build-test-api
-      - publish
+      - publish-package:
           requires: 
-            - build-api
-            - build-test-domain
-            - build-test-api
+           - build-api
+           - build-test-domain
+           - build-test-api
