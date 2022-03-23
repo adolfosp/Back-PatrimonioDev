@@ -15,8 +15,8 @@
 
 ## Apresentação da Aplicação
 
-- Tela que mostra a tela inicial onde possui login com a google 
-<img src="https://image.freepik.com/vetores-gratis/conceito-de-controle-de-acesso-protegido-bloqueio-com-chave-seguranca-de-dados_39422-866.jpg">
+- Tela inicial da aplicação onde temos a possibilidade de se logar com a conta do google, facebook ou por e-mail.
+![screencapture-localhost-4200-2022-03-22-22_23_12](https://user-images.githubusercontent.com/39220517/159603798-ec032b56-9bcd-4ea1-9f5e-8fe19c4761d2.png)
 
 - Tela que mostra a tela inicial onde possui login com a google 
 <img src="https://image.freepik.com/vetores-gratis/conceito-de-controle-de-acesso-protegido-bloqueio-com-chave-seguranca-de-dados_39422-866.jpg">
