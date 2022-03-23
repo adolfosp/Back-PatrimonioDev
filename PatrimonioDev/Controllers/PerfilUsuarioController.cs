@@ -1,5 +1,4 @@
-﻿using Aplicacao.Features.PerfilUsuarioFeature;
-using Aplicacao.Features.PerfilUsuarioFeature.Commands;
+﻿using Aplicacao.Features.PerfilUsuarioFeature.Commands;
 using Aplicacao.Features.PerfilUsuarioFeature.Queries;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/perfils")]
     public class PerfilUsuarioController: BaseApiController
     {
         private readonly IWebHostEnvironment _host;
@@ -42,7 +41,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}"});
             }
         }
 
@@ -68,7 +67,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -92,7 +91,7 @@ namespace PatrimonioDev.Controllers
 
                 if (file.Length > 0)
                 {
-                    DeletarImagem(usuario.ImagemUrl);
+                    new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
 
                     usuario.ImagemUrl = await SalvarImagem(file);
                 }
@@ -108,7 +107,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { mensagem = $"Erro interno no servidor. Mensagem:  {ex.Message} {ex.InnerException}" });
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -131,19 +130,6 @@ namespace PatrimonioDev.Controllers
             }
 
             return nomeImagem;
-        }
-
-        [NonAction]
-        private void DeletarImagem(string imagemUrl)
-        {
-            if (imagemUrl is null) return;
-
-            var imagemPath = Path.Combine(_host.ContentRootPath, @"Resources/Imagens", imagemUrl);
-
-            if (System.IO.File.Exists(imagemPath))
-            {
-                System.IO.File.Delete(imagemPath);
-            }
         }
     }
 }

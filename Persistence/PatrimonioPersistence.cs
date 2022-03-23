@@ -4,6 +4,7 @@ using Aplicacao.Interfaces.Persistence;
 using AutoMapper;
 using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,6 +65,21 @@ namespace Persistence
             if (patrimonio is null) return null;
 
             return patrimonio;
+        }
+
+        public async Task<IEnumerable<PatrimonioDto>> ObterTodosPatrimonio()
+        {
+
+            return  await (from p in _context.Patrimonio
+                    join e in _context.Equipamento on p.CodigoTipoEquipamento equals e.CodigoTipoEquipamento
+                    join f in _context.Funcionario on p.CodigoFuncionario equals f.CodigoFuncionario
+                    select new PatrimonioDto() {
+                        NomeFuncionario = f.NomeFuncionario,
+                        TipoEquipamento = e.TipoEquipamento,
+                        Modelo = p.Modelo,
+                        CodigoPatrimonio = p.CodigoPatrimonio,
+                        SituacaoEquipamento = p.SituacaoEquipamento
+                    }).ToListAsync();
         }
     }
 }

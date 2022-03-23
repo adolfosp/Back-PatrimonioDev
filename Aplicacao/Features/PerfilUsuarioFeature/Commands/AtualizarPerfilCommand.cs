@@ -12,9 +12,9 @@ namespace Aplicacao.Features.PerfilUsuarioFeature.Commands
 
         public class AtualizarPerfilCommandHandler : IRequestHandler<AtualizarPerfilCommand, int>
         {
-            private readonly IPerfilUsuario _repository;
+            private readonly IPerfilUsuarioPersistence _repository;
 
-            public AtualizarPerfilCommandHandler(IPerfilUsuario repository)         
+            public AtualizarPerfilCommandHandler(IPerfilUsuarioPersistence repository)         
                =>  _repository = repository;
 
 

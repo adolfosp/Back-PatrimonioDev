@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class todasTabelas : Migration
+    public partial class addTudo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,7 @@ namespace Persistence.Migrations
                 {
                     CodigoFuncionario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeFuncionario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NomeFuncionario = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
                     Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -127,13 +127,13 @@ namespace Persistence.Migrations
                         column: x => x.CodigoCategoria,
                         principalTable: "CategoriaEquipamento",
                         principalColumn: "CodigoCategoria",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Equipamento_Fabricante_CodigoFabricante",
                         column: x => x.CodigoFabricante,
                         principalTable: "Fabricante",
                         principalColumn: "CodigoFabricante",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -144,7 +144,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodigoEmpresa = table.Column<int>(type: "int", nullable: true),
@@ -171,7 +171,7 @@ namespace Persistence.Migrations
                         column: x => x.CodigoUsuarioPermissao,
                         principalTable: "UsuarioPermissao",
                         principalColumn: "CodigoUsuarioPermissao",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,13 +199,13 @@ namespace Persistence.Migrations
                         column: x => x.CodigoTipoEquipamento,
                         principalTable: "Equipamento",
                         principalColumn: "CodigoTipoEquipamento",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Patrimonio_Usuario_CodigoUsuario",
                         column: x => x.CodigoUsuario,
                         principalTable: "Usuario",
                         principalColumn: "CodigoUsuario",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +229,7 @@ namespace Persistence.Migrations
                         column: x => x.CodigoPatrimonio,
                         principalTable: "Patrimonio",
                         principalColumn: "CodigoPatrimonio",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,13 +253,13 @@ namespace Persistence.Migrations
                         column: x => x.CodigoPatrimonio,
                         principalTable: "Patrimonio",
                         principalColumn: "CodigoPatrimonio",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MovimentacaoEquipamento_Usuario_CodigoUsuario",
                         column: x => x.CodigoUsuario,
                         principalTable: "Usuario",
                         principalColumn: "CodigoUsuario",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -279,7 +279,7 @@ namespace Persistence.Migrations
                         column: x => x.CodigoPatrimonio,
                         principalTable: "Patrimonio",
                         principalColumn: "CodigoPatrimonio",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

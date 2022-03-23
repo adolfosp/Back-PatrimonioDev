@@ -66,13 +66,22 @@ namespace Persistence
             return 200;
         }
 
-        public async Task<IEnumerable<Equipamento>> ObterTodosEquipamentos()
-        {
-            var equipamento = await _context.Equipamento.ToListAsync();
+        public async Task<List<EquipamentoDto>> ObterTodosEquipamentos() {
 
-            if (equipamento == null) return null;
+            return await (from e in _context.Equipamento
+                    join f in _context.Fabricante on e.CodigoFabricante equals f.CodigoFabricante
+                    join c in _context.CategoriaEquipamento on e.CodigoCategoria equals c.CodigoCategoria
+                    select new EquipamentoDto
+                    {
+                        CodigoTipoEquipamento = e.CodigoTipoEquipamento,
+                        TipoEquipamento = e.TipoEquipamento,
+                        CodigoFabricante = e.CodigoFabricante,
+                        CodigoCategoria = e.CodigoCategoria,
+                        NomeCategoria = c.Descricao,
+                        NomeFabricante = f.NomeFabricante
 
-            return equipamento.AsReadOnly();
+                    }).ToListAsync();
+
         }
     }
 }

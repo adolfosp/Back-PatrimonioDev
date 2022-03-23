@@ -43,7 +43,7 @@ namespace PatrimonioDev
             services.AddScoped<IMovimentacaoEquipamentoPersistence, MovimentacaoEquipamentoPersistence>();
             services.AddScoped<ICategoriaPersistence, CategoriaPersistence>();
             services.AddScoped<IFuncionarioPersistence, FuncionarioPersistence>();
-            services.AddScoped<IPerfilUsuario, PerfilUsuarioPersistence>();
+            services.AddScoped<IPerfilUsuarioPersistence, PerfilUsuarioPersistence>();
 
             services.AddControllers();
             services.AddAuthentication(opt =>

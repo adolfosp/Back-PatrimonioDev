@@ -36,6 +36,8 @@ namespace Persistence
 
         public async Task<Funcionario> CriarFuncionario(FuncionarioDto funcionario)
         {
+            funcionario.Ativo = true;
+
             var funcionarioDominio = _mapper.Map<Funcionario>(funcionario);
 
             _context.Funcionario.Add(funcionarioDominio);

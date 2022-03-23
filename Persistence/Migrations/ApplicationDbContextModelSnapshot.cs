@@ -119,7 +119,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("NomeFuncionario")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
@@ -205,6 +206,9 @@ namespace Persistence.Migrations
                     b.Property<string>("Armazenamento")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CodigoFuncionario")
+                        .HasColumnType("int");
+
                     b.Property<int>("CodigoTipoEquipamento")
                         .HasColumnType("int");
 
@@ -235,6 +239,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CodigoPatrimonio");
+
+                    b.HasIndex("CodigoFuncionario");
 
                     b.HasIndex("CodigoTipoEquipamento");
 
@@ -348,8 +354,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("CodigoUsuario");
 
@@ -433,6 +439,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entidades.Patrimonio", b =>
                 {
+                    b.HasOne("Domain.Entidades.Funcionario", "Funcionario")
+                        .WithMany()
+                        .HasForeignKey("CodigoFuncionario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entidades.Equipamento", "Equipamento")
                         .WithMany()
                         .HasForeignKey("CodigoTipoEquipamento")
@@ -446,6 +458,8 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Equipamento");
+
+                    b.Navigation("Funcionario");
 
                     b.Navigation("Usuario");
                 });

@@ -3,6 +3,7 @@ using Aplicacao.Features.UsuarioFeature.Queries;
 using Domain.Entidades;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,10 +16,16 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/usuarios")]
     public class UsuarioController : BaseApiController
     {
 
+        private readonly IWebHostEnvironment _host;
+
+        public UsuarioController(IWebHostEnvironment host)
+        {
+            _host = host;
+        }
 
         [SwaggerOperation(Summary = "Método para criar um usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
@@ -41,7 +48,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { mensagem = $"Erro interno no servidor. Mensagem:  {ex.Message} {ex.InnerException}" });
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -81,7 +88,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -104,12 +111,13 @@ namespace PatrimonioDev.Controllers
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
                 var tokenOptios = new JwtSecurityToken(
-                    issuer: "https://localhost:5001",
-                    audience: "https://localhost:5001",
+                    issuer: "https://localhost:44380",
+                    audience: "https://localhost:44380",
                     claims: new[] {
-                        new Claim(ClaimTypes.Name,usuario.Nome),
-                        new Claim(ClaimTypes.Role,usuario.CodigoUsuarioPermissao.ToString()),
-                        new Claim("codigoUsuario",usuario.CodigoUsuario.ToString())
+                        new Claim(ClaimTypes.Role, usuario.CodigoUsuarioPermissao.ToString()),
+                        new Claim("codigoUsuario", usuario.CodigoUsuario.ToString()),
+                        new Claim("nomeUsuario", usuario.Nome)
+
                     },
                     expires: DateTime.Now.AddMinutes(150),
                     signingCredentials: signinCredentials);
@@ -122,7 +130,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}" });
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -146,7 +154,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
 
         }
@@ -163,17 +171,19 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                var statusCode = StatusCode(await Mediator.Send(new RemoverUsuarioCommand { Id = id }));
+                var usuario = await Mediator.Send(new RemoverUsuarioCommand { Id = id });
 
-                if (statusCode.StatusCode == 404)
+                if (usuario is null)
                     return NotFound("Não foi encontrado registro para deletar");
+
+                new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
 
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -201,7 +211,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
     }

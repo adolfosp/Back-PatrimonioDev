@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PatrimonioDev.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/categorias")]
     public class CategoriaController : BaseApiController
     {
         [SwaggerOperation(Summary = "Método para obter todas as categorias")]
@@ -33,7 +33,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -44,15 +44,18 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarCategoria(CriarCategoriaCommand command)
+        public async Task<IActionResult> CriarCategoria([FromBody]CriarCategoriaCommand command)
         {
             try
             {
-                return Ok(await Mediator.Send(command));
+                var categoria = await Mediator.Send(command);
+
+                return StatusCode(HTTPStatus.RetornaStatus(categoria), categoria);
+
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}"});
             }
         }
 
@@ -78,7 +81,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -90,7 +93,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize]
         [HttpPut("{codigoCategoria}")]
-        public async Task<IActionResult> AtualizarEmpresa(int codigoCategoria, [FromBody] AtualizarCategoriaCommand command)
+        public async Task<IActionResult> AtualizarCategoria(int codigoCategoria, [FromBody] AtualizarCategoriaCommand command)
         {
 
             try
@@ -108,7 +111,31 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para buscar uma categoria específica")]
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterApenasUm(int id)
+        {
+            try
+            {
+                var usuario = await Mediator.Send(new ObterApenasUmaCategoria { Id = id });
+
+                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
     }

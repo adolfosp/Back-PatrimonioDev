@@ -2,7 +2,7 @@ version: 2.1
 
 jobs:
 
-  build:
+  build-api:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
     working_directory: ~/PatrimonioDev/PatrimonioDev
@@ -28,7 +28,31 @@ jobs:
       - run: dotnet restore
       - run: dotnet build
 
-  publish:
+  build-test-domain:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0
+    working_directory: ~/PatrimonioDev/Testes/DomainTests
+    steps:
+      - checkout:
+          path: ~/PatrimonioDev/Testes
+      - run: 
+          command: echo "Current directory $(ls)"
+      - run: dotnet restore
+      - run: dotnet build
+
+  build-test-api:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0
+    working_directory: ~/PatrimonioDev/Testes/ApiTests
+    steps:
+      - checkout:
+          path: ~/PatrimonioDev/Testes
+      - run: 
+          command: echo "Current directory $(ls)"
+      - run: dotnet restore
+      - run: dotnet build
+
+  publish-package:
     docker:
       - image: circleci/node:latest
     steps:
@@ -72,5 +96,11 @@ jobs:
 workflows:
   sample: 
     jobs:
-      - build
-      - publish
+      - build-api
+      - build-test-domain
+      - build-test-api
+      - publish-package:
+          requires: 
+           - build-api
+           - build-test-domain
+           - build-test-api

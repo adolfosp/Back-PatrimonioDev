@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Aplicacao.Interfaces.Persistence
 {
-    public interface IPerfilUsuario
+    public interface IPerfilUsuarioPersistence
     {
         Task<PerfilUsuario> ObterInformacaoPerfil(int codigoUsuario);
         Task<int> AtualizarPerfilUsuario(PerfilUsuarioDto perfil);

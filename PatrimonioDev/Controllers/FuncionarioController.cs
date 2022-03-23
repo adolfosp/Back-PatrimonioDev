@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/funcionarios")]
     public class FuncionarioController: BaseApiController
     {
 
@@ -30,7 +30,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
 
         }
@@ -53,7 +53,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -76,7 +76,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -106,7 +106,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -118,7 +118,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletarFuncionario(int id)
+        public async Task<IActionResult> DesativarFuncionario(int id)
         {
             try
             {
@@ -132,8 +132,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
     }

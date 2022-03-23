@@ -8,10 +8,11 @@ using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Enums;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/setores")]
     public class SetorController : BaseApiController
     {
 
@@ -31,7 +32,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -53,7 +54,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -76,7 +77,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
 
         }
@@ -94,17 +95,20 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
 
                 if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+                    return NotFound(new { mensagem = "Não foi encontrado registro para excluir" });
 
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -120,6 +124,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, codigoSetor))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 command.Id = codigoSetor;
 
                 var statusCode = StatusCode(await Mediator.Send(command));
@@ -133,7 +140,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
     }

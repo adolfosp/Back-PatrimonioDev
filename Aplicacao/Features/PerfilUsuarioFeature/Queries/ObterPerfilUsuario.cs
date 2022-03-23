@@ -12,8 +12,8 @@ namespace Aplicacao.Features.PerfilUsuarioFeature.Queries
 
         public class ObterPerfilUsuarioHandler : IRequestHandler<ObterPerfilUsuario, PerfilUsuario>
         {
-            private readonly IPerfilUsuario _repository;
-            public ObterPerfilUsuarioHandler(IPerfilUsuario repository)
+            private readonly IPerfilUsuarioPersistence _repository;
+            public ObterPerfilUsuarioHandler(IPerfilUsuarioPersistence repository)
                 => _repository = repository;
 
             public Task<PerfilUsuario> Handle(ObterPerfilUsuario request, CancellationToken cancellationToken)

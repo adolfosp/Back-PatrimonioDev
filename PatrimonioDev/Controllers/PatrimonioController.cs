@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/patrimonios")]
     public class PatrimonioController : BaseApiController
     {
 
@@ -30,12 +30,12 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
 
         }
 
-        [SwaggerOperation(Summary = "Método para buscar por patrimonio específico")]
+        [SwaggerOperation(Summary = "Método para buscar por patrimônio específico")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -52,7 +52,28 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para buscar todos patrimônios ")]
+        [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ListarTodosPatrimonios()
+        {
+            try
+            {
+                var patrimonios = await Mediator.Send(new ObterTodosPatrimonios());
+
+                return StatusCode(HTTPStatus.RetornaStatus(patrimonios), patrimonios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -80,7 +101,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -108,7 +129,7 @@ namespace PatrimonioDev.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
     }

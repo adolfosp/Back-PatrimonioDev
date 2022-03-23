@@ -8,10 +8,12 @@ using Domain.Helpers;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
+using Aplicacao.Features.UsuarioFeature.Queries;
+using Domain.Enums;
 
 namespace PatrimonioDev.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/permissoes")]
     public class UsuarioPermissaoController : BaseApiController
     {
 
@@ -23,7 +25,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "1,2")]
         [HttpPost]
-        public async Task<IActionResult> CriarUsuarioPermissao(CriarUsuarioPermissaoCommand command)
+        public async Task<IActionResult> CriarUsuarioPermissao([FromBody]CriarUsuarioPermissaoCommand command)
         {
             try
             {
@@ -31,7 +33,7 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno no servidor. Mensagem: {ex.Message} {ex.InnerException}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
 
         }
@@ -54,7 +56,31 @@ namespace PatrimonioDev.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para buscar uma permissão específica")]
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "1,2")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterApenasUm(int id)
+        {
+            try
+            {
+                var usuario = await Mediator.Send(new ObterApenasUmaPermissao { Id = id });
+
+                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
 
@@ -64,12 +90,16 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "1,2")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuarioPermissao(int id)
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, id))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 var statusCode = StatusCode(await Mediator.Send(new DeletarUsuarioPermissaoCommand() { Id = id }));
 
                 if (statusCode.StatusCode == 404)
@@ -81,7 +111,39 @@ namespace PatrimonioDev.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Não foi possível realizar a operação! Mensagem: {ex.Message}");
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para atualizar uma permissão específica")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "1,2")]
+        [HttpPut("{codigoPermissao}")]
+        public async Task<IActionResult> AtualizarPermissaoUsuario(int codigoPermissao, [FromBody] AtualizarPermissaoCommand command)
+        {
+            try
+            {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, codigoPermissao))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
+                command.Id = codigoPermissao;
+
+                var statusCode = StatusCode(await Mediator.Send(command));
+
+                if (statusCode.StatusCode == 404)
+                    return NotFound("Nenhum registro encontrado!");
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
     }

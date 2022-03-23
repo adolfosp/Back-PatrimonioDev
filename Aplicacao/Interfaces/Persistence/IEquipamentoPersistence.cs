@@ -9,7 +9,7 @@ namespace Aplicacao.Interfaces.Persistence
     {
         Task<int> DeletarEquipamento(int codigoEquipamento);
         Task<Equipamento> CriarEquipamento(EquipamentoDto equipamento);
-        Task<IEnumerable<Equipamento>> ObterTodosEquipamentos();
+        Task<List<EquipamentoDto>> ObterTodosEquipamentos();
         Task<Equipamento> ObterEquipamentoPorId(int codigoEquipamento);
         Task<int> AtualizarEquipamento(int codigoEquipamento, EquipamentoDto equipamento);
 

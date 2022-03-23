@@ -9,7 +9,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
     public class AtualizarFuncionarioCommand: IRequest<int>
     {
         public int CodigoFuncionario { get; set; }
-        public FuncionarioDto FuncionaioDto { get; set; }
+        public FuncionarioDto Funcionario { get; set; }
 
         public class AtualizarFuncionarioCommandHandler : IRequestHandler<AtualizarFuncionarioCommand, int>
         {
@@ -20,7 +20,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
                 => _persistence = persistence;
 
             public Task<int> Handle(AtualizarFuncionarioCommand request, CancellationToken cancellationToken)
-                => _persistence.AtualizarFuncionario(request.CodigoFuncionario, request.FuncionaioDto);
+                => _persistence.AtualizarFuncionario(request.CodigoFuncionario, request.Funcionario);
         }
     }
 }
