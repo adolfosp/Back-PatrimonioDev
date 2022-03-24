@@ -1,5 +1,6 @@
 ﻿using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading.Tasks;
 
 namespace Aplicacao.Interfaces
@@ -21,5 +22,9 @@ namespace Aplicacao.Interfaces
         DbSet<Funcionario> Funcionario { get; set; }
 
         Task<int> SaveChangesAsync();
+        Task<IDbContextTransaction> BeginTransactionAsync();
+        void CommitTransactionAsync();
+        void RollbackTransactionAsync();
+
     }
 }

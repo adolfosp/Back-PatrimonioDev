@@ -146,7 +146,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataExpericaoGarantia")
+                    b.Property<DateTime?>("DataExpiracaoGarantia")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("ValorPago")

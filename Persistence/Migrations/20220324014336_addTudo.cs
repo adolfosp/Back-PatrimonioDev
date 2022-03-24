@@ -189,7 +189,8 @@ namespace Persistence.Migrations
                     MemoriaRAM = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SituacaoEquipamento = table.Column<int>(type: "int", nullable: false),
                     CodigoTipoEquipamento = table.Column<int>(type: "int", nullable: false),
-                    CodigoUsuario = table.Column<int>(type: "int", nullable: false)
+                    CodigoUsuario = table.Column<int>(type: "int", nullable: false),
+                    CodigoFuncionario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,6 +200,12 @@ namespace Persistence.Migrations
                         column: x => x.CodigoTipoEquipamento,
                         principalTable: "Equipamento",
                         principalColumn: "CodigoTipoEquipamento",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Patrimonio_Funcionario_CodigoFuncionario",
+                        column: x => x.CodigoFuncionario,
+                        principalTable: "Funcionario",
+                        principalColumn: "CodigoFuncionario",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Patrimonio_Usuario_CodigoUsuario",
@@ -216,7 +223,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ValorPago = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataExpericaoGarantia = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataExpiracaoGarantia = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Antivirus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VersaoWindows = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
@@ -308,6 +315,11 @@ namespace Persistence.Migrations
                 column: "CodigoUsuario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Patrimonio_CodigoFuncionario",
+                table: "Patrimonio",
+                column: "CodigoFuncionario");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patrimonio_CodigoTipoEquipamento",
                 table: "Patrimonio",
                 column: "CodigoTipoEquipamento");
@@ -341,9 +353,6 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Funcionario");
-
-            migrationBuilder.DropTable(
                 name: "InformacaoAdicional");
 
             migrationBuilder.DropTable(
@@ -360,6 +369,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Equipamento");
+
+            migrationBuilder.DropTable(
+                name: "Funcionario");
 
             migrationBuilder.DropTable(
                 name: "Usuario");

@@ -4,7 +4,9 @@ using Aplicacao.Interfaces.Persistence;
 using AutoMapper;
 using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,15 +36,35 @@ namespace Persistence
             return 200;
         }
 
-        public async Task<Patrimonio> CriarPatrimonio(PatrimonioDto patrimonio)
+        public async Task<Patrimonio> CriarPatrimonio(PatrimonioDto patrimonio, InformacaoAdicionalDto informacaoAdicional)
         {
-            var patrimonioDominio = _mapper.Map<Patrimonio>(patrimonio);
 
-            _context.Patrimonio.Add(patrimonioDominio);
+            using (IDbContextTransaction transaction = await _context.BeginTransactionAsync())
+            {
+                try
+                {
+                    var patrimonioDominio = _mapper.Map<Patrimonio>(patrimonio);
+                    var informacaoDominio = _mapper.Map<InformacaoAdicional>(informacaoAdicional);
 
-            await _context.SaveChangesAsync();
+                    _context.Patrimonio.Add(patrimonioDominio);
+                    await _context.SaveChangesAsync();
 
-            return patrimonioDominio;
+                    informacaoDominio.CodigoPatrimonio = patrimonioDominio.CodigoPatrimonio;
+                    _context.InformacaoAdicional.Add(informacaoDominio);
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+
+                    return patrimonioDominio;
+                }
+                catch (System.Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new System.Exception($"Não foi possível gravar o patrimônio. Mensagem: {ex.Message}");
+                }
+
+           
+            }
         }
 
         public async Task<int> DeletarPatrimonio(int codigoPatrimonio)
@@ -70,16 +92,17 @@ namespace Persistence
         public async Task<IEnumerable<PatrimonioDto>> ObterTodosPatrimonio()
         {
 
-            return  await (from p in _context.Patrimonio
-                    join e in _context.Equipamento on p.CodigoTipoEquipamento equals e.CodigoTipoEquipamento
-                    join f in _context.Funcionario on p.CodigoFuncionario equals f.CodigoFuncionario
-                    select new PatrimonioDto() {
-                        NomeFuncionario = f.NomeFuncionario,
-                        TipoEquipamento = e.TipoEquipamento,
-                        Modelo = p.Modelo,
-                        CodigoPatrimonio = p.CodigoPatrimonio,
-                        SituacaoEquipamento = p.SituacaoEquipamento
-                    }).ToListAsync();
+            return await (from p in _context.Patrimonio
+                          join e in _context.Equipamento on p.CodigoTipoEquipamento equals e.CodigoTipoEquipamento
+                          join f in _context.Funcionario on p.CodigoFuncionario equals f.CodigoFuncionario
+                          select new PatrimonioDto()
+                          {
+                              NomeFuncionario = f.NomeFuncionario,
+                              TipoEquipamento = e.TipoEquipamento,
+                              Modelo = p.Modelo,
+                              CodigoPatrimonio = p.CodigoPatrimonio,
+                              SituacaoEquipamento = p.SituacaoEquipamento
+                          }).ToListAsync();
         }
     }
 }

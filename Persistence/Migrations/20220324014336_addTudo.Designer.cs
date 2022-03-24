@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220321103102_addColunaFuncionario")]
-    partial class addColunaFuncionario
+    [Migration("20220324014336_addTudo")]
+    partial class addTudo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -148,7 +148,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataExpericaoGarantia")
+                    b.Property<DateTime?>("DataExpiracaoGarantia")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("ValorPago")

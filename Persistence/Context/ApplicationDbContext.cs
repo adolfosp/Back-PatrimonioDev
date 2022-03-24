@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Interfaces;
 using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading.Tasks;
 
 namespace Persistence.Context
@@ -12,7 +13,7 @@ namespace Persistence.Context
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
-
+       
         public DbSet<Equipamento> Equipamento { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<Setor> Setor { get; set; }
@@ -30,6 +31,13 @@ namespace Persistence.Context
         public async Task<int> SaveChangesAsync()
           => await base.SaveChangesAsync();
 
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+            => await base.Database.BeginTransactionAsync();
 
+        public async void CommitTransactionAsync()
+            => await base.Database.CommitTransactionAsync();
+
+        public async void RollbackTransactionAsync()
+           => await base.Database.RollbackTransactionAsync();
     }
 }
