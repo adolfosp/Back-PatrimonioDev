@@ -143,11 +143,12 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCompra")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataCompra")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DataExpiracaoGarantia")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataExpiracaoGarantia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ValorPago")
                         .HasColumnType("decimal(10,2)");

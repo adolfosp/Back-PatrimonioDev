@@ -37,7 +37,7 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Commands
                 if (informacaoAdicional == null) return 404;
 
                 //informacaoAdicional.DataCompra = request.InformacaoAdicional.DataCompra;
-                informacaoAdicional.DataExpiracaoGarantia = request.InformacaoAdicional.DataExpiracaoGarantia;
+                //informacaoAdicional.DataExpiracaoGarantia = request.InformacaoAdicional.DataExpiracaoGarantia;
                 informacaoAdicional.Antivirus = request.InformacaoAdicional.Antivirus;
                 informacaoAdicional.VersaoWindows = request.InformacaoAdicional.VersaoWindows;
                 informacaoAdicional.ValorPago = request.InformacaoAdicional.ValorPago;

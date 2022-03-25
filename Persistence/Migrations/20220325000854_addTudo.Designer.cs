@@ -10,7 +10,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220324014336_addTudo")]
+    [Migration("20220325000854_addTudo")]
     partial class addTudo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,11 +145,12 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCompra")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataCompra")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DataExpiracaoGarantia")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataExpiracaoGarantia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ValorPago")
                         .HasColumnType("decimal(10,2)");

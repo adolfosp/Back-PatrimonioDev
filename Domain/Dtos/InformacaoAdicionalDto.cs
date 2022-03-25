@@ -7,8 +7,8 @@ namespace Aplicacao.Dtos
     {
         public int CodigoInformacaoAdicional { get; set; }
         public decimal ValorPago { get; set; }
-        public DateTime? DataCompra { get; set; }
-        public DateTime? DataExpiracaoGarantia { get; set; }
+        public string? DataCompra { get; set; }
+        public string? DataExpiracaoGarantia { get; set; }
         public string? Antivirus { get; set; }
         public string? VersaoWindows { get; set; }
 

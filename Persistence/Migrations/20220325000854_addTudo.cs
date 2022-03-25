@@ -222,8 +222,8 @@ namespace Persistence.Migrations
                     CodigoInformacao = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ValorPago = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataExpiracaoGarantia = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataCompra = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataExpiracaoGarantia = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Antivirus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VersaoWindows = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
