@@ -57,71 +57,94 @@ namespace Persistence
             }
         }
 
-            public async Task<Patrimonio> CriarPatrimonio(PatrimonioDto patrimonio, InformacaoAdicionalDto informacaoAdicional)
+        public async Task<Patrimonio> CriarPatrimonio(PatrimonioDto patrimonio, InformacaoAdicionalDto informacaoAdicional)
+        {
+
+            using (IDbContextTransaction transaction = await _context.BeginTransactionAsync())
             {
-
-                using (IDbContextTransaction transaction = await _context.BeginTransactionAsync())
+                try
                 {
-                    try
-                    {
-                        var patrimonioDominio = _mapper.Map<Patrimonio>(patrimonio);
-                        var informacaoDominio = _mapper.Map<InformacaoAdicional>(informacaoAdicional);
+                    var patrimonioDominio = _mapper.Map<Patrimonio>(patrimonio);
+                    var informacaoDominio = _mapper.Map<InformacaoAdicional>(informacaoAdicional);
 
-                        _context.Patrimonio.Add(patrimonioDominio);
-                        await _context.SaveChangesAsync();
+                    _context.Patrimonio.Add(patrimonioDominio);
+                    await _context.SaveChangesAsync();
 
-                        informacaoDominio.CodigoPatrimonio = patrimonioDominio.CodigoPatrimonio;
-                        _context.InformacaoAdicional.Add(informacaoDominio);
-                        await _context.SaveChangesAsync();
+                    informacaoDominio.CodigoPatrimonio = patrimonioDominio.CodigoPatrimonio;
+                    _context.InformacaoAdicional.Add(informacaoDominio);
+                    await _context.SaveChangesAsync();
 
-                        await transaction.CommitAsync();
+                    await transaction.CommitAsync();
 
-                        return patrimonioDominio;
-                    }
-                    catch (System.Exception ex)
-                    {
-                        await transaction.RollbackAsync();
-                        throw new System.Exception($"Não foi possível gravar o patrimônio. Mensagem: {ex.Message}");
-                    }
+                    return patrimonioDominio;
+                }
+                catch (System.Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new System.Exception($"Não foi possível gravar o patrimônio. Mensagem: {ex.Message}");
                 }
             }
+        }
 
-            public async Task<int> DeletarPatrimonio(int codigoPatrimonio)
+        public async Task<int> DeletarPatrimonio(int codigoPatrimonio)
+        {
+            using (IDbContextTransaction transaction = await _context.BeginTransactionAsync())
             {
-                var patrimonio = await _context.Patrimonio.Where(x => x.CodigoPatrimonio == codigoPatrimonio).FirstOrDefaultAsync();
+                try
+                {
 
-                if (patrimonio == null) return 404;
+                    var informacaoAdicional = await _context.InformacaoAdicional.Where(x => x.CodigoPatrimonio == codigoPatrimonio).FirstOrDefaultAsync();
 
-                _context.Patrimonio.Remove(patrimonio);
+                    if (informacaoAdicional is not null)
+                    {
+                        _context.InformacaoAdicional.Remove(informacaoAdicional);
 
-                await _context.SaveChangesAsync();
+                        await _context.SaveChangesAsync();
+                    }
+                   
+                    var patrimonio = await _context.Patrimonio.Where(x => x.CodigoPatrimonio == codigoPatrimonio).FirstOrDefaultAsync();
 
-                return 200;
-            }
+                    if (patrimonio == null) return 404;
 
-            public async Task<Patrimonio> ObterPatrimonioPorId(int codigoPatrimonio)
-            {
-                var patrimonio = await _context.Patrimonio.Where(x => x.CodigoPatrimonio == codigoPatrimonio).Select(x => x).FirstOrDefaultAsync();
+                    _context.Patrimonio.Remove(patrimonio);
 
-                if (patrimonio is null) return null;
+                    await _context.SaveChangesAsync();
 
-                return patrimonio;
-            }
+                    await transaction.CommitAsync();
 
-            public async Task<IEnumerable<PatrimonioDto>> ObterTodosPatrimonio()
-            {
-
-                return await (from p in _context.Patrimonio
-                              join e in _context.Equipamento on p.CodigoTipoEquipamento equals e.CodigoTipoEquipamento
-                              join f in _context.Funcionario on p.CodigoFuncionario equals f.CodigoFuncionario
-                              select new PatrimonioDto()
-                              {
-                                  NomeFuncionario = f.NomeFuncionario,
-                                  TipoEquipamento = e.TipoEquipamento,
-                                  Modelo = p.Modelo,
-                                  CodigoPatrimonio = p.CodigoPatrimonio,
-                                  SituacaoEquipamento = p.SituacaoEquipamento
-                              }).ToListAsync();
+                    return 200;
+                }
+                catch (System.Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new System.Exception($"Não foi possível gravar o patrimônio. Mensagem: {ex.Message}");
+                }
             }
         }
+
+        public async Task<Patrimonio> ObterPatrimonioPorId(int codigoPatrimonio)
+        {
+            var patrimonio = await _context.Patrimonio.Where(x => x.CodigoPatrimonio == codigoPatrimonio).Select(x => x).FirstOrDefaultAsync();
+
+            if (patrimonio is null) return null;
+
+            return patrimonio;
+        }
+
+        public async Task<IEnumerable<PatrimonioDto>> ObterTodosPatrimonio()
+        {
+
+            return await (from p in _context.Patrimonio
+                          join e in _context.Equipamento on p.CodigoTipoEquipamento equals e.CodigoTipoEquipamento
+                          join f in _context.Funcionario on p.CodigoFuncionario equals f.CodigoFuncionario
+                          select new PatrimonioDto()
+                          {
+                              NomeFuncionario = f.NomeFuncionario,
+                              TipoEquipamento = e.TipoEquipamento,
+                              Modelo = p.Modelo,
+                              CodigoPatrimonio = p.CodigoPatrimonio,
+                              SituacaoEquipamento = p.SituacaoEquipamento
+                          }).ToListAsync();
+        }
     }
+}
