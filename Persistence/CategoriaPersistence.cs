@@ -15,7 +15,7 @@ namespace Persistence
         public CategoriaPersistence(IApplicationDbContext context)
             => _context = context;
 
-        public async Task<int> AtualizarEquipamento(int codigoCategoria, CategoriaEquipamento categoria)
+        public async Task<int> AtualizarCategoriaEquipamento(int codigoCategoria, CategoriaEquipamento categoria)
         {
             var categoriaEquipamento = await _context.CategoriaEquipamento.Where(x => x.CodigoCategoria == codigoCategoria).Select(x => x).FirstOrDefaultAsync();
 

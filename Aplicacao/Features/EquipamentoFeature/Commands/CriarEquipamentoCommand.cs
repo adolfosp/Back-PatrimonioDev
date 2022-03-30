@@ -1,6 +1,5 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces.Persistence;
-using AutoMapper;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -15,15 +14,10 @@ namespace Aplicacao.Features.EquipamentoFeature.Commands
         public class CriarEquipamentoCommandHandler : IRequestHandler<CriarEquipamentoCommand, Equipamento>
         {
             private readonly IEquipamentoPersistence _persistence;
-            private readonly IMapper _mapper;
 
-            public CriarEquipamentoCommandHandler(IEquipamentoPersistence persistence, IMapper mapper)
-            {
-                _persistence = persistence;
-                _mapper = mapper;
-            }
-               
-
+            public CriarEquipamentoCommandHandler(IEquipamentoPersistence persistence)
+                => _persistence = persistence;
+            
             public Task<Equipamento> Handle(CriarEquipamentoCommand request, CancellationToken cancellationToken)
                 => _persistence.CriarEquipamento(request.Equipamento);
         }

@@ -33,5 +33,6 @@ COPY ./Docker/build ./wwwroot
 
 RUN useradd -m myappuser
 USER myappuser
-
+EXPOSE 5000
+EXPOSE 5001
 CMD ASPNETCORE_URLS="http://*:$PORT" dotnet PatrimonioDev.dll

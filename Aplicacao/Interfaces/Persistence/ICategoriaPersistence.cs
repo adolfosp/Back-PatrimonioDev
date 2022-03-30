@@ -10,7 +10,7 @@ namespace Aplicacao.Interfaces.Persistence
         Task<CategoriaEquipamento> ObterApenasUmaCategoria(int codigoCategoria);
         Task<CategoriaEquipamento> CriarCategoria(CategoriaEquipamento categoria);
         Task<int> DeletarCategoria(int codigoCategoria);
-        Task<int> AtualizarEquipamento(int codigoCategoria, CategoriaEquipamento categoria);
+        Task<int> AtualizarCategoriaEquipamento(int codigoCategoria, CategoriaEquipamento categoria);
 
     }
 }

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\AdolfoPoiatti\Documents\MEGA\Projetos\PatrimonioDev\Domain\Domain.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\Adolfo\Documents\MEGA\Projetos\Back-PatrimonioDev\Domain\Domain.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
