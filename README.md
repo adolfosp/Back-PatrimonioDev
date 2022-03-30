@@ -24,11 +24,7 @@
 
 ## Como rodar a aplicação
 
-- Abra o projeto com seu editor de preferência e digite npm install para baixar todos os pacotes necessários - **REALIZAR ESSE PROCESSO TANTO PARA A PASTA DO ANGULAR QUANTO PARA A DO BACK-END**
-- No caminho da pasta do back-end, digite npm start
-- No caminho da pasta do Angular, digite ng s -o
 
-Espero que dado tudo certo :smile:
 
 
 
