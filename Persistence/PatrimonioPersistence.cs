@@ -143,7 +143,8 @@ namespace Persistence
                               TipoEquipamento = e.TipoEquipamento,
                               Modelo = p.Modelo,
                               CodigoPatrimonio = p.CodigoPatrimonio,
-                              SituacaoEquipamento = p.SituacaoEquipamento
+                              SituacaoEquipamento = p.SituacaoEquipamento,
+                              ServiceTag = p.ServiceTag
                           }).ToListAsync();
         }
     }
