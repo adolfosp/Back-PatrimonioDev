@@ -26,6 +26,7 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
                 empresa.CNPJ = request.Empresa.CNPJ;
                 empresa.NomeFantasia = request.Empresa.NomeFantasia;
                 empresa.RazaoSocial = request.Empresa.RazaoSocial;
+                empresa.EmpresaPadraoImpressao = request.Empresa.EmpresaPadraoImpressao;
 
                 await _context.Empresa.AddAsync(empresa);
 

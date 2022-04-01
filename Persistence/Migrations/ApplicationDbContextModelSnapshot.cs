@@ -48,6 +48,9 @@ namespace Persistence.Migrations
                         .HasMaxLength(18)
                         .HasColumnType("nvarchar(18)");
 
+                    b.Property<bool>("EmpresaPadraoImpressa")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -234,7 +237,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("ServiceTag")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("SituacaoEquipamento")
                         .HasColumnType("int");

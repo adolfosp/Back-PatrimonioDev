@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220325000854_addTudo")]
-    partial class addTudo
+    [Migration("20220401002945_addTabelas")]
+    partial class addTabelas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(18)
                         .HasColumnType("nvarchar(18)");
+
+                    b.Property<bool>("EmpresaPadraoImpressa")
+                        .HasColumnType("bit");
 
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
@@ -236,7 +239,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("ServiceTag")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("SituacaoEquipamento")
                         .HasColumnType("int");

@@ -18,9 +18,6 @@ namespace Aplicacao.Dtos
         public int CodigoUsuario { get; set; }
         public int CodigoFuncionario { get; set; }
         public string? NomeFuncionario { get; set; }
-
-
-
     }
 }
 

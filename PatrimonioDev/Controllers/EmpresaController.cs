@@ -62,8 +62,7 @@ namespace PatrimonioDev.Controllers
             }
         }
 
-        [SwaggerOperation(Summary = "Método para a empresa por Id")]
-
+        [SwaggerOperation(Summary = "Método para buscar a empresa por Id")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -76,6 +75,28 @@ namespace PatrimonioDev.Controllers
             try
             {
                 var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
+
+                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para buscar empresa empresa padrão de impressão")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Empresa), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "1")]
+        [HttpGet("empresaPadrao")]
+        public async Task<IActionResult> ListarEmpresaPadrao()
+        {
+            try
+            {
+                var empresa = await Mediator.Send(new ObterEmpresaPadrao());
 
                 return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
             }
@@ -103,13 +124,15 @@ namespace PatrimonioDev.Controllers
 
                 command.Id = codigoEmpresa;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+                var resposta = await Mediator.Send(command);
 
-                if (statusCode.StatusCode == 404)
+                if (resposta.CodigoStatus == 404)
                     return NotFound("Nenhum registro encontrado!");
 
-                return Ok();
+                if (resposta.CodigoStatus == 400)
+                    return BadRequest(new { mensagem = $"A empresa de nome fantasia '{resposta.NomeEmpresa}' já está com a opção 'Empresa Padrão Impressão' marcada" });
 
+                return Ok();
 
             }
             catch (Exception ex)

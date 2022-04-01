@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class addTudo : Migration
+    public partial class addTabelas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,8 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CNPJ = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
                     RazaoSocial = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    NomeFantasia = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false)
+                    NomeFantasia = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    EmpresaPadraoImpressa = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +182,7 @@ namespace Persistence.Migrations
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Modelo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ServiceTag = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceTag = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Armazenamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Processador = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlacaDeVideo = table.Column<string>(type: "nvarchar(max)", nullable: true),
