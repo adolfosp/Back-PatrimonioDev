@@ -1,6 +1,7 @@
 ﻿using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace Aplicacao.Interfaces
@@ -25,6 +26,9 @@ namespace Aplicacao.Interfaces
         Task<IDbContextTransaction> BeginTransactionAsync();
         void CommitTransactionAsync();
         void RollbackTransactionAsync();
+        public DbCommand CreateCommand();
+        public void OpenConnection();
+        public void CloseConnection();
 
     }
 }

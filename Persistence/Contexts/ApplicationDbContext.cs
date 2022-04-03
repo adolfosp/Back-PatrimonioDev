@@ -2,6 +2,7 @@
 using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace Persistence.Context
@@ -39,5 +40,14 @@ namespace Persistence.Context
 
         public async void RollbackTransactionAsync()
            => await base.Database.RollbackTransactionAsync();
+
+        public DbCommand CreateCommand()
+          => base.Database.GetDbConnection().CreateCommand();
+
+        public void OpenConnection()
+          => base.Database.OpenConnection();
+
+        public void CloseConnection()
+            => base.Database.CloseConnection();
     }
 }

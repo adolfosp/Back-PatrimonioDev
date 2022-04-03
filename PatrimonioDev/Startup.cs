@@ -35,6 +35,7 @@ namespace PatrimonioDev
         {
             services.AddCors();
 
+            //TODO: VALIDAR PARA COLOCAR EM OUTRO ARQUIVO
             services.AddApplication();
             services.AddPersistence(Configuration);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -47,6 +48,7 @@ namespace PatrimonioDev
             services.AddScoped<ICategoriaPersistence, CategoriaPersistence>();
             services.AddScoped<IFuncionarioPersistence, FuncionarioPersistence>();
             services.AddScoped<IPerfilUsuarioPersistence, PerfilUsuarioPersistence>();
+            services.AddScoped<IEstatisticaPersistence, EstatisticaPersistence>();
 
             services.AddControllers();
             services.AddAuthentication(opt =>

@@ -29,7 +29,12 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                return Ok(await Mediator.Send(command));
+               var empresa = await Mediator.Send(command);
+
+                if(empresa.EmpresaContemOpcaoPadraoImpressao)
+                    return BadRequest(new { mensagem = $"A empresa de nome fantasia '{empresa.Empresa.NomeFantasia}' já está com a opção 'Empresa Padrão Impressão' marcada" });
+
+                return Ok(empresa);
             }
             catch (Exception ex)
             {
