@@ -16,7 +16,7 @@ namespace PatrimonioDev.Controllers
     {
 
         [SwaggerOperation(Summary = "Método para criar perdas de equipamento")]
-        [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PerdaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
@@ -36,7 +36,7 @@ namespace PatrimonioDev.Controllers
         }
 
         [SwaggerOperation(Summary = "Método para buscar perdas de equipamento específico")]
-        [ProducesResponseType(typeof(PercaEquipamento), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PerdaEquipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

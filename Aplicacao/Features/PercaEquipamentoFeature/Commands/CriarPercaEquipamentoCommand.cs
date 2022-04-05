@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Aplicacao.Features.PercaEquipamentoFeature.Commands
 {
-    public class CriarPercaEquipamentoCommand : IRequest<PercaEquipamento>
+    public class CriarPercaEquipamentoCommand : IRequest<PerdaEquipamento>
     {
         public PercaEquipamentoDto PercaDeEquipamento { get; set; }
 
-        public class CriarPercaEquipamentoCommandHandler: IRequestHandler<CriarPercaEquipamentoCommand, PercaEquipamento>
+        public class CriarPercaEquipamentoCommandHandler: IRequestHandler<CriarPercaEquipamentoCommand, PerdaEquipamento>
         {
             private readonly IPercaEquipamentoPersistence _persistence;
 
@@ -19,7 +19,7 @@ namespace Aplicacao.Features.PercaEquipamentoFeature.Commands
                 => _persistence = persistence;
 
 
-            public Task<PercaEquipamento> Handle(CriarPercaEquipamentoCommand request,
+            public Task<PerdaEquipamento> Handle(CriarPercaEquipamentoCommand request,
                 CancellationToken cancellationToken)
                 => _persistence.CriarPercaEquipamento(request.PercaDeEquipamento);
         }

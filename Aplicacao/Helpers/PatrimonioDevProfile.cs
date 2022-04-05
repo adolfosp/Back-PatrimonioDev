@@ -12,7 +12,7 @@ namespace Aplicacao.Helpers
             CreateMap<Domain.Entidades.Usuario, Dtos.UsuarioDto>().ReverseMap();
             CreateMap<Domain.Entidades.Equipamento, Dtos.EquipamentoDto>().ReverseMap();
             CreateMap<Domain.Entidades.Patrimonio, Dtos.PatrimonioDto>().ReverseMap();
-            CreateMap<Domain.Entidades.PercaEquipamento, Dtos.PercaEquipamentoDto>().ReverseMap();
+            CreateMap<Domain.Entidades.PerdaEquipamento, Dtos.PercaEquipamentoDto>().ReverseMap();
             CreateMap<Domain.Entidades.MovimentacaoEquipamento, Dtos.MovimentacaoEquipamentoDto>().ReverseMap();
             CreateMap<Domain.Entidades.Funcionario, Dtos.FuncionarioDto>().ReverseMap();
             CreateMap<Domain.Entidades.PerfilUsuario, Dtos.PerfilUsuarioDto>().ReverseMap();

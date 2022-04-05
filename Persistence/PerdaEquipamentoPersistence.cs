@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class PercaEquipamentoPersistence : IPercaEquipamentoPersistence
+    public class PerdaEquipamentoPersistence : IPercaEquipamentoPersistence
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public PercaEquipamentoPersistence(IApplicationDbContext context, IMapper mapper)
+        public PerdaEquipamentoPersistence(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -22,7 +22,7 @@ namespace Persistence
 
         public async Task<int> DeletarPercaEquipamento(int codigoPercaEquipamento)
         {
-            var percaEquipamento = await _context.PercaEquipamento.Where(x => x.CodigoPerca == codigoPercaEquipamento).FirstOrDefaultAsync();
+            var percaEquipamento = await _context.PercaEquipamento.Where(x => x.CodigoPerda == codigoPercaEquipamento).FirstOrDefaultAsync();
 
             if (percaEquipamento == null) return 404;
 
@@ -33,9 +33,9 @@ namespace Persistence
             return 200;
         }
 
-        public async Task<PercaEquipamento> CriarPercaEquipamento(PercaEquipamentoDto percaEquipamentoDto)
+        public async Task<PerdaEquipamento> CriarPercaEquipamento(PercaEquipamentoDto percaEquipamentoDto)
         {
-            var percaEquipamento = _mapper.Map<PercaEquipamento>(percaEquipamentoDto);
+            var percaEquipamento = _mapper.Map<PerdaEquipamento>(percaEquipamentoDto);
 
             _context.PercaEquipamento.Add(percaEquipamento);
 
@@ -44,9 +44,9 @@ namespace Persistence
             return percaEquipamento;
         }
 
-        public async Task<PercaEquipamento> ObterPercaPorId(int codigoPercaEquipamento)
+        public async Task<PerdaEquipamento> ObterPercaPorId(int codigoPercaEquipamento)
         {
-            var percaEquipamento = await _context.PercaEquipamento.Where(x => x.CodigoPerca == codigoPercaEquipamento).Select(x => x).FirstOrDefaultAsync();
+            var percaEquipamento = await _context.PercaEquipamento.Where(x => x.CodigoPerda == codigoPercaEquipamento).Select(x => x).FirstOrDefaultAsync();
 
             if (percaEquipamento is null) return null;
 
@@ -55,7 +55,7 @@ namespace Persistence
 
         public async Task<int> AtualizarPercaEquipamento(int codigoPercaEquipamento, PercaEquipamentoDto percaEquipamentoDto)
         {
-            var percaEquipamento = await _context.PercaEquipamento.Where(x => x.CodigoPerca == codigoPercaEquipamento).Select(x => x).FirstOrDefaultAsync();
+            var percaEquipamento = await _context.PercaEquipamento.Where(x => x.CodigoPerda == codigoPercaEquipamento).Select(x => x).FirstOrDefaultAsync();
 
             if (percaEquipamento is null) return 404;
 

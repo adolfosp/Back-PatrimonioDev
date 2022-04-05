@@ -17,7 +17,7 @@ namespace Aplicacao.Interfaces
         DbSet<UsuarioPermissao> UsuarioPermissao { get; set; }
         DbSet<InformacaoAdicional> InformacaoAdicional { get; set; } 
         DbSet<Patrimonio> Patrimonio { get; set; }
-        DbSet<PercaEquipamento> PercaEquipamento { get; set; }
+        DbSet<PerdaEquipamento> PercaEquipamento { get; set; }
         DbSet<MovimentacaoEquipamento> MovimentacaoEquipamento { get; set; }
         DbSet<CategoriaEquipamento> CategoriaEquipamento { get; set; }
         DbSet<Funcionario> Funcionario { get; set; }
