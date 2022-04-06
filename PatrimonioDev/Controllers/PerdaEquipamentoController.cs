@@ -22,7 +22,7 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarPercaEquipamento([FromBody]CriarPercaEquipamentoCommand command)
+        public async Task<IActionResult> CriarPerdaEquipamento([FromBody]CriarPerdaEquipamentoCommand command)
         {
             try
             {

@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Persistence.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -133,18 +134,16 @@ namespace Persistence
         public async Task<IEnumerable<PatrimonioDto>> ObterTodosPatrimonio()
         {
 
-            return await (from p in _context.Patrimonio
-                          join e in _context.Equipamento on p.CodigoTipoEquipamento equals e.CodigoTipoEquipamento
-                          join f in _context.Funcionario on p.CodigoFuncionario equals f.CodigoFuncionario
-                          select new PatrimonioDto()
-                          {
-                              NomeFuncionario = f.NomeFuncionario,
-                              TipoEquipamento = e.TipoEquipamento,
-                              Modelo = p.Modelo,
-                              CodigoPatrimonio = p.CodigoPatrimonio,
-                              SituacaoEquipamento = p.SituacaoEquipamento,
-                              ServiceTag = p.ServiceTag
-                          }).ToListAsync();
+            _context.OpenConnection();
+
+            using var command = _context.CreateCommand();
+
+            command.CommandText = "SELECT f.NomeFuncionario, e.TipoEquipamento, p.Modelo, p.CodigoPatrimonio, p.SituacaoEquipamento, p.ServiceTag FROM Patrimonio AS p LEFT JOIN PercaEquipamento AS pe ON pe.CodigoPatrimonio = p.CodigoPatrimonio LEFT JOIN Funcionario AS f ON f.CodigoFuncionario = p.CodigoFuncionario LEFT JOIN Equipamento AS e ON e.CodigoTipoEquipamento = p.CodigoTipoEquipamento WHERE pe.CodigoPerda IS NULL";
+
+            using var result = await command.ExecuteReaderAsync();
+
+            return DataReaderMapToList.DataReaderToList<PatrimonioDto>(result);
+
         }
     }
 }

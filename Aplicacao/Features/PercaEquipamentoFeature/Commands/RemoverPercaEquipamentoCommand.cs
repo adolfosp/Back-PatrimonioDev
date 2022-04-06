@@ -11,9 +11,9 @@ namespace Aplicacao.Features.PercaEquipamentoFeature.Commands
 
         public class RemoverPercaEquipamentoCommandHandler : IRequestHandler<RemoverPercaEquipamentoCommand, int>
         {
-            private readonly IPercaEquipamentoPersistence _persistence;
+            private readonly IPerdaEquipamentoPersistence _persistence;
 
-            public RemoverPercaEquipamentoCommandHandler(IPercaEquipamentoPersistence persistence)
+            public RemoverPercaEquipamentoCommandHandler(IPerdaEquipamentoPersistence persistence)
                 => _persistence = persistence;
 
             public Task<int> Handle(RemoverPercaEquipamentoCommand request, CancellationToken cancellationToken)

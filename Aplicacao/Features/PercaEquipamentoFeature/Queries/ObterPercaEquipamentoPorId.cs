@@ -12,9 +12,9 @@ namespace Aplicacao.Features.PercaEquipamentoFeature.Queries
 
         public class ObterPercaEquipamentoPorIdHandler : IRequestHandler<ObterPercaEquipamentoPorId, PerdaEquipamento>
         {
-            private readonly IPercaEquipamentoPersistence _persistence;
+            private readonly IPerdaEquipamentoPersistence _persistence;
 
-            public ObterPercaEquipamentoPorIdHandler(IPercaEquipamentoPersistence persistence)
+            public ObterPercaEquipamentoPorIdHandler(IPerdaEquipamentoPersistence persistence)
                 =>  _persistence = persistence;
 
             public Task<PerdaEquipamento> Handle(ObterPercaEquipamentoPorId request, CancellationToken cancellationToken)

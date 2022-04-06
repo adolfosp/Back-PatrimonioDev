@@ -9,13 +9,13 @@ namespace Aplicacao.Features.PercaEquipamentoFeature.Commands
     public class AtualizarPercaEquipamentoCommand : IRequest<int>
     {
         public int Id { get; set; }
-        public PercaEquipamentoDto PercaEquipamentoDto { get; set; }
+        public PerdaEquipamentoDto PercaEquipamentoDto { get; set; }
 
         public class AtualizarPercaEquipamentoCommandHandler : IRequestHandler<AtualizarPercaEquipamentoCommand, int>
         {
-            private readonly IPercaEquipamentoPersistence _persistence;
+            private readonly IPerdaEquipamentoPersistence _persistence;
 
-            public AtualizarPercaEquipamentoCommandHandler(IPercaEquipamentoPersistence persistence)
+            public AtualizarPercaEquipamentoCommandHandler(IPerdaEquipamentoPersistence persistence)
                 => _persistence = persistence;
 
 

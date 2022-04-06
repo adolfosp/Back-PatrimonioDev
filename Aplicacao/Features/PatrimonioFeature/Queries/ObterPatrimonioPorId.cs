@@ -17,8 +17,8 @@ namespace Aplicacao.Features.PatrimonioFeature.Queries
             public ObterPatrimonioPorIdHandler(IPatrimonioPersistence persistence)
                 => _persistence = persistence;
 
-            public Task<Patrimonio> Handle(ObterPatrimonioPorId request, CancellationToken cancellationToken)
-                => _persistence.ObterPatrimonioPorId(request.Id);
+            public async Task<Patrimonio> Handle(ObterPatrimonioPorId request, CancellationToken cancellationToken)
+                => await _persistence.ObterPatrimonioPorId(request.Id);
         }
     }
 }

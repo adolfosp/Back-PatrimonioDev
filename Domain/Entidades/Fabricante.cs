@@ -8,7 +8,7 @@ namespace Domain.Entidades
         public int CodigoFabricante { get; set; }
 
         [Required]
-        [MinLength(5)]
+        [MinLength(4)]
         [MaxLength(60)]
         public string NomeFabricante { get; set; }
     }

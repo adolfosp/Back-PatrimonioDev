@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220401002945_addTabelas")]
-    partial class addTabelas
+    [Migration("20220405231847_addTudo")]
+    partial class addTudo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,7 +50,7 @@ namespace Persistence.Migrations
                         .HasMaxLength(18)
                         .HasColumnType("nvarchar(18)");
 
-                    b.Property<bool>("EmpresaPadraoImpressa")
+                    b.Property<bool>("EmpresaPadraoImpressao")
                         .HasColumnType("bit");
 
                     b.Property<string>("NomeFantasia")
@@ -256,9 +256,9 @@ namespace Persistence.Migrations
                     b.ToTable("Patrimonio");
                 });
 
-            modelBuilder.Entity("Domain.Entidades.PercaEquipamento", b =>
+            modelBuilder.Entity("Domain.Entidades.PerdaEquipamento", b =>
                 {
-                    b.Property<int>("CodigoPerca")
+                    b.Property<int>("CodigoPerda")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -266,49 +266,16 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
 
-                    b.Property<string>("MotivoDaPerca")
+                    b.Property<string>("MotivoDaPerda")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.HasKey("CodigoPerca");
+                    b.HasKey("CodigoPerda");
 
                     b.HasIndex("CodigoPatrimonio");
 
                     b.ToTable("PercaEquipamento");
-                });
-
-            modelBuilder.Entity("Domain.Entidades.PerfilUsuario", b =>
-                {
-                    b.Property<int>("CodigoUsuario")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DescricaoPermissao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImagemUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomeSetor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomeUsuario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RazaoSocial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Senha")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CodigoUsuario");
-
-                    b.ToTable("PerfilUsuario");
                 });
 
             modelBuilder.Entity("Domain.Entidades.Setor", b =>
@@ -471,7 +438,7 @@ namespace Persistence.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("Domain.Entidades.PercaEquipamento", b =>
+            modelBuilder.Entity("Domain.Entidades.PerdaEquipamento", b =>
                 {
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()

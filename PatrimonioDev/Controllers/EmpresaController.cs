@@ -95,7 +95,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [Authorize(Roles = "1")]
+        [Authorize]
         [HttpGet("empresaPadrao")]
         public async Task<IActionResult> ListarEmpresaPadrao()
         {

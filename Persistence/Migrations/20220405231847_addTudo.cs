@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class addTabelas : Migration
+    public partial class addTudo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Persistence.Migrations
                     CNPJ = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
                     RazaoSocial = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     NomeFantasia = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    EmpresaPadraoImpressa = table.Column<bool>(type: "bit", nullable: false)
+                    EmpresaPadraoImpressao = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,25 +62,6 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Funcionario", x => x.CodigoFuncionario);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PerfilUsuario",
-                columns: table => new
-                {
-                    CodigoUsuario = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeUsuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NomeSetor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RazaoSocial = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DescricaoPermissao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PerfilUsuario", x => x.CodigoUsuario);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,14 +255,14 @@ namespace Persistence.Migrations
                 name: "PercaEquipamento",
                 columns: table => new
                 {
-                    CodigoPerca = table.Column<int>(type: "int", nullable: false)
+                    CodigoPerda = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MotivoDaPerca = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    MotivoDaPerda = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PercaEquipamento", x => x.CodigoPerca);
+                    table.PrimaryKey("PK_PercaEquipamento", x => x.CodigoPerda);
                     table.ForeignKey(
                         name: "FK_PercaEquipamento_Patrimonio_CodigoPatrimonio",
                         column: x => x.CodigoPatrimonio,
@@ -361,9 +342,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PercaEquipamento");
-
-            migrationBuilder.DropTable(
-                name: "PerfilUsuario");
 
             migrationBuilder.DropTable(
                 name: "Patrimonio");
