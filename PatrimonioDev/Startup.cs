@@ -49,6 +49,7 @@ namespace PatrimonioDev
             services.AddScoped<IFuncionarioPersistence, FuncionarioPersistence>();
             services.AddScoped<IPerfilUsuarioPersistence, PerfilUsuarioPersistence>();
             services.AddScoped<IEstatisticaPersistence, EstatisticaPersistence>();
+            services.AddScoped<IRelatorio, RelatorioPersistence>();
 
             services.AddControllers();
             services.AddAuthentication(opt =>
