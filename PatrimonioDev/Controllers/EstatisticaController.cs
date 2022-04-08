@@ -36,6 +36,28 @@ namespace PatrimonioDev.Controllers
                 return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
             }
         }
+
+        [SwaggerOperation(Summary = "Método para obter resultados da quantidade media de equipamentos por funcionário")]
+        [ProducesResponseType(typeof(EstatisticaCategoriaDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
+        [HttpGet("media")]
+        public async Task<IActionResult> ObterMediaEquipamentosPorFuncionario()
+        {
+            try
+            {
+                var categorias = await Mediator.Send(new ObterMediaEquipamentoPorFuncionario());
+
+                return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
     }
 }
 

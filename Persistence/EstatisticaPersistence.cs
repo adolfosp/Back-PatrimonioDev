@@ -28,5 +28,18 @@ namespace Persistence
             return DataReaderMapToList.DataReaderToList<EstatisticaCategoriaDto>(result);
 
         }
+
+        public async Task<List<EstatisticaMediaEquipamentoDto>> ObterMediaEquipamentoPorFuncionario()
+        {
+            _context.OpenConnection();
+
+            using var command = _context.CreateCommand();
+
+            command.CommandText = "SELECT Sum(quantidadeequipamentoporfuncionario) AS QuantidadeTotalDeEquipamento, Count(codigofuncionario) AS QuantidadeTotalFuncionario FROM(SELECT Count(f.codigofuncionario) AS QuantidadeEquipamentoPorFuncionario , f.codigofuncionario FROM patrimonio AS p LEFT JOIN funcionario AS f ON f.codigofuncionario = p.codigofuncionario LEFT JOIN equipamento AS eq ON eq.codigotipoequipamento = p.codigotipoequipamento LEFT JOIN percaequipamento AS perca ON perca.codigopatrimonio = p.codigopatrimonio WHERE perca.codigopatrimonio IS NULL GROUP BY f.codigofuncionario, f.nomefuncionario) grp ";
+
+            using var result = await command.ExecuteReaderAsync();
+
+            return DataReaderMapToList.DataReaderToList<EstatisticaMediaEquipamentoDto>(result);
+        }
     }
 }
