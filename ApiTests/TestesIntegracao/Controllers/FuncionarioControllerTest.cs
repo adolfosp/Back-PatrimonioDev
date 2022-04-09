@@ -231,7 +231,7 @@ namespace ApiTests.TestesIntegracao.Controllers
             sut._mediator = _service.Object;
 
             //Act
-            var actionResult = sut.DesativarFuncionario(1);
+            var actionResult = sut.DesativarFuncionario(3);
             var result = actionResult.Result as OkResult;
 
             //Assert
