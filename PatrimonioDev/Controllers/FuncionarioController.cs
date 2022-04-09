@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Features.FuncionarioFeature.Commands;
 using Aplicacao.Features.FuncionarioFeature.Queries;
 using Domain.Entidades;
+using Domain.Enums;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/funcionarios")]
-    public class FuncionarioController: BaseApiController
+    [Route("api/funcionarios")]
+    public class FuncionarioController : BaseApiController
     {
 
         [SwaggerOperation(Summary = "Método para cadastrar um funcionário")]
@@ -88,11 +89,14 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoFuncionario}")]
-        public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody]AtualizarFuncionarioCommand command)
+        public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody] AtualizarFuncionarioCommand command)
         {
 
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, codigoFuncionario))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 command.CodigoFuncionario = codigoFuncionario;
 
                 var statusCode = StatusCode(await Mediator.Send(command));
@@ -122,6 +126,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
+                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, id))
+                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
+
                 var statusCode = StatusCode(await Mediator.Send(new DesativarFuncionarioCommand() { CodigoFuncionario = id }));
 
                 if (statusCode.StatusCode == 404)

@@ -8,6 +8,7 @@ namespace Persistence.Helpers
 {
     public class DataReaderMapToList
     {
+        //TODO: FAZER PARA APENAS CLASSES AO INVES DE LISTA
         public static List<Tdto> DataReaderToList<Tdto>(DbDataReader dr)
         {
             List<Tdto> list = new List<Tdto>();

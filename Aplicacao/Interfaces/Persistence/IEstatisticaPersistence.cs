@@ -8,5 +8,7 @@ namespace Aplicacao.Interfaces.Persistence
     {
         Task<List<EstatisticaCategoriaDto>> ObterEstatisticaCategoria();
         Task<List<EstatisticaMediaEquipamentoDto>> ObterMediaEquipamentoPorFuncionario();
+        Task<List<EstatisticaPatrimonioDisponivelDto>> ObterPatrimonioDisponivel();
+
     }
 }

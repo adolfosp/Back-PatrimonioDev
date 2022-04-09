@@ -48,7 +48,29 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                var categorias = await Mediator.Send(new ObterMediaEquipamentoPorFuncionario());
+                var categorias = await Mediator.Send(new ObterEstatisticaMediaEquipamentoPorFuncionario());
+
+                return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para obter quantidade de patrimônio disponível")]
+        [ProducesResponseType(typeof(EstatisticaCategoriaDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
+        [HttpGet("patrimoniodisponivel")]
+        public async Task<IActionResult> ObterPatrimoniosDisponivel()
+        {
+            try
+            {
+                var categorias = await Mediator.Send(new ObterEstatisticaPatrimonioDisponivel());
 
                 return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
 

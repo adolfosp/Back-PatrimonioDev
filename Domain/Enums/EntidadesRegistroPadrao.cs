@@ -4,6 +4,7 @@
     {
         Empresa = 1,
         Permissao = 2,
-        Setor =3,
+        Setor = 3,
+        Funcionario = 4
     }
 }

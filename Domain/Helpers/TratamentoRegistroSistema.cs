@@ -10,6 +10,7 @@ namespace Domain.Helpers
             {
                 case EntidadesRegistroPadrao.Empresa:
                 case EntidadesRegistroPadrao.Setor:
+                case EntidadesRegistroPadrao.Funcionario:
 
                     if (codigoRegistro == 1)
                         return true;
