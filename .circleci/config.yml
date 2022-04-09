@@ -27,6 +27,7 @@ jobs:
           command: echo "Current directory $(ls)"
       - run: dotnet restore
       - run: dotnet build
+      - run: dotnet run
 
   build-test-api:
     docker:
@@ -39,6 +40,7 @@ jobs:
           command: echo "Current directory $(ls)"
       - run: dotnet restore
       - run: dotnet build
+      - run: dotnet run
 
   publish-package:
     docker:

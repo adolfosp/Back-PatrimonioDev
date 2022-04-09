@@ -74,7 +74,7 @@ namespace ApiTests.TestesIntegracao.Controllers
 
             //Assert
             Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value);
+            Assert.IsTrue(result.Value.ToString().Contains("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object."));
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace ApiTests.TestesIntegracao.Controllers
 
             //Assert
             Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value.ToString());
+            Assert.IsTrue(result.Value.ToString().Contains("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object."));
 
         }
 
@@ -185,7 +185,7 @@ namespace ApiTests.TestesIntegracao.Controllers
             sut._mediator = _service.Object;
 
             //Act
-            var actionResult = sut.AtualizarFuncionario(1,handlerMoq);
+            var actionResult = sut.AtualizarFuncionario(3,handlerMoq);
             var result = actionResult.Result as OkResult;
 
             //Assert
@@ -208,13 +208,12 @@ namespace ApiTests.TestesIntegracao.Controllers
             sut._mediator = _service.Object;
 
             //Act
-            var actionResult = sut.AtualizarFuncionario(1, handlerMoq);
+            var actionResult = sut.AtualizarFuncionario(2, handlerMoq);
             var result = actionResult.Result as ObjectResult;
 
             //Assert
             Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("{ mensagem = Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.  }", result.Value.ToString());
-
+            Assert.IsTrue(result.Value.ToString().Contains("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object."));
         }
 
         [TestMethod]
@@ -260,7 +259,7 @@ namespace ApiTests.TestesIntegracao.Controllers
 
             //Assert
             Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value.ToString());
+            Assert.IsTrue(result.Value.ToString().Contains("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object."));
 
         }
     }
