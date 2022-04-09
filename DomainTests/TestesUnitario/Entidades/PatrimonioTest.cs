@@ -40,7 +40,7 @@ namespace DomainTests.TestesUnitario.Entidades
             var results = new List<ValidationResult>();
 
             //Act
-            var resultado = Validator.TryValidateProperty("", context, results);
+            var resultado = Validator.TryValidateProperty("modelo", context, results);
 
             //Assert
             Assert.IsTrue(resultado);

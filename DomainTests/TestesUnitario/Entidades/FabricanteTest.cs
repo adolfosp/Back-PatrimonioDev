@@ -22,7 +22,7 @@ namespace DomainTests.TestesUnitario.Entidades
             var results = new List<ValidationResult>();
 
             //Act
-            var resultado = Validator.TryValidateProperty("equi", context, results);
+            var resultado = Validator.TryValidateProperty("equ", context, results);
 
             //Assert
             Assert.IsFalse(resultado);

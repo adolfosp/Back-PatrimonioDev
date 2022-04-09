@@ -143,7 +143,7 @@ namespace ApiTests.TestesIntegracao.Controllers
 
             //Assert
             Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value.ToString());
+            Assert.IsTrue(result.Value.ToString().Contains("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object."));
 
         }
 
@@ -254,7 +254,7 @@ namespace ApiTests.TestesIntegracao.Controllers
             sut._mediator = _service.Object;
 
             //Act
-            var actionResult = sut.DesativarFuncionario(1);
+            var actionResult = sut.DesativarFuncionario(3);
             var result = actionResult.Result as ObjectResult;
 
             //Assert
