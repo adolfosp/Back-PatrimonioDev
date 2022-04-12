@@ -86,6 +86,7 @@ namespace Persistence
         { 
 
             usuarioCadastrar.Senha = CriptografiaHelper.Criptografar(usuarioCadastrar.Senha);
+            usuarioCadastrar.Ativo = true;
 
             _context.Usuario.Add(usuarioCadastrar);
 

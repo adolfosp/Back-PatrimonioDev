@@ -119,7 +119,7 @@ namespace PatrimonioDev.Controllers
                         new Claim("nomeUsuario", usuario.Nome)
 
                     },
-                    expires: DateTime.Now.AddMinutes(150),
+                    expires: DateTime.Now.AddDays(1),
                     signingCredentials: signinCredentials);
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
