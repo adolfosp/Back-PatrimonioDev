@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Helpers;
 
 namespace Persistence
 {
@@ -35,10 +36,8 @@ namespace Persistence
             return 200;
         }
 
-        public async Task<MovimentacaoEquipamento> CriarMovimentacaoEquipamento(MovimentacaoEquipamentoDto movimentacaoEquipamentoDto)
+        public async Task<MovimentacaoEquipamento> CriarMovimentacaoEquipamento(MovimentacaoEquipamento movimentacaoEquipamento)
         {
-            var movimentacaoEquipamento = _mapper.Map<MovimentacaoEquipamento>(movimentacaoEquipamentoDto);
-
             _context.MovimentacaoEquipamento.Add(movimentacaoEquipamento);
 
             await _context.SaveChangesAsync();
@@ -46,11 +45,17 @@ namespace Persistence
             return movimentacaoEquipamento;
         }
 
-        public async Task<IEnumerable<MovimentacaoEquipamento>> ObterTodasAsMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
+        public async Task<IEnumerable<MovimentacaoEquipamentoDto>> ObterTodasAsMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
-            var movimentacoesDeEquipamentos = await _context.MovimentacaoEquipamento.Where(x => x.CodigoPatrimonio == codigoPatrimonio).Select(x => x).ToListAsync();
+            _context.OpenConnection();
 
-            return movimentacoesDeEquipamentos;
+            using var command = _context.CreateCommand();
+
+            command.CommandText = "SELECT me.DataApropriacao, me.DataDevolucao, me.Observacao, me.MovimentacaoDoEquipamento, u.Nome AS NomeUsuario, CONCAT(e.TipoEquipamento, ' - ', f.NomeFuncionario) AS Patrimonio FROM MovimentacaoEquipamento AS me INNER JOIN Usuario AS u ON u.CodigoUsuario = me.CodigoUsuario INNER JOIN PATRIMONIO AS p ON p.CodigoPatrimonio = me.CodigoPatrimonio INNER JOIN Funcionario AS f ON f.CodigoFuncionario = p.CodigoPatrimonio INNER JOIN Equipamento AS e on e.CodigoTipoEquipamento = p.CodigoTipoEquipamento";
+
+            using var result = await command.ExecuteReaderAsync();
+
+            return DataReaderMapToList.DataReaderToList<MovimentacaoEquipamentoDto>(result);
         }
     }
 }

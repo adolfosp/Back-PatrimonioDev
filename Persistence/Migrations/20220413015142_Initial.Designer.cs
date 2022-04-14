@@ -10,8 +10,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220405231847_addTudo")]
-    partial class addTudo
+    [Migration("20220413015142_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,10 +182,10 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataApropriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("DataEvolucao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime?>("DataDevolucao")
+                        .HasColumnType("datetime");
 
                     b.Property<int>("MovimentacaoDoEquipamento")
                         .HasColumnType("int");

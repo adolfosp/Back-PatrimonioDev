@@ -9,7 +9,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
 {
     public class CriarMovimentacaoEquipamentoCommand : IRequest<MovimentacaoEquipamento>
     {
-        public MovimentacaoEquipamentoDto MovimentacaoEquipamentoDto { get; set; }
+        public MovimentacaoEquipamento Movimentacao { get; set; }
 
         public class CriarMovimentacaoEquipamentoCommandHandler: IRequestHandler<CriarMovimentacaoEquipamentoCommand, MovimentacaoEquipamento>
         {
@@ -20,7 +20,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
 
             public Task<MovimentacaoEquipamento> Handle(CriarMovimentacaoEquipamentoCommand request,
                 CancellationToken cancellationToken)
-                => _persistence.CriarMovimentacaoEquipamento(request.MovimentacaoEquipamentoDto);
+                => _persistence.CriarMovimentacaoEquipamento(request.Movimentacao);
         }
     }
 }

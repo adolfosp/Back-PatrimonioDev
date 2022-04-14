@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class addTudo : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -228,7 +228,7 @@ namespace Persistence.Migrations
                     CodigoMovimentacao = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DataApropriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataEvolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataDevolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MovimentacaoDoEquipamento = table.Column<int>(type: "int", nullable: false),
                     CodigoUsuario = table.Column<int>(type: "int", nullable: false),
