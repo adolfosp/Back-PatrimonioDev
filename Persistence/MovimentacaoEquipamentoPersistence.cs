@@ -38,6 +38,7 @@ namespace Persistence
 
         public async Task<MovimentacaoEquipamento> CriarMovimentacaoEquipamento(MovimentacaoEquipamento movimentacaoEquipamento)
         {
+
             _context.MovimentacaoEquipamento.Add(movimentacaoEquipamento);
 
             await _context.SaveChangesAsync();
@@ -51,7 +52,7 @@ namespace Persistence
 
             using var command = _context.CreateCommand();
 
-            command.CommandText = "SELECT me.DataApropriacao, me.DataDevolucao, me.Observacao, me.MovimentacaoDoEquipamento, u.Nome AS NomeUsuario, CONCAT(e.TipoEquipamento, ' - ', f.NomeFuncionario) AS Patrimonio FROM MovimentacaoEquipamento AS me INNER JOIN Usuario AS u ON u.CodigoUsuario = me.CodigoUsuario INNER JOIN PATRIMONIO AS p ON p.CodigoPatrimonio = me.CodigoPatrimonio INNER JOIN Funcionario AS f ON f.CodigoFuncionario = p.CodigoPatrimonio INNER JOIN Equipamento AS e on e.CodigoTipoEquipamento = p.CodigoTipoEquipamento";
+            command.CommandText = $" SELECT me.DataApropriacao, me.DataDevolucao, me.Observacao, me.MovimentacaoDoEquipamento, u.Nome AS NomeUsuario, CONCAT(e.TipoEquipamento, ' - ', f.NomeFuncionario) AS Patrimonio FROM MovimentacaoEquipamento AS me INNER JOIN Usuario AS u ON u.CodigoUsuario = me.CodigoUsuario INNER JOIN PATRIMONIO AS p ON p.CodigoPatrimonio = me.CodigoPatrimonio INNER JOIN Funcionario AS f ON f.CodigoFuncionario = p.CodigoFuncionario INNER JOIN Equipamento AS e on e.CodigoTipoEquipamento = p.CodigoTipoEquipamento WHERE p.CodigoPatrimonio = {codigoPatrimonio} ";
 
             using var result = await command.ExecuteReaderAsync();
 

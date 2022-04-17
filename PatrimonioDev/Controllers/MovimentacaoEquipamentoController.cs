@@ -22,7 +22,7 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody]CriarMovimentacaoEquipamentoCommand command)
+        public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody] CriarMovimentacaoEquipamentoCommand command)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoPatrimonio}")]
-        public async Task<IActionResult> AtualizarMovimentacao(int codigoPatrimonio, [FromBody]AtualizarMovimentacaoEquipamentoCommand command)
+        public async Task<IActionResult> AtualizarMovimentacao(int codigoPatrimonio, [FromBody] AtualizarMovimentacaoEquipamentoCommand command)
         {
             try
             {
