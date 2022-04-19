@@ -44,11 +44,12 @@ namespace Persistence
 
         public async Task<List<EstatisticaPatrimonioDisponivelDto>> ObterPatrimonioDisponivel()
         {
+            //REFATORAR: UTILIZAR DAPPER
             _context.OpenConnection();
 
             using var command = _context.CreateCommand();
 
-            command.CommandText = "WITH CTE_Patrimonios AS( SELECT COUNT(P.CodigoPatrimonio) AS QuantidadePatrimonioDisponivel FROM Patrimonio AS P LEFT JOIN PercaEquipamento AS PE ON PE.CodigoPatrimonio = P.CodigoPatrimonio WHERE P.SituacaoEquipamento = 2 AND PE.CodigoPatrimonio IS NULL GROUP BY P.CodigoPatrimonio) SELECT Sum(QuantidadePatrimonioDisponivel) AS QuantidadePatrimonioDisponivel, OT.QuantidadeTotalPatrimonio FROM CTE_Patrimonios AS CTO FULL JOIN( SELECT Count(p.CodigoPatrimonio) AS QuantidadeTotalPatrimonio FROM Patrimonio AS p LEFT JOIN PercaEquipamento AS eq on eq.CodigoPatrimonio = p.CodigoPatrimonio WHERE eq.CodigoPatrimonio IS NULL ) AS OT ON OT.QuantidadeTotalPatrimonio != CTO.QuantidadePatrimonioDisponivel GROUP BY QuantidadePatrimonioDisponivel, OT.QuantidadeTotalPatrimonio ";
+            command.CommandText = "WITH CTE_Patrimonios AS( SELECT COUNT(P.CodigoPatrimonio) AS QuantidadePatrimonioDisponivel FROM Patrimonio AS P LEFT JOIN PercaEquipamento AS PE ON PE.CodigoPatrimonio = P.CodigoPatrimonio WHERE P.SituacaoEquipamento = 2 AND PE.CodigoPatrimonio IS NULL GROUP BY P.CodigoPatrimonio) SELECT Sum(QuantidadePatrimonioDisponivel) AS QuantidadePatrimonioDisponivel, COALESCE(OT.QuantidadeTotalPatrimonio,1) AS QuantidadeTotalPatrimonio FROM CTE_Patrimonios AS CTO FULL JOIN( SELECT Count(p.CodigoPatrimonio) AS QuantidadeTotalPatrimonio FROM Patrimonio AS p LEFT JOIN PercaEquipamento AS eq on eq.CodigoPatrimonio = p.CodigoPatrimonio WHERE eq.CodigoPatrimonio IS NULL ) AS OT ON OT.QuantidadeTotalPatrimonio != CTO.QuantidadePatrimonioDisponivel GROUP BY QuantidadePatrimonioDisponivel, OT.QuantidadeTotalPatrimonio ";
 
             using var result = await command.ExecuteReaderAsync();
 

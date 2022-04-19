@@ -20,13 +20,15 @@ namespace Persistence
             _context = context;
             _mapper = mapper;
         }
-             
+
 
         public async Task<int> AtualizarUsuario(UsuarioDto usuarioDto, int id)
         {
             var usuario = await _context.Usuario.Where(x => x.CodigoUsuario == id && x.Ativo == true).Select(x => x).FirstOrDefaultAsync();
 
             if (usuario is null) return 404;
+
+            usuarioDto.Senha = CriptografiaHelper.Criptografar(usuario.Senha);
 
             _mapper.Map(usuarioDto, usuario);
 
@@ -69,21 +71,22 @@ namespace Persistence
         public async Task<Usuario> ObterUsuarioLogin(string email, string senha, bool autenticacaoAuth)
         {
 
-            Usuario usuario; 
+            Usuario usuario;
+            var senhasIguais = false;
 
-            if(autenticacaoAuth)
-                 usuario = await _context.Usuario.Where(x => x.Email == email).Select(x => x).FirstOrDefaultAsync();
-            else
-                usuario = await _context.Usuario.Where(x => x.Email == email && x.Senha == CriptografiaHelper.Criptografar(senha)).Select(x => x).FirstOrDefaultAsync();
+            usuario = await _context.Usuario.Where(x => x.Email == email).Select(x => x).FirstOrDefaultAsync();
 
+            if (usuario is null) return null;
 
-            if (usuario == null) return null;
+            if (!autenticacaoAuth)       
+                return (CriptografiaHelper.Descriptografar(usuario.Senha) == senha) ? usuario: null;       
 
             return usuario;
         }
 
+
         public async Task<Usuario> CriarUsuario(Usuario usuarioCadastrar)
-        { 
+        {
 
             usuarioCadastrar.Senha = CriptografiaHelper.Criptografar(usuarioCadastrar.Senha);
             usuarioCadastrar.Ativo = true;
