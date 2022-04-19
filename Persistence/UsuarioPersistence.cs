@@ -28,7 +28,7 @@ namespace Persistence
 
             if (usuario is null) return 404;
 
-            usuarioDto.Senha = CriptografiaHelper.Criptografar(usuario.Senha);
+            usuarioDto.Senha = CriptografiaHelper.Criptografar(usuarioDto.Senha);
 
             _mapper.Map(usuarioDto, usuario);
 
