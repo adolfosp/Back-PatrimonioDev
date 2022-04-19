@@ -72,7 +72,6 @@ namespace Persistence
         {
 
             Usuario usuario;
-            var senhasIguais = false;
 
             usuario = await _context.Usuario.Where(x => x.Email == email).Select(x => x).FirstOrDefaultAsync();
 
