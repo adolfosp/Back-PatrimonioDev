@@ -10,5 +10,7 @@ namespace Aplicacao.Interfaces.Persistence
         Task<int> AtualizarMovimentacaoEquipamento(int codigoMovimentacao, MovimentacaoEquipamentoDto movimentacaoEquipamentoDto);
         Task<MovimentacaoEquipamento> CriarMovimentacaoEquipamento(MovimentacaoEquipamento movimentacaoEquipamentoDto);
         Task<IEnumerable<MovimentacaoEquipamentoDto>> ObterTodasAsMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio);
+        Task<MovimentacaoEquipamentoDto> ObterApenasUmaMovimentacao(int codigoMovimentacao);
+
     }
 }

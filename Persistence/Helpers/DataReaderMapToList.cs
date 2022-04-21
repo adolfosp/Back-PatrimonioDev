@@ -34,5 +34,30 @@ namespace Persistence.Helpers
             }
             return new List<Tdto>();
         }
+
+        public static Tdto DataReader<Tdto>(DbDataReader dr)
+        {
+            var dto = Activator.CreateInstance<Tdto>();
+          
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    foreach (PropertyInfo prop in dto.GetType().GetProperties())
+                    {
+                        if (dr.GetColumnSchema().Any(x => x.ColumnName.ToUpper() == prop.Name.ToUpper()))
+                        {
+                            if (!Equals(dr[prop.Name], DBNull.Value))
+                            {
+                                prop.SetValue(dto, dr[prop.Name], null);
+                            }
+                        }
+                    }
+                }
+                return dto;
+            }
+            return dto;
+        }
     }
 }

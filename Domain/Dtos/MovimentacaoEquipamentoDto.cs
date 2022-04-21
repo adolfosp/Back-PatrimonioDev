@@ -6,6 +6,7 @@ namespace Aplicacao.Dtos
     public class MovimentacaoEquipamentoDto
     {
 
+        public int CodigoMovimentacao { get; set; }
         public DateTime DataApropriacao { get; set; }
         public DateTime? DataDevolucao { get; set; }
         public string Observacao { get; set; }
@@ -13,6 +14,8 @@ namespace Aplicacao.Dtos
         public int CodigoUsuario { get; set; }
         public int CodigoPatrimonio { get; set; }
         public string NomeUsuario { get; set; }
-        public string Patrimonio { get; set; }
+        public string TipoEquipamento { get; set; }
+        public string NomeFuncionario { get; set; }
+
     }
 }

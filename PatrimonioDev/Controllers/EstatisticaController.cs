@@ -26,9 +26,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                var categorias = await Mediator.Send(new ObterEstatisticaCategoria());
+                var estatistica = await Mediator.Send(new ObterEstatisticaCategoria());
 
-                return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
 
             }
             catch (Exception ex)
@@ -48,9 +48,9 @@ namespace PatrimonioDev.Controllers
         {
             try
             {
-                var categorias = await Mediator.Send(new ObterEstatisticaMediaEquipamentoPorFuncionario());
+                var estatistica = await Mediator.Send(new ObterEstatisticaMediaEquipamentoPorFuncionario());
 
-                return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
 
             }
             catch (Exception ex)
@@ -65,14 +65,36 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        [HttpGet("patrimoniodisponivel")]
+        [HttpGet("patrimonio-disponivel")]
         public async Task<IActionResult> ObterPatrimoniosDisponivel()
         {
             try
             {
-                var categorias = await Mediator.Send(new ObterEstatisticaPatrimonioDisponivel());
+                var estatistica = await Mediator.Send(new ObterEstatisticaPatrimonioDisponivel());
 
-                return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+        [SwaggerOperation(Summary = "Método para obter quantidade de patrimônio disponível")]
+        [ProducesResponseType(typeof(EstatisticaCategoriaDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
+        [HttpGet("quantidade-movimentacao")]
+        public async Task<IActionResult> ObterQuantidadeDeMovimentacao()
+        {
+            try
+            {
+                var estatistica = await Mediator.Send(new ObterQuantidadeMovimentacao());
+
+                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
 
             }
             catch (Exception ex)

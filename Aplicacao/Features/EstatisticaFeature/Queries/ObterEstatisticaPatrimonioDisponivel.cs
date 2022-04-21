@@ -17,8 +17,7 @@ namespace Aplicacao.Features.EstatisticaFeature.Queries
 
             public async Task<List<EstatisticaPatrimonioDisponivelDto>> Handle(ObterEstatisticaPatrimonioDisponivel request, CancellationToken cancellationToken)
                 => await _context.ObterPatrimonioDisponivel();
-
-          
+      
         }
     }
 }

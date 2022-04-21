@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Interfaces;
 using Aplicacao.Interfaces.Persistence;
 using Domain.Dtos;
+using Domain.Dtos.Estatisticas;
 using Persistence.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -54,6 +55,19 @@ namespace Persistence
             using var result = await command.ExecuteReaderAsync();
 
             return DataReaderMapToList.DataReaderToList<EstatisticaPatrimonioDisponivelDto>(result);
+        }
+
+        public async Task<EstatisticaQuantidadeMovimentacao> ObterQuantidadeMovimentacao()
+        {
+            _context.OpenConnection();
+
+            using var command = _context.CreateCommand();
+
+            command.CommandText = "SELECT COUNT(CodigoMovimentacao) AS QuantidadeMovimentacao FROM MovimentacaoEquipamento AS me LEFT JOIN PercaEquipamento AS pe ON PE.CodigoPatrimonio = ME.CodigoPatrimonio WHERE PE.CodigoPatrimonio IS NULL";
+
+            using var result = await command.ExecuteReaderAsync();
+
+            return DataReaderMapToList.DataReader<EstatisticaQuantidadeMovimentacao>(result);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
 {
     public class AtualizarMovimentacaoEquipamentoCommand : IRequest<int>
     {
-        public int Id { get; set; }
+        public int CodigoMovimentacao { get; set; }
 
-        public MovimentacaoEquipamentoDto MovimentacaoEquipamentoDto { get; set; }
+        public MovimentacaoEquipamentoDto Movimentacao { get; set; }
 
         public class AtualizarMovimentacaoEquipamentoCommandHandler : IRequestHandler<AtualizarMovimentacaoEquipamentoCommand, int>
         {
@@ -21,7 +21,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
 
 
             public Task<int> Handle(AtualizarMovimentacaoEquipamentoCommand request, CancellationToken cancellationToken)
-                => _persistence.AtualizarMovimentacaoEquipamento(request.Id, request.MovimentacaoEquipamentoDto);
+                => _persistence.AtualizarMovimentacaoEquipamento(request.CodigoMovimentacao, request.Movimentacao);
         }
     }
 }

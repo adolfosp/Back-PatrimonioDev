@@ -40,7 +40,7 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        [HttpGet("{codigoPatrimonio}")]
+        [HttpGet("movimentacao/{codigoPatrimonio}")]
         public async Task<IActionResult> ObterTodasMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
             try
@@ -62,12 +62,12 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        [HttpPut("{codigoPatrimonio}")]
-        public async Task<IActionResult> AtualizarMovimentacao(int codigoPatrimonio, [FromBody] AtualizarMovimentacaoEquipamentoCommand command)
+        [HttpPut("{codigoMovimentacao}")]
+        public async Task<IActionResult> AtualizarMovimentacao(int codigoMovimentacao, [FromBody] AtualizarMovimentacaoEquipamentoCommand command)
         {
             try
             {
-                command.Id = codigoPatrimonio;
+                command.CodigoMovimentacao = codigoMovimentacao;
 
                 var statusCode = StatusCode(await Mediator.Send(command));
 
@@ -76,6 +76,28 @@ namespace PatrimonioDev.Controllers
 
                 return Ok();
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
+            }
+        }
+
+
+        [SwaggerOperation(Summary = "Método para obter apenas uma movimentação")]
+        [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
+        [HttpGet("{codigoMovimentacao}")]
+        public async Task<IActionResult> ObterApenasUmaMovimentacao(int codigoMovimentacao)
+        {
+            try
+            {
+                var movimentacao = await Mediator.Send(new ObterApenasUmaMovimentacao() { CodigoMovimentacao = codigoMovimentacao });
+
+                return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
             }
             catch (Exception ex)
             {
