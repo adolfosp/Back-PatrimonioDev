@@ -54,7 +54,7 @@ namespace Persistence
 
             using var command = _context.CreateCommand();
 
-            command.CommandText = $" {_queryMovimentacao} WHERE me.CodigoMovimentacao = {codigoMovimentacao} ";
+            command.CommandText = $" {_queryMovimentacao} WHERE me.CodigoMovimentacao = {codigoMovimentacao}";
 
             using var result = await command.ExecuteReaderAsync();
 
@@ -68,7 +68,7 @@ namespace Persistence
 
             using var command = _context.CreateCommand();
 
-            command.CommandText = $"{_queryMovimentacao} WHERE p.CodigoPatrimonio = {codigoPatrimonio} ";
+            command.CommandText = $"{_queryMovimentacao} WHERE p.CodigoPatrimonio = {codigoPatrimonio} ORDER BY me.DataApropriacao ASC";
 
             using var result = await command.ExecuteReaderAsync();
 

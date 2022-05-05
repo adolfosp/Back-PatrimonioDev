@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PatrimonioDev.Extensions;
 using Persistence;
 using System;
 using System.IO;
@@ -36,6 +37,11 @@ namespace PatrimonioDev
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             Services.AtribuirServicosInjecaoDependencia(services);
 
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+
             services.AddControllers();
             services.AddAuthentication(opt =>
             {
@@ -50,7 +56,7 @@ namespace PatrimonioDev
                     ValidateIssuerSigningKey = true,
                     ValidateLifetime = true,
 
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.SecurityKeyJWT))
                 };
             });
 
