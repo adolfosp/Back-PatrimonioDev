@@ -1,5 +1,4 @@
 using Aplicacao;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,14 +6,10 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using PatrimonioDev.Extensions;
+using PatrimonioDev.Configuration;
 using Persistence;
 using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace PatrimonioDev
 {
@@ -35,89 +30,19 @@ namespace PatrimonioDev
             services.AddApplication();
             services.AddPersistence(Configuration);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            Services.AtribuirServicosInjecaoDependencia(services);
-
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            var appSettings = appSettingsSection.Get<AppSettings>();
+            services.AddServiceInjection();
 
             services.AddControllers();
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
+            services.AddAuthenticationConfiguration(Configuration);
 
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.SecurityKeyJWT))
-                };
-            });
-
-            services.AddSwaggerGen(c =>
-            {
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
-
-                c.EnableAnnotations();
-                c.SwaggerDoc("v1",
-                    new OpenApiInfo
-                    {
-                        Title = "REST API",
-                        Version = "v1",
-                        Description = "REST API",
-                        Contact = new OpenApiContact
-                        {
-                            Name = "Adolfo Poiatti",
-                        }
-                    });
-                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-            });
-
-
+            services.AddSwaggerConfiguration();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "REST API - v1");
-            });
-
+            app.UseSwaggerConfiguration();
 
             app.UseHttpsRedirection();
 

@@ -6,9 +6,9 @@ using Persistence;
 
 namespace PatrimonioDev
 {
-    public static class Services
+    public static class DependecyInjection
     {
-        public static void AtribuirServicosInjecaoDependencia(IServiceCollection services)
+        public static void AddServiceInjection(this IServiceCollection services)
         {
             services.AddScoped<IUsuarioPermissaoPersistence, UsuarioPermissaoPersistence>();
             services.AddScoped<IUsuarioPersistence, UsuarioPersistence>();
