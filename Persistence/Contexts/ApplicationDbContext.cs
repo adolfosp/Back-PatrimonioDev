@@ -12,7 +12,6 @@ namespace Persistence.Context
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options) { }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
        
         public DbSet<Equipamento> Equipamento { get; set; }
