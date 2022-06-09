@@ -25,21 +25,15 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "1")]
         [HttpPost]
-        public async Task<IActionResult> CriarEmpresa([FromBody]CriarEmpresaCommand command)
+        public async Task<IActionResult> CriarEmpresa([FromBody] CriarEmpresaCommand command)
         {
-            try
-            {
-               var empresa = await Mediator.Send(command);
 
-                if(empresa.EmpresaContemOpcaoPadraoImpressao)
-                    return BadRequest(new { mensagem = $"A empresa de nome fantasia '{empresa.Empresa.NomeFantasia}' já está com a opção 'Empresa Padrão Impressão' marcada" });
+            var empresa = await Mediator.Send(command);
 
-                return Ok(empresa);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            if (empresa.EmpresaContemOpcaoPadraoImpressao)
+                return BadRequest(new { mensagem = $"A empresa de nome fantasia '{empresa.Empresa.NomeFantasia}' já está com a opção 'Empresa Padrão Impressão' marcada" });
+
+            return Ok(empresa);
 
         }
 
@@ -54,17 +48,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ListarTodasEmpresas()
         {
-            try
-            {
-                var empresa = await Mediator.Send(new ObterTodasEmpresas());
 
-                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+            var empresa = await Mediator.Send(new ObterTodasEmpresas());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+
         }
 
         [SwaggerOperation(Summary = "Método para buscar a empresa por Id")]
@@ -77,16 +65,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarEmpresaPorId(int id)
         {
-            try
-            {
-                var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
+
+            return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+
         }
 
         [SwaggerOperation(Summary = "Método para buscar empresa empresa padrão de impressão")]
@@ -99,16 +82,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("empresaPadrao")]
         public async Task<IActionResult> ListarEmpresaPadrao()
         {
-            try
-            {
-                var empresa = await Mediator.Send(new ObterEmpresaPadrao());
 
-                return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var empresa = await Mediator.Send(new ObterEmpresaPadrao());
+
+            return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+
         }
 
         [SwaggerOperation(Summary = "Método para atualizar a empresa")]
@@ -119,31 +97,25 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "1")]
         [HttpPut("{codigoEmpresa}")]
-        public async Task<IActionResult> AtualizarEmpresa(int codigoEmpresa, [FromBody]AtualizarEmpresaCommand command)
+        public async Task<IActionResult> AtualizarEmpresa(int codigoEmpresa, [FromBody] AtualizarEmpresaCommand command)
         {
 
-            try
-            {
-                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, codigoEmpresa))
-                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                command.Id = codigoEmpresa;
+            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, codigoEmpresa))
+                return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                var resposta = await Mediator.Send(command);
+            command.Id = codigoEmpresa;
 
-                if (resposta.CodigoStatus == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var resposta = await Mediator.Send(command);
 
-                if (resposta.CodigoStatus == 400)
-                    return BadRequest(new { mensagem = $"A empresa de nome fantasia '{resposta.NomeEmpresa}' já está com a opção 'Empresa Padrão Impressão' marcada" });
+            if (resposta.CodigoStatus == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-                return Ok();
+            if (resposta.CodigoStatus == 400)
+                return BadRequest(new { mensagem = $"A empresa de nome fantasia '{resposta.NomeEmpresa}' já está com a opção 'Empresa Padrão Impressão' marcada" });
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
         }
 
 
@@ -157,23 +129,17 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarEmpresa(int id)
         {
-            try
-            {
-                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, id))
-                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                var statusCode = StatusCode(await Mediator.Send(new DeletarEmpresaCommand() { Id = id }));
+            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, id))
+                return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+            var statusCode = StatusCode(await Mediator.Send(new DeletarEmpresaCommand() { Id = id }));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Não foi encontrado registro para deletar");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
         }
     }
 }

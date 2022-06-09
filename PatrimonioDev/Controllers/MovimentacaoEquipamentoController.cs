@@ -23,16 +23,7 @@ namespace PatrimonioDev.Controllers
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody] CriarMovimentacaoEquipamentoCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-        }
+                => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para criar movimentação do equipamento")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
@@ -43,16 +34,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet("movimentacao/{codigoPatrimonio}")]
         public async Task<IActionResult> ObterTodasMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
-            try
-            {
-                var movimentacao = await Mediator.Send(new ObterTodasAsMovimentacoesPorCodigoPatrimonio() { Id = codigoPatrimonio });
 
-                return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var movimentacao = await Mediator.Send(new ObterTodasAsMovimentacoesPorCodigoPatrimonio() { Id = codigoPatrimonio });
+
+            return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
 
         }
 
@@ -65,22 +50,16 @@ namespace PatrimonioDev.Controllers
         [HttpPut("{codigoMovimentacao}")]
         public async Task<IActionResult> AtualizarMovimentacao(int codigoMovimentacao, [FromBody] AtualizarMovimentacaoEquipamentoCommand command)
         {
-            try
-            {
-                command.CodigoMovimentacao = codigoMovimentacao;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            command.CodigoMovimentacao = codigoMovimentacao;
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
         }
 
 
@@ -93,16 +72,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{codigoMovimentacao}")]
         public async Task<IActionResult> ObterApenasUmaMovimentacao(int codigoMovimentacao)
         {
-            try
-            {
-                var movimentacao = await Mediator.Send(new ObterApenasUmaMovimentacao() { CodigoMovimentacao = codigoMovimentacao });
+            var movimentacao = await Mediator.Send(new ObterApenasUmaMovimentacao() { CodigoMovimentacao = codigoMovimentacao });
 
-                return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
+
         }
     }
 }

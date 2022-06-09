@@ -10,10 +10,13 @@ namespace Persistence.Context
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-           : base(options) { }
+           : base(options)
+        {
+            Database.SetCommandTimeout(60);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
-       
+
         public DbSet<Equipamento> Equipamento { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<Setor> Setor { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using PatrimonioDev.Configuration;
+using PatrimonioDev.Extension;
 using Persistence;
 using System;
 using System.IO;
@@ -49,6 +50,8 @@ namespace PatrimonioDev
             app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseAuthorization();
 

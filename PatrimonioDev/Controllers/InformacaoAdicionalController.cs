@@ -22,18 +22,8 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarInformacaoAdicional([FromBody]CriarInformacaoAdicionalCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-        }
-
+        public async Task<IActionResult> CriarInformacaoAdicional([FromBody] CriarInformacaoAdicionalCommand command)
+                => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para listar info adicional específico")]
         [ProducesResponseType(typeof(InformacaoAdicional), StatusCodes.Status200OK)]
@@ -44,17 +34,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
-            try
-            {
-                var informacaoAdicional = await Mediator.Send(new ObterInformacaoAdicionalPorId { CodigoPatrimonio = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(informacaoAdicional), informacaoAdicional);
+            var informacaoAdicional = await Mediator.Send(new ObterInformacaoAdicionalPorId { CodigoPatrimonio = id });
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(informacaoAdicional), informacaoAdicional);
+
         }
 
         [SwaggerOperation(Summary = "Método para deletar info adicional específico")]
@@ -66,20 +50,13 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarInformacaoAdicional(int id)
         {
-            try
-            {
-                var statusCode = StatusCode(await Mediator.Send(new RemoverInformacaoAdicionalCommand { Id = id }));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+            var statusCode = StatusCode(await Mediator.Send(new RemoverInformacaoAdicionalCommand { Id = id }));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Não foi encontrado registro para deletar");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
 
         [SwaggerOperation(Summary = "Método para atualizar info adicional específico")]
@@ -89,24 +66,18 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoInfo}")]
-        public async Task<IActionResult> AtualizarInformacao(int codigoInfo, [FromBody]AtualizarInformacaoAdicionalCommand command)
+        public async Task<IActionResult> AtualizarInformacao(int codigoInfo, [FromBody] AtualizarInformacaoAdicionalCommand command)
         {
-            try
-            {
-                command.Id = codigoInfo;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            command.Id = codigoInfo;
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
         }
     }
 }

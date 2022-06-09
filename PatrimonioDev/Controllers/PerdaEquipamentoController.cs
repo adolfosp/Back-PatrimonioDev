@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
@@ -21,18 +20,8 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarPerdaEquipamento([FromBody]CriarPerdaEquipamentoCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
-        }
+        public async Task<IActionResult> CriarPerdaEquipamento([FromBody] CriarPerdaEquipamentoCommand command)
+             => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para obter todas as perdas")]
         [ProducesResponseType(typeof(PerdaEquipamento), StatusCodes.Status200OK)]
@@ -42,16 +31,6 @@ namespace PatrimonioDev.Controllers
         [Produces("application/json")]
         [HttpGet]
         public async Task<IActionResult> ObterTodasPerdas()
-        {
-            try
-            {
-                return Ok(await Mediator.Send(new ObterTodasPerdas()));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
-        }
+            => Ok(await Mediator.Send(new ObterTodasPerdas()));
     }
 }

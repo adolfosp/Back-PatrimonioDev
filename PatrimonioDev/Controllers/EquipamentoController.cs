@@ -24,19 +24,8 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarEquipamento([FromBody]CriarEquipamentoCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
-        }
-
+        public async Task<IActionResult> CriarEquipamento([FromBody] CriarEquipamentoCommand command)
+              => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para listar todos os equipamentos")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -47,39 +36,26 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ListarTodosEquipamento()
         {
-            try
-            {
-                var equipamentos = await Mediator.Send(new ObterTodosEquipamento());
+            var equipamentos = await Mediator.Send(new ObterTodosEquipamento());
 
-                return StatusCode(HTTPStatus.RetornaStatus(equipamentos), equipamentos);
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(equipamentos), equipamentos);
         }
 
 
         [SwaggerOperation(Summary = "Método para listar equipamento específico")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(Equipamento),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Equipamento), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarEquipamentoPorId(int id)
         {
-            try
-            {
-                var equipamento = await Mediator.Send(new ObterApenasUmEquipamento { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(equipamento), equipamento);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var equipamento = await Mediator.Send(new ObterApenasUmEquipamento { Id = id });
+
+            return StatusCode(HTTPStatus.RetornaStatus(equipamento), equipamento);
+
         }
 
         [SwaggerOperation(Summary = "Método para atualizar o equipamento")]
@@ -89,29 +65,21 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoEquipamento}")]
-        public async Task<IActionResult> AtualizarEquipamento(int codigoEquipamento, [FromBody]AtualizarEquipamentoCommand command)
+        public async Task<IActionResult> AtualizarEquipamento(int codigoEquipamento, [FromBody] AtualizarEquipamentoCommand command)
         {
 
-            try
-            {
-                command.Id = codigoEquipamento;
+            command.Id = codigoEquipamento;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-                return Ok();
+            return Ok();
 
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
         }
 
- 
+
         [SwaggerOperation(Summary = "Método para remover o equipamento")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -121,20 +89,14 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarEquipamento(int id)
         {
-            try
-            {
-                var statusCode = StatusCode(await Mediator.Send(new DeletarEquipamentoCommand() { Id = id }));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+            var statusCode = StatusCode(await Mediator.Send(new DeletarEquipamentoCommand() { Id = id }));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Não foi encontrado registro para deletar");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
         }
     }
 }

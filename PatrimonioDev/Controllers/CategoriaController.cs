@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
@@ -24,17 +23,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodasCategorias()
         {
-            try
-            {
-                var categorias = await Mediator.Send(new ObterTodasCategorias());
 
-                return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+            var categorias = await Mediator.Send(new ObterTodasCategorias());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+
         }
 
         [SwaggerOperation(Summary = "Método para cadastrar categoria")]
@@ -44,19 +37,13 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarCategoria([FromBody]CriarCategoriaCommand command)
+        public async Task<IActionResult> CriarCategoria([FromBody] CriarCategoriaCommand command)
         {
-            try
-            {
-                var categoria = await Mediator.Send(command);
 
-                return StatusCode(HTTPStatus.RetornaStatus(categoria), categoria);
+            var categoria = await Mediator.Send(command);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}"});
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(categoria), categoria);
+
         }
 
         [SwaggerOperation(Summary = "Método para deletar uma categoria específico")]
@@ -69,20 +56,14 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarCategoria(int id)
         {
-            try
-            {
-                var statusCode = StatusCode(await Mediator.Send(new DeletarCategoriaCommand { Id = id }));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+            var statusCode = StatusCode(await Mediator.Send(new DeletarCategoriaCommand { Id = id }));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Não foi encontrado registro para deletar");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
         }
 
         [SwaggerOperation(Summary = "Método para atualizar a categoria")]
@@ -96,23 +77,15 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarCategoria(int codigoCategoria, [FromBody] AtualizarCategoriaCommand command)
         {
 
-            try
-            {
-                command.Categoria.CodigoCategoria = codigoCategoria;
+            command.Categoria.CodigoCategoria = codigoCategoria;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-                return Ok();
+            return Ok();
 
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
         }
 
         [SwaggerOperation(Summary = "Método para buscar uma categoria específica")]
@@ -126,17 +99,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
-            try
-            {
-                var usuario = await Mediator.Send(new ObterApenasUmaCategoria { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            var usuario = await Mediator.Send(new ObterApenasUmaCategoria { Id = id });
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+
         }
     }
 }

@@ -22,18 +22,8 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarPatrimonio([FromBody]CriarPatrimonioCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
-        }
+        public async Task<IActionResult> CriarPatrimonio([FromBody] CriarPatrimonioCommand command)
+            => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para buscar por patrimônio específico")]
         [ProducesResponseType(typeof(Patrimonio), StatusCodes.Status200OK)]
@@ -44,16 +34,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarPatrimonioPorId(int id)
         {
-            try
-            {
-                var patrimonio = await Mediator.Send(new ObterPatrimonioPorId() { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(patrimonio), patrimonio);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var patrimonio = await Mediator.Send(new ObterPatrimonioPorId() { Id = id });
+
+            return StatusCode(HTTPStatus.RetornaStatus(patrimonio), patrimonio);
         }
 
         [SwaggerOperation(Summary = "Método para buscar todos patrimônios ")]
@@ -65,16 +49,9 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ListarTodosPatrimonios()
         {
-            try
-            {
-                var patrimonios = await Mediator.Send(new ObterTodosPatrimonios());
+            var patrimonios = await Mediator.Send(new ObterTodosPatrimonios());
 
-                return StatusCode(HTTPStatus.RetornaStatus(patrimonios), patrimonios);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(patrimonios), patrimonios);
         }
 
         [SwaggerOperation(Summary = "Método para atualizar patrimonio específico")]
@@ -84,25 +61,17 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoPatrimonio}")]
-        public async Task<IActionResult> AtualizarPatrimonio(int codigoPatrimonio, [FromBody]AtualizarPatrimonioCommand command)
+        public async Task<IActionResult> AtualizarPatrimonio(int codigoPatrimonio, [FromBody] AtualizarPatrimonioCommand command)
         {
 
-            try
-            {
-                command.Id = codigoPatrimonio;
+            command.Id = codigoPatrimonio;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
 
 
@@ -115,22 +84,13 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{codigoPatrimonio}")]
         public async Task<IActionResult> DeletarPatrimonio(int codigoPatrimonio)
         {
-            try
-            {
-                var statusCode = StatusCode(await Mediator.Send(new RemoverPatrimonioCommand() { Id = codigoPatrimonio }));
+            var statusCode = StatusCode(await Mediator.Send(new RemoverPatrimonioCommand() { Id = codigoPatrimonio }));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+            if (statusCode.StatusCode == 404)
+                return NotFound("Não foi encontrado registro para deletar");
 
-                return Ok();
+            return Ok();
 
-
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
         }
     }
 }

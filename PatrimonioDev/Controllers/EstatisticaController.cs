@@ -24,17 +24,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodasCategorias()
         {
-            try
-            {
-                var estatistica = await Mediator.Send(new ObterEstatisticaCategoria());
 
-                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            var estatistica = await Mediator.Send(new ObterEstatisticaCategoria());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+
         }
 
         [SwaggerOperation(Summary = "Método para obter resultados da quantidade media de equipamentos por funcionário")]
@@ -46,17 +40,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("media")]
         public async Task<IActionResult> ObterMediaEquipamentosPorFuncionario()
         {
-            try
-            {
-                var estatistica = await Mediator.Send(new ObterEstatisticaMediaEquipamentoPorFuncionario());
 
-                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            var estatistica = await Mediator.Send(new ObterEstatisticaMediaEquipamentoPorFuncionario());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+
         }
 
         [SwaggerOperation(Summary = "Método para obter quantidade de patrimônio disponível")]
@@ -68,17 +56,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("patrimonio-disponivel")]
         public async Task<IActionResult> ObterPatrimoniosDisponivel()
         {
-            try
-            {
-                var estatistica = await Mediator.Send(new ObterEstatisticaPatrimonioDisponivel());
 
-                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            var estatistica = await Mediator.Send(new ObterEstatisticaPatrimonioDisponivel());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+
         }
 
         [SwaggerOperation(Summary = "Método para obter quantidade de patrimônio disponível")]
@@ -90,17 +72,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("quantidade-movimentacao")]
         public async Task<IActionResult> ObterQuantidadeDeMovimentacao()
         {
-            try
-            {
-                var estatistica = await Mediator.Send(new ObterQuantidadeMovimentacao());
 
-                return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            var estatistica = await Mediator.Send(new ObterQuantidadeMovimentacao());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+
         }
     }
 }

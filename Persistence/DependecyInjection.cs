@@ -13,7 +13,9 @@ namespace Persistence
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("Persistence")));
+                    b => {
+                        b.MigrationsAssembly("Persistence");
+                    }));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
         }
