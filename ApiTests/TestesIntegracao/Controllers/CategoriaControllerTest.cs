@@ -138,12 +138,8 @@ namespace DomainTests.t
             var sut = new CategoriaController();
             sut._mediator = _service.Object;
 
-            //Act
-            var actionResult = sut.AtualizarCategoria(1, new AtualizarCategoriaCommand() { });
-            var result = actionResult.Result as ObjectResult;
-
-            //Assert
-            Assert.AreEqual(500, result.StatusCode);
+            //Act & Assert
+            Assert.ThrowsExceptionAsync<System.NullReferenceException>(() => sut.AtualizarCategoria(1, new AtualizarCategoriaCommand() { }));
         }
 
         [TestMethod]
