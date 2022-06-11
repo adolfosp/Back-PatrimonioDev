@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/adolfosp/Back-PatrimonioDev#readme",
   "dependencies": {
-    "commitlint": "^16.2.1",
+    "commitlint": "^16.3.0",
     "semantic-release": "^19.0.2"
   },
   "devDependencies": {
