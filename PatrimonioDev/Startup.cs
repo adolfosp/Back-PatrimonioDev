@@ -1,16 +1,12 @@
 using Aplicacao;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using PatrimonioDev.Configuration;
-using PatrimonioDev.Extension;
 using Persistence;
 using System;
-using System.IO;
 
 namespace PatrimonioDev
 {
@@ -29,11 +25,15 @@ namespace PatrimonioDev
             services.AddCors();
 
             services.AddApplication();
-            services.AddPersistence(Configuration);
+
+            services.AddPersistenceConfiguration(Configuration);
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddServiceInjection();
 
             services.AddControllers();
+
             services.AddAuthenticationConfiguration(Configuration);
 
             services.AddSwaggerConfiguration();
@@ -51,20 +51,7 @@ namespace PatrimonioDev
 
             app.UseAuthentication();
 
-            app.UseMiddleware<ExceptionMiddleware>();
-
-            app.UseAuthorization();
-
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetIsOriginAllowed((host) => true);
-            });
-
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
-                RequestPath = new PathString("/Resources")
-            });
+            app.UseWebApiConfiguration();
 
             app.UseEndpoints(endpoints =>
             {

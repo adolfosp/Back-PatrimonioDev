@@ -3,6 +3,7 @@ using Aplicacao.Interfaces;
 using Aplicacao.Interfaces.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
+using Persistence.Context;
 
 namespace PatrimonioDev
 {
@@ -10,6 +11,7 @@ namespace PatrimonioDev
     {
         public static void AddServiceInjection(this IServiceCollection services)
         {
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IUsuarioPermissaoPersistence, UsuarioPermissaoPersistence>();
             services.AddScoped<IUsuarioPersistence, UsuarioPersistence>();
             services.AddScoped<IEquipamentoPersistence, EquipamentoPersistence>();
