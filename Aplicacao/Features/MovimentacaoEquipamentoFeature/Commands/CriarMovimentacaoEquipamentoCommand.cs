@@ -1,5 +1,6 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces.Persistence;
+using AutoMapper;
 using Domain.Entidades;
 using MediatR;
 using System.Threading;
@@ -9,18 +10,29 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
 {
     public class CriarMovimentacaoEquipamentoCommand : IRequest<MovimentacaoEquipamento>
     {
-        public MovimentacaoEquipamentoDto MovimentacaoEquipamentoDto { get; set; }
+        public MovimentacaoEquipamentoDto Movimentacao { get; set; }
 
-        public class CriarMovimentacaoEquipamentoCommandHandler: IRequestHandler<CriarMovimentacaoEquipamentoCommand, MovimentacaoEquipamento>
+        public class CriarMovimentacaoEquipamentoCommandHandler : IRequestHandler<CriarMovimentacaoEquipamentoCommand, MovimentacaoEquipamento>
         {
             private readonly IMovimentacaoEquipamentoPersistence _persistence;
+            private readonly IMapper _mapper;
 
-            public CriarMovimentacaoEquipamentoCommandHandler(IMovimentacaoEquipamentoPersistence persistence)
-                => _persistence = persistence;
+            public CriarMovimentacaoEquipamentoCommandHandler(IMovimentacaoEquipamentoPersistence persistence, IMapper mapper)
+            {
+                _persistence = persistence;
+                _mapper = mapper;
+            }
 
             public Task<MovimentacaoEquipamento> Handle(CriarMovimentacaoEquipamentoCommand request,
                 CancellationToken cancellationToken)
-                => _persistence.CriarMovimentacaoEquipamento(request.MovimentacaoEquipamentoDto);
+            {
+                var movimentacao = new MovimentacaoEquipamento();
+
+                _mapper.Map(request.Movimentacao, movimentacao);
+
+                return _persistence.CriarMovimentacaoEquipamento(movimentacao);
+            }
+
         }
     }
 }

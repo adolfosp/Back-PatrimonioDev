@@ -10,7 +10,7 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Queries
 {
     public class ObterInformacaoAdicionalPorId : IRequest<InformacaoAdicional>
     {
-        public int Id { get; set; }
+        public int CodigoPatrimonio { get; set; }
 
         public class ObterInformacaoAdicionalPorIdHandler : IRequestHandler<ObterInformacaoAdicionalPorId, InformacaoAdicional>
         {
@@ -23,7 +23,7 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Queries
             //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<InformacaoAdicional> Handle(ObterInformacaoAdicionalPorId request, CancellationToken cancellationToken)
             {
-                var informacaoAdicional = await _context.InformacaoAdicional.Where(x => x.CodigoInformacao == request.Id).FirstOrDefaultAsync();
+                var informacaoAdicional = await _context.InformacaoAdicional.Where(x => x.CodigoPatrimonio == request.CodigoPatrimonio).FirstOrDefaultAsync();
 
                 if (informacaoAdicional == null)
                     return null;

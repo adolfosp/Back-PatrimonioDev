@@ -12,6 +12,7 @@ namespace Aplicacao.Features.PatrimonioFeature.Commands
         public int Id { get; set; }
 
         public PatrimonioDto Patrimonio { get; set; }
+        public InformacaoAdicionalDto InformacaoAdicional { get; set; }
 
         public class AtualizarPatrimonioCommandHandler: IRequestHandler<AtualizarPatrimonioCommand,int>
         {
@@ -25,7 +26,7 @@ namespace Aplicacao.Features.PatrimonioFeature.Commands
             }
 
             public Task<int> Handle(AtualizarPatrimonioCommand request, CancellationToken cancellationToken)
-                => _persistence.AtualizarPatrimonio(request.Id, request.Patrimonio);
+                => _persistence.AtualizarPatrimonio(request.Id, request.Patrimonio, request.InformacaoAdicional);
             
         }
     }

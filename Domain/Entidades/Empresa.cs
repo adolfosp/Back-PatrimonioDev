@@ -21,5 +21,7 @@ namespace Domain.Entidades
         [MaxLength(70)]
         public string NomeFantasia { get; set; }
 
+        public bool EmpresaPadraoImpressao { get; set; }
+
     }
 }

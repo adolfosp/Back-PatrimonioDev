@@ -36,7 +36,7 @@ namespace DomainTests.TestesUnitario.Entidades
             var results = new List<ValidationResult>();
 
             //Act
-            var resultado = Validator.TryValidateProperty("seto", context, results);
+            var resultado = Validator.TryValidateProperty("s", context, results);
 
             //Assert
             Assert.IsFalse(resultado);

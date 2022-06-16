@@ -15,5 +15,8 @@ namespace Aplicacao.Dtos
         [Required(ErrorMessage = "{0} precisa ser preenchida."),
             StringLength(70,MinimumLength = 5,ErrorMessage = "O intervalo de caracteres precisa estar entre 5 a 70.")]
         public string NomeFantasia { get; set; }
+
+        public bool EmpresaPadraoImpressao { get; set; }
+
     }
 }

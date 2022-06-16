@@ -68,13 +68,8 @@ namespace ApiTests.TestesIntegracao.Controllers
             var sut = new FuncionarioController();
             sut._mediator = _service.Object;
 
-            //Act
-            var actionResult = sut.ListarTodosFuncionario();
-            var result = actionResult.Result as ObjectResult;
-
-            //Assert
-            Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value);
+            //Act & Assert
+            Assert.ThrowsExceptionAsync<System.NullReferenceException>(() => sut.ListarTodosFuncionario());
         }
 
         [TestMethod]
@@ -113,13 +108,8 @@ namespace ApiTests.TestesIntegracao.Controllers
             var sut = new FuncionarioController();
             sut._mediator = _service.Object;
 
-            //Act
-            var actionResult = sut.ListarFuncionarioPorId(1);
-            var result = actionResult.Result as ObjectResult;
-
-            //Assert
-            Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value.ToString());
+            //Act & Assert
+            Assert.ThrowsExceptionAsync<System.NullReferenceException>(() => sut.ListarFuncionarioPorId(1));
 
         }
 
@@ -137,13 +127,8 @@ namespace ApiTests.TestesIntegracao.Controllers
             var sut = new FuncionarioController();
             sut._mediator = _service.Object;
 
-            //Act
-            var actionResult = sut.CriarFuncionario(handlerMoq);
-            var result = actionResult.Result as ObjectResult;
-
-            //Assert
-            Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value.ToString());
+            //Act & Assert
+            Assert.ThrowsExceptionAsync<System.NullReferenceException>(() => sut.CriarFuncionario(handlerMoq));
 
         }
 
@@ -185,7 +170,7 @@ namespace ApiTests.TestesIntegracao.Controllers
             sut._mediator = _service.Object;
 
             //Act
-            var actionResult = sut.AtualizarFuncionario(1,handlerMoq);
+            var actionResult = sut.AtualizarFuncionario(3,handlerMoq);
             var result = actionResult.Result as OkResult;
 
             //Assert
@@ -207,14 +192,8 @@ namespace ApiTests.TestesIntegracao.Controllers
             var sut = new FuncionarioController();
             sut._mediator = _service.Object;
 
-            //Act
-            var actionResult = sut.AtualizarFuncionario(1, handlerMoq);
-            var result = actionResult.Result as ObjectResult;
-
-            //Assert
-            Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("{ mensagem = Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.  }", result.Value.ToString());
-
+            //Act & Assert
+            Assert.ThrowsExceptionAsync<System.NullReferenceException>(() => sut.AtualizarFuncionario(2, handlerMoq));
         }
 
         [TestMethod]
@@ -232,7 +211,7 @@ namespace ApiTests.TestesIntegracao.Controllers
             sut._mediator = _service.Object;
 
             //Act
-            var actionResult = sut.DesativarFuncionario(1);
+            var actionResult = sut.DesativarFuncionario(3);
             var result = actionResult.Result as OkResult;
 
             //Assert
@@ -254,13 +233,8 @@ namespace ApiTests.TestesIntegracao.Controllers
             var sut = new FuncionarioController();
             sut._mediator = _service.Object;
 
-            //Act
-            var actionResult = sut.DesativarFuncionario(1);
-            var result = actionResult.Result as ObjectResult;
-
-            //Assert
-            Assert.AreEqual(500, result.StatusCode);
-            Assert.AreEqual("Não foi possível realizar a operação! Mensagem: Object reference not set to an instance of an object.", result.Value.ToString());
+            //Act & Assert
+            Assert.ThrowsExceptionAsync<System.NullReferenceException>(() => sut.DesativarFuncionario(3));
 
         }
     }

@@ -14,14 +14,13 @@ using System.Threading.Tasks;
 namespace PatrimonioDev.Controllers
 {
     [Route("api/perfils")]
-    public class PerfilUsuarioController: BaseApiController
+    public class PerfilUsuarioController : BaseApiController
     {
         private readonly IWebHostEnvironment _host;
 
         public PerfilUsuarioController(IWebHostEnvironment host)
-        {
-           _host = host;
-        }
+          => _host = host;
+
 
         [SwaggerOperation(Summary = "Método para obter perfil do usuário")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -33,16 +32,11 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{codigoUsuario}")]
         public async Task<IActionResult> ObterInformacoesPerfil(int codigoUsuario)
         {
-            try
-            {
-                var perfil = await Mediator.Send(new ObterPerfilUsuario { CodigoUsuario = codigoUsuario });
 
-                return StatusCode(HTTPStatus.RetornaStatus(perfil), perfil);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}"});
-            }
+            var perfil = await Mediator.Send(new ObterPerfilUsuario { CodigoUsuario = codigoUsuario });
+
+            return StatusCode(HTTPStatus.RetornaStatus(perfil), perfil);
+
         }
 
         [SwaggerOperation(Summary = "Método para alterar perfil do usuário")]
@@ -53,25 +47,18 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize]
         [HttpPut]
-        public async Task<IActionResult> AlterarPerfilUsuario([FromBody]AtualizarPerfilCommand command)
+        public async Task<IActionResult> AlterarPerfilUsuario([FromBody] AtualizarPerfilCommand command)
         {
-            try
-            {
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            return Ok();
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
         }
 
-        [SwaggerOperation(Summary = "Método para subir uma imagem")]
+        [SwaggerOperation(Summary = "Método para subir uma imagem do perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -80,35 +67,27 @@ namespace PatrimonioDev.Controllers
         [HttpPost("upload-imagem/{codigoUsuario}")]
         public async Task<IActionResult> InserirImagem(int codigoUsuario)
         {
-            try
+
+            var usuario = await Mediator.Send(new ObterPerfilUsuario { CodigoUsuario = codigoUsuario });
+
+            if (usuario is null) return NoContent();
+
+            var file = Request.Form.Files[0];
+
+            if (file.Length > 0)
             {
-                var usuario = await Mediator.Send(new ObterPerfilUsuario { CodigoUsuario = codigoUsuario });
+                new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
 
-
-                if (usuario is null) return NoContent();
-
-                var file = Request.Form.Files[0];
-
-                if (file.Length > 0)
-                {
-                    new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
-
-                    usuario.ImagemUrl = await SalvarImagem(file);
-                }
-
-                var novoUsuario = new AtualizarPerfilCommand();
-                novoUsuario.Perfil = usuario;
-
-                var usuarioRetorno = await AlterarPerfilUsuario(novoUsuario);
-
-
-                return Ok(usuarioRetorno);
-
+                usuario.ImagemUrl = await SalvarImagem(file);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+
+            var novoUsuario = new AtualizarPerfilCommand();
+            novoUsuario.Perfil = usuario;
+
+            var usuarioRetorno = await AlterarPerfilUsuario(novoUsuario);
+
+            return Ok(usuarioRetorno);
+
         }
 
         [NonAction]
@@ -116,9 +95,9 @@ namespace PatrimonioDev.Controllers
         {
 
             string nomeImagem = new String(Path.GetFileNameWithoutExtension(imagemFile.FileName)
-                                            .Take(10)
-                                            .ToArray())
-                                            .Replace(" ", "-");
+                                               .Take(10)
+                                               .ToArray())
+                                               .Replace(" ", "-");
 
             nomeImagem = $"{nomeImagem}{DateTime.UtcNow.ToString("yymmssfff")}{Path.GetExtension(imagemFile.FileName)}";
 

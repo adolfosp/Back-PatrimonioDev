@@ -23,9 +23,8 @@ namespace PatrimonioDev.Controllers
         private readonly IWebHostEnvironment _host;
 
         public UsuarioController(IWebHostEnvironment host)
-        {
-            _host = host;
-        }
+          => _host = host;
+
 
         [SwaggerOperation(Summary = "Método para criar um usuário")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
@@ -37,37 +36,19 @@ namespace PatrimonioDev.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
         {
-            try
-            {
-                var usuario = await ObterUsuarioPorEmail(command.Usuario.Email);
 
-                if (usuario)
-                    return StatusCode(500, new { mensagem = $"Não é possível realizar o cadastro pois o e-mail já foi utilizado em outro registro." });
+            var usuario = await ObterUsuarioPorEmail(command.Usuario.Email);
 
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            if (usuario)
+                return StatusCode(500, new { mensagem = $"Não é possível realizar o cadastro pois o e-mail já foi utilizado em outro registro." });
+
+            return Ok(await Mediator.Send(command));
+
         }
 
         [NonAction]
         public async Task<bool> ObterUsuarioPorEmail(string email)
-        {
-            try
-            {
-
-               return await Mediator.Send(new ObterUsuarioPorEmail { Email = email });
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro interno no servidor. Mensagem:  {ex.Message} {ex.InnerException}");
-            }
-
-        }
-
+              => await Mediator.Send(new ObterUsuarioPorEmail { Email = email });
 
         [SwaggerOperation(Summary = "Método para buscar um usuário específico")]
         [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
@@ -79,17 +60,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
-            try
-            {
-                var usuario = await Mediator.Send(new ObterApenasUm { Id = id });
+            var usuario = await Mediator.Send(new ObterApenasUm { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
         }
 
         [SwaggerOperation(Summary = "Método para buscar um usuário por email e senha ")]
@@ -98,40 +72,36 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [AllowAnonymous]
         [HttpPost("{emailUsuario}/{senha}")]
-        public async Task<IActionResult> ObterUsuarioPorLogin(string emailUsuario, string senha, [FromBody]bool autenticacaoAuth = false)
+        public async Task<IActionResult> ObterUsuarioPorLogin(string emailUsuario, string senha, [FromBody] bool autenticacaoAuth = false)
         {
-            try
-            {
-                var usuario = await Mediator.Send(new ObterUsuarioPorLogin(autenticacaoAuth) { senha = senha, email = emailUsuario });
 
-                if (usuario is null)
-                    return StatusCode(400, new { mensagem = "Não foi encontrado usuário com as credencias informadas" });
+            var usuario = await Mediator.Send(new ObterUsuarioPorLogin(autenticacaoAuth) { senha = senha, email = emailUsuario });
 
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            if (usuario is null)
+                return StatusCode(400, new { mensagem = "Não foi encontrado usuário com as credencias informadas" });
 
-                var tokenOptios = new JwtSecurityToken(
-                    issuer: "https://localhost:44380",
-                    audience: "https://localhost:44380",
-                    claims: new[] {
+            //TODO: criar uma controller de autenticacao
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345!"));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var tokenOptios = new JwtSecurityToken(
+                issuer: "https://localhost:44380",
+                audience: "https://localhost:44380",
+                claims: new[] {
                         new Claim(ClaimTypes.Role, usuario.CodigoUsuarioPermissao.ToString()),
                         new Claim("codigoUsuario", usuario.CodigoUsuario.ToString()),
                         new Claim("nomeUsuario", usuario.Nome)
 
-                    },
-                    expires: DateTime.Now.AddMinutes(150),
-                    signingCredentials: signinCredentials);
+                },
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: signinCredentials);
 
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptios);
 
-                usuario.Token = tokenString;
+            usuario.Token = tokenString;
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+
         }
 
 
@@ -145,18 +115,9 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
-            try
-            {
-                var usuario = await Mediator.Send(new ObterTodosUsuarios());
+            var usuario = await Mediator.Send(new ObterTodosUsuarios());
 
-                return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
+            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
         }
 
         [SwaggerOperation(Summary = "Método para buscar todos os usuário ")]
@@ -169,22 +130,15 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarUsuario(int id)
         {
-            try
-            {
-                var usuario = await Mediator.Send(new RemoverUsuarioCommand { Id = id });
 
-                if (usuario is null)
-                    return NotFound("Não foi encontrado registro para deletar");
+            var usuario = await Mediator.Send(new RemoverUsuarioCommand { Id = id });
 
-                new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
+            if (usuario is null)
+                return NotFound("Não foi encontrado registro para deletar");
 
-                return Ok();
+            new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
 
         [SwaggerOperation(Summary = "Método para atualizar o usuário específico")]
@@ -197,22 +151,15 @@ namespace PatrimonioDev.Controllers
         [HttpPut("{codigoFuncionario}")]
         public async Task<IActionResult> AtualizarUsuario(int codigoFuncionario, [FromBody] AtualizarUsuarioCommand command)
         {
-            try
-            {
-                command.Id = codigoFuncionario;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            command.Id = codigoFuncionario;
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
     }
 }

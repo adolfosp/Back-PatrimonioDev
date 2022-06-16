@@ -1,13 +1,12 @@
 ﻿using Aplicacao.Features.FabricanteFeature.Commands;
 using Aplicacao.Features.FabricanteFeature.Queries;
-using Domain.Helpers;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 using Domain.Entidades;
-using Microsoft.AspNetCore.Http;
-using Swashbuckle.AspNetCore.Annotations;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
@@ -22,40 +21,21 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarFabricante([FromBody]CriarFabricanteCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
-        }
-
+        public async Task<IActionResult> CriarFabricante([FromBody] CriarFabricanteCommand command)
+                => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para buscar todos os fabricantes")]
         [ProducesResponseType(typeof(Fabricante), StatusCodes.Status200OK)]
-        [ProducesResponseType( StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> ListarTodosFabricantes()
         {
-            try
-            {
-                var fabricante = await Mediator.Send(new ObterTodosFabricantes());
+            var fabricante = await Mediator.Send(new ObterTodosFabricantes());
 
-                return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
         }
 
 
@@ -68,17 +48,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarFabricantePorId(int id)
         {
-            try
-            {
-                var fabricante = await Mediator.Send(new ObterApenasUmFabricante { Id = id });
+            var fabricante = await Mediator.Send(new ObterApenasUmFabricante { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
         }
 
 
@@ -89,26 +62,17 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoFabricante}")]
-        public async Task<IActionResult> AtualizarFabricante(int codigoFabricante, [FromBody]AtualizarFabricanteCommand command)
+        public async Task<IActionResult> AtualizarFabricante(int codigoFabricante, [FromBody] AtualizarFabricanteCommand command)
         {
 
-            try
-            {
-                command.Id = codigoFabricante;
+            command.Id = codigoFabricante;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-                return Ok();
-
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
 
 
@@ -121,21 +85,13 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarTipoEquipamento(int id)
         {
-            try
-            {
-                var statusCode = StatusCode(await Mediator.Send(new DeletarFabricanteCommand() { Id = id }));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound(new {mensagem = "Não foi encontrado registro para deletar" });
+            var statusCode = StatusCode(await Mediator.Send(new DeletarFabricanteCommand() { Id = id }));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound(new { mensagem = "Não foi encontrado registro para deletar" });
 
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
     }
 }

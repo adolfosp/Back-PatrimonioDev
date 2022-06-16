@@ -8,9 +8,9 @@ namespace Aplicacao.Interfaces.Persistence
     public interface IPatrimonioPersistence
     {
         Task<int> DeletarPatrimonio(int codigoPatrimonio);
-        Task<Patrimonio> CriarPatrimonio(PatrimonioDto patrimonio);
+        Task<Patrimonio> CriarPatrimonio(PatrimonioDto patrimonio, InformacaoAdicionalDto informacaoAdicionalDto);
         Task<Patrimonio> ObterPatrimonioPorId(int codigoPatrimonio);
-        Task<int> AtualizarPatrimonio(int codigoPatrimonio, PatrimonioDto patrimonioDto);
+        Task<int> AtualizarPatrimonio(int codigoPatrimonio, PatrimonioDto patrimonioDto, InformacaoAdicionalDto informacaoAdicionalDto);
         Task<IEnumerable<PatrimonioDto>> ObterTodosPatrimonio();
     }
 }

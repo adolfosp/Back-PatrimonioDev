@@ -24,17 +24,8 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "1")]
         [HttpPost]
-        public async Task<IActionResult> CriarSetor([FromBody]CriarSetorCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-        }
+        public async Task<IActionResult> CriarSetor([FromBody] CriarSetorCommand command)
+                => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para buscar setor específico")]
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
@@ -46,19 +37,12 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
-            try
-            {
-                var setor = await Mediator.Send(new ObterApenasUmSetor { Id = id });
+            var setor = await Mediator.Send(new ObterApenasUmSetor { Id = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
         }
 
- 
+
         [SwaggerOperation(Summary = "Método para buscar todos os setores")]
         [ProducesResponseType(typeof(Setor), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -69,16 +53,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
-            try
-            {
-                var setor = await Mediator.Send(new ObterTodosSetores());
 
-                return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var setor = await Mediator.Send(new ObterTodosSetores());
+
+            return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
 
         }
 
@@ -93,23 +71,16 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarSetor(int id)
         {
-            try
-            {
-                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
-                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
+            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
+                return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound(new { mensagem = "Não foi encontrado registro para excluir" });
+            var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound(new { mensagem = "Não foi encontrado registro para excluir" });
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
 
         [SwaggerOperation(Summary = "Método para atualizar um setor específico")]
@@ -120,28 +91,20 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "1")]
         [HttpPut("{codigoSetor}")]
-        public async Task<IActionResult> AtualizarSetor(int codigoSetor, [FromBody]AtualizarSetorCommand command)
+        public async Task<IActionResult> AtualizarSetor(int codigoSetor, [FromBody] AtualizarSetorCommand command)
         {
-            try
-            {
-                if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, codigoSetor))
-                    return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                command.Id = codigoSetor;
+            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, codigoSetor))
+                return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            command.Id = codigoSetor;
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
     }
 }

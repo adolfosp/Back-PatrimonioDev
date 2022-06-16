@@ -13,7 +13,7 @@ namespace Domain.Entidades
         [Display(Name = "Data de apropriação")]
         [Required(ErrorMessage = "É necessário informar a {0} do equipamento")]
         public DateTime DataApropriacao { get; set; }
-        public DateTime? DataEvolucao { get; set; }
+        public DateTime? DataDevolucao { get; set; }
         public string? Observacao { get; set; }
 
         [Required(ErrorMessage = "É necessário informar qual movimentação foi realizada")]

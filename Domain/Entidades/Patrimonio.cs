@@ -8,19 +8,17 @@ namespace Domain.Entidades
     {
         [Key]
         public int CodigoPatrimonio { get; set; }
-
         [Required(ErrorMessage = "É necessário informar o modelo")]
         public string Modelo { get; set; }
-
         [Required(ErrorMessage = "É necessário informar a service tag")]
+        [MaxLength(20)]
+        [MinLength(4)]
         public string ServiceTag { get; set; }
-
         public string? Armazenamento { get; set; }
         public string? Processador { get; set; }
         public string? PlacaDeVideo { get; set; }
         public string? MAC { get; set; }
         public string? MemoriaRAM { get; set; }
-
         [Display(Name = "Situação do equipamento")]
         [Required(ErrorMessage = "É necessário informar a {0}")]
         public SituacaoEquipamento SituacaoEquipamento { get; set; }

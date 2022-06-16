@@ -18,7 +18,7 @@ namespace Aplicacao.Features.CategoriaFeature.Commands
                 => _categoriaPersistence = persistence;
 
             public Task<int> Handle(AtualizarCategoriaCommand request, CancellationToken cancellationToken)
-                => _categoriaPersistence.AtualizarEquipamento(request.Categoria.CodigoCategoria, request.Categoria);
+                => _categoriaPersistence.AtualizarCategoriaEquipamento(request.Categoria.CodigoCategoria, request.Categoria);
         }
     }
 }

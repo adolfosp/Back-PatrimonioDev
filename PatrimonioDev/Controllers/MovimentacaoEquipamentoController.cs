@@ -22,17 +22,8 @@ namespace PatrimonioDev.Controllers
         [Authorize]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody]CriarMovimentacaoEquipamentoCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-        }
+        public async Task<IActionResult> CriarMovimentacaoEquipamento([FromBody] CriarMovimentacaoEquipamentoCommand command)
+                => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para criar movimentação do equipamento")]
         [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
@@ -40,19 +31,13 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        [HttpGet("{codigoPatrimonio}")]
+        [HttpGet("movimentacao/{codigoPatrimonio}")]
         public async Task<IActionResult> ObterTodasMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
-            try
-            {
-                var movimentacao = await Mediator.Send(new ObterTodasAsMovimentacoesPorCodigoPatrimonio() { Id = codigoPatrimonio });
 
-                return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            var movimentacao = await Mediator.Send(new ObterTodasAsMovimentacoesPorCodigoPatrimonio() { Id = codigoPatrimonio });
+
+            return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
 
         }
 
@@ -62,25 +47,35 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        [HttpPut("{codigoPatrimonio}")]
-        public async Task<IActionResult> AtualizarMovimentacao(int codigoPatrimonio, [FromBody]AtualizarMovimentacaoEquipamentoCommand command)
+        [HttpPut("{codigoMovimentacao}")]
+        public async Task<IActionResult> AtualizarMovimentacao(int codigoMovimentacao, [FromBody] AtualizarMovimentacaoEquipamentoCommand command)
         {
-            try
-            {
-                command.Id = codigoPatrimonio;
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            command.CodigoMovimentacao = codigoMovimentacao;
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
+
+        }
+
+
+        [SwaggerOperation(Summary = "Método para obter apenas uma movimentação")]
+        [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MovimentacaoEquipamento), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize]
+        [HttpGet("{codigoMovimentacao}")]
+        public async Task<IActionResult> ObterApenasUmaMovimentacao(int codigoMovimentacao)
+        {
+            var movimentacao = await Mediator.Send(new ObterApenasUmaMovimentacao() { CodigoMovimentacao = codigoMovimentacao });
+
+            return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
+
         }
     }
 }

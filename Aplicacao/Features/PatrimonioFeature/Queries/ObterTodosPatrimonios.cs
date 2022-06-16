@@ -16,8 +16,8 @@ namespace Aplicacao.Features.PatrimonioFeature.Queries
             public ObterTodosPatrimoniosHandler(IPatrimonioPersistence persistence)
                 => _persistence = persistence;
 
-            public Task<IEnumerable<PatrimonioDto>> Handle(ObterTodosPatrimonios request, CancellationToken cancellationToken)
-                => _persistence.ObterTodosPatrimonio();
+            public async Task<IEnumerable<PatrimonioDto>> Handle(ObterTodosPatrimonios request, CancellationToken cancellationToken)
+                => await _persistence.ObterTodosPatrimonio();
                
         }
     }

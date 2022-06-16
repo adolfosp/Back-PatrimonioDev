@@ -12,8 +12,8 @@ namespace Domain.Entidades
         [Column(TypeName = "decimal(10, 2)")]
         public decimal ValorPago { get; set; }
         [Required]
-        public DateTime DataCompra { get; set; }
-        public DateTime? DataExpericaoGarantia { get; set; }
+        public string DataCompra { get; set; }
+        public string? DataExpiracaoGarantia { get; set; }
         public string? Antivirus { get; set; }
         public string? VersaoWindows { get; set; }
 

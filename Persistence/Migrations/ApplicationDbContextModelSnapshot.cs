@@ -48,6 +48,9 @@ namespace Persistence.Migrations
                         .HasMaxLength(18)
                         .HasColumnType("nvarchar(18)");
 
+                    b.Property<bool>("EmpresaPadraoImpressao")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -143,11 +146,12 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCompra")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataCompra")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DataExpericaoGarantia")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataExpiracaoGarantia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ValorPago")
                         .HasColumnType("decimal(10,2)");
@@ -178,7 +182,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("DataApropriacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataEvolucao")
+                    b.Property<DateTime>("DataDevolucao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MovimentacaoDoEquipamento")
@@ -233,7 +237,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("ServiceTag")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("SituacaoEquipamento")
                         .HasColumnType("int");
@@ -249,9 +254,9 @@ namespace Persistence.Migrations
                     b.ToTable("Patrimonio");
                 });
 
-            modelBuilder.Entity("Domain.Entidades.PercaEquipamento", b =>
+            modelBuilder.Entity("Domain.Entidades.PerdaEquipamento", b =>
                 {
-                    b.Property<int>("CodigoPerca")
+                    b.Property<int>("CodigoPerda")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -259,49 +264,16 @@ namespace Persistence.Migrations
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
 
-                    b.Property<string>("MotivoDaPerca")
+                    b.Property<string>("MotivoDaPerda")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.HasKey("CodigoPerca");
+                    b.HasKey("CodigoPerda");
 
                     b.HasIndex("CodigoPatrimonio");
 
                     b.ToTable("PercaEquipamento");
-                });
-
-            modelBuilder.Entity("Domain.Entidades.PerfilUsuario", b =>
-                {
-                    b.Property<int>("CodigoUsuario")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DescricaoPermissao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImagemUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomeSetor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomeUsuario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RazaoSocial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Senha")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CodigoUsuario");
-
-                    b.ToTable("PerfilUsuario");
                 });
 
             modelBuilder.Entity("Domain.Entidades.Setor", b =>
@@ -464,7 +436,7 @@ namespace Persistence.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("Domain.Entidades.PercaEquipamento", b =>
+            modelBuilder.Entity("Domain.Entidades.PerdaEquipamento", b =>
                 {
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()

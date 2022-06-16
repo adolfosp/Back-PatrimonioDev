@@ -4,7 +4,7 @@ jobs:
 
   build-api:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     working_directory: ~/PatrimonioDev/PatrimonioDev
     steps:
       - checkout:
@@ -30,7 +30,7 @@ jobs:
 
   build-test-domain:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     working_directory: ~/PatrimonioDev/Testes/DomainTests
     steps:
       - checkout:
@@ -39,10 +39,11 @@ jobs:
           command: echo "Current directory $(ls)"
       - run: dotnet restore
       - run: dotnet build
+      - run: dotnet test
 
   build-test-api:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     working_directory: ~/PatrimonioDev/Testes/ApiTests
     steps:
       - checkout:
@@ -51,6 +52,7 @@ jobs:
           command: echo "Current directory $(ls)"
       - run: dotnet restore
       - run: dotnet build
+      - run: dotnet test
 
   publish-package:
     docker:

@@ -9,7 +9,7 @@ namespace DomainTests.TestesIntegracao.Repositories
 {
     internal class CategoriaRepositoryFake : ICategoriaPersistence
     {
-        public Task<int> AtualizarEquipamento(int codigoCategoria, CategoriaEquipamento categoria)
+        public Task<int> AtualizarCategoriaEquipamento(int codigoCategoria, CategoriaEquipamento categoria)
         {
             return Task.FromResult<int>(200);
         }

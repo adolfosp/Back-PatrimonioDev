@@ -8,7 +8,7 @@ namespace Domain.Entidades
         [Key]
         public int CodigoCategoria { get; set; }
 
-        [Required(ErrorMessage = "A descrição é obrigatória"),MinLength(5), MaxLength(50)]
+        [Required(ErrorMessage = "A descrição é obrigatória"),MinLength(2), MaxLength(50)]
         public string Descricao { get; set; }
 
         public static implicit operator CategoriaEquipamento(CategoriaDto categoria)

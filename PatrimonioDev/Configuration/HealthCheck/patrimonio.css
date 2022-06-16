@@ -1,0 +1,14 @@
+﻿:root {
+    --bgMain: #1f1f1f; /* background color */
+    --fcBase: #fff; /* font color */
+    --bgMenuActive: #2f2f2f; /* background color of active menu item */
+    --bcMenuActive: #fffb00; /* border color of active menu item */
+    --primaryColor: #009AE0; /* primary color */
+    --secondaryColor: #9343d1; /* secondary color */
+    --bgMenuActive: #7a0bcf6e; /* background color of menu item when active */
+    --bgButton: #009AE0; /* background color of button */
+    --logoImageUrl: url(https://scontent.fsjp3-1.fna.fbcdn.net/v/t1.6435-9/120578553_3273552889365174_8841373318810495365_n.png?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=8T502gpUSHsAX-7S2GG&_nc_ht=scontent.fsjp3-1.fna&oh=00_AT_1vNmq1c72p5U8ZT78efa6MOmvx-tm9d4yhO3yxon41A&oe=62CCC73F); /* logo image url */
+    --bgAside: var(--primaryColor); /* background color of aside */
+    --bgTable: #2f2f2f; /* background color of table */
+    --bgTableSecondary: #63199b; /* secondary background color of table */
+}

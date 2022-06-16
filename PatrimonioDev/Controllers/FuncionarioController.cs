@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Features.FuncionarioFeature.Commands;
 using Aplicacao.Features.FuncionarioFeature.Queries;
 using Domain.Entidades;
+using Domain.Enums;
 using Domain.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace PatrimonioDev.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/funcionarios")]
-    public class FuncionarioController: BaseApiController
+    [Route("api/funcionarios")]
+    public class FuncionarioController : BaseApiController
     {
 
         [SwaggerOperation(Summary = "Método para cadastrar um funcionário")]
@@ -23,17 +24,7 @@ namespace PatrimonioDev.Controllers
         [Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> CriarFuncionario([FromBody] CriarFuncionarioCommand command)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
-
-        }
+                => Ok(await Mediator.Send(command));
 
         [SwaggerOperation(Summary = "Método para listar todos os funcionario")]
         [ProducesResponseType(typeof(Funcionario), StatusCodes.Status200OK)]
@@ -44,17 +35,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet]
         public async Task<IActionResult> ListarTodosFuncionario()
         {
-            try
-            {
-                var fabricante = await Mediator.Send(new ObterTodosFuncionarios());
 
-                return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            var fabricante = await Mediator.Send(new ObterTodosFuncionarios());
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
         }
 
 
@@ -67,17 +51,10 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarFuncionarioPorId(int id)
         {
-            try
-            {
-                var fabricante = await Mediator.Send(new ObterFuncionarioPorId { CodigoFuncionario = id });
 
-                return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            var fabricante = await Mediator.Send(new ObterFuncionarioPorId { CodigoFuncionario = id });
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
         }
 
 
@@ -88,26 +65,20 @@ namespace PatrimonioDev.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         [HttpPut("{codigoFuncionario}")]
-        public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody]AtualizarFuncionarioCommand command)
+        public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody] AtualizarFuncionarioCommand command)
         {
 
-            try
-            {
-                command.CodigoFuncionario = codigoFuncionario;
+            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, codigoFuncionario))
+                return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                var statusCode = StatusCode(await Mediator.Send(command));
+            command.CodigoFuncionario = codigoFuncionario;
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Nenhum registro encontrado!");
+            var statusCode = StatusCode(await Mediator.Send(command));
 
-                return Ok();
+            if (statusCode.StatusCode == 404)
+                return NotFound("Nenhum registro encontrado!");
 
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            return Ok();
         }
 
 
@@ -120,20 +91,16 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DesativarFuncionario(int id)
         {
-            try
-            {
-                var statusCode = StatusCode(await Mediator.Send(new DesativarFuncionarioCommand() { CodigoFuncionario = id }));
 
-                if (statusCode.StatusCode == 404)
-                    return NotFound("Não foi encontrado registro para deletar");
+            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, id))
+                return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-                return Ok();
+            var statusCode = StatusCode(await Mediator.Send(new DesativarFuncionarioCommand() { CodigoFuncionario = id }));
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {ex.Message}{ex.InnerException}" });
-            }
+            if (statusCode.StatusCode == 404)
+                return NotFound("Não foi encontrado registro para deletar");
+
+            return Ok();
         }
     }
 }
