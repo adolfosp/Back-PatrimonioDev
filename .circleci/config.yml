@@ -4,7 +4,7 @@ jobs:
 
   build-api:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     working_directory: ~/PatrimonioDev/PatrimonioDev
     steps:
       - checkout:
@@ -18,7 +18,7 @@ jobs:
 
   build-test-domain:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     working_directory: ~/PatrimonioDev/Testes/DomainTests
     steps:
       - checkout:
@@ -31,7 +31,7 @@ jobs:
 
   build-test-api:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     working_directory: ~/PatrimonioDev/Testes/ApiTests
     steps:
       - checkout:
