@@ -1,4 +1,3 @@
-using Aplicacao;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
@@ -22,17 +21,13 @@ namespace PatrimonioDev
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddCors();
-
-            services.AddApplication();
-
             services.AddPersistenceConfiguration(Configuration);
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddServiceInjection();
 
-            services.AddControllers();
+            services.AddWebApiConfiguration();
 
             services.AddAuthenticationConfiguration(Configuration);
 
@@ -40,7 +35,7 @@ namespace PatrimonioDev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
 
             app.UseSwaggerConfiguration();

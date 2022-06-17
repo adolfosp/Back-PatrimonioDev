@@ -4,6 +4,7 @@ using Aplicacao.Interfaces.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Context;
+using Persistence.Contexts;
 
 namespace PatrimonioDev
 {
@@ -23,6 +24,9 @@ namespace PatrimonioDev
             services.AddScoped<IPerfilUsuarioPersistence, PerfilUsuarioPersistence>();
             services.AddScoped<IEstatisticaPersistence, EstatisticaPersistence>();
             services.AddScoped<IRelatorio, RelatorioPersistence>();
+
+            services.AddSingleton<DapperContext>();
+
 
         }
     }

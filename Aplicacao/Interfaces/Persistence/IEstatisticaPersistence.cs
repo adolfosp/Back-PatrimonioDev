@@ -7,9 +7,9 @@ namespace Aplicacao.Interfaces.Persistence
 {
     public interface IEstatisticaPersistence
     {
-        Task<List<EstatisticaCategoriaDto>> ObterEstatisticaCategoria();
-        Task<List<EstatisticaMediaEquipamentoDto>> ObterMediaEquipamentoPorFuncionario();
-        Task<List<EstatisticaPatrimonioDisponivelDto>> ObterPatrimonioDisponivel();
+        Task<IEnumerable<EstatisticaCategoriaDto>> ObterEstatisticaCategoria();
+        Task<IEnumerable<EstatisticaMediaEquipamentoDto>> ObterMediaEquipamentoPorFuncionario();
+        Task<IEnumerable<EstatisticaPatrimonioDisponivelDto>> ObterPatrimonioDisponivel();
         Task<EstatisticaQuantidadeMovimentacao> ObterQuantidadeMovimentacao();
 
     }

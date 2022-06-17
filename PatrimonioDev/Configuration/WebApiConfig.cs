@@ -1,8 +1,12 @@
-﻿using HealthChecks.UI.Client;
+﻿using Aplicacao;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using PatrimonioDev.Extension;
 using System.IO;
 
@@ -10,6 +14,18 @@ namespace PatrimonioDev.Configuration
 {
     public static class WebApiConfig
     {
+
+        public static IServiceCollection AddWebApiConfiguration(this IServiceCollection services)
+        {
+            services.AddCors();
+
+            services.AddApplication();
+
+            services.AddControllers();
+
+            return services;
+        }
+
 
         public static IApplicationBuilder UseWebApiConfiguration(this IApplicationBuilder app)
         {
@@ -20,7 +36,10 @@ namespace PatrimonioDev.Configuration
 
             app.UseCors(builder =>
             {
-                builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetIsOriginAllowed((host) => true);
+                builder.AllowAnyHeader().
+                        AllowAnyOrigin().
+                        AllowAnyMethod().
+                        SetIsOriginAllowed((host) => true);
             });
 
             app.UseHealthChecks("/health", new HealthCheckOptions

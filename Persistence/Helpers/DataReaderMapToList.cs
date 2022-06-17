@@ -8,7 +8,8 @@ namespace Persistence.Helpers
 {
     public class DataReaderMapToList
     {
-        //TODO: FAZER PARA APENAS CLASSES AO INVES DE LISTA
+
+        [Obsolete(message:"Utilizar Dapper ao invés desse método")]
         public static List<Tdto> DataReaderToList<Tdto>(DbDataReader dr)
         {
             List<Tdto> list = new List<Tdto>();
@@ -35,6 +36,7 @@ namespace Persistence.Helpers
             return new List<Tdto>();
         }
 
+        [Obsolete(message: "Utilizar Dapper ao invés desse método")]
         public static Tdto DataReader<Tdto>(DbDataReader dr)
         {
             var dto = Activator.CreateInstance<Tdto>();
