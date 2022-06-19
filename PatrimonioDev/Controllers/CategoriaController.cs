@@ -26,7 +26,7 @@ namespace PatrimonioDev.Controllers
 
             var categorias = await Mediator.Send(new ObterTodasCategorias());
 
-            return StatusCode(HTTPStatus.RetornaStatus(categorias), categorias);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(categorias), categorias);
 
         }
 
@@ -42,7 +42,7 @@ namespace PatrimonioDev.Controllers
 
             var categoria = await Mediator.Send(command);
 
-            return StatusCode(HTTPStatus.RetornaStatus(categoria), categoria);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(categoria), categoria);
 
         }
 
@@ -102,7 +102,7 @@ namespace PatrimonioDev.Controllers
 
             var usuario = await Mediator.Send(new ObterApenasUmaCategoria { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(usuario), usuario);
 
         }
     }

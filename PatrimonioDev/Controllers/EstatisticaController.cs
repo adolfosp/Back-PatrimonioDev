@@ -27,7 +27,7 @@ namespace PatrimonioDev.Controllers
 
             var estatistica = await Mediator.Send(new ObterEstatisticaCategoria());
 
-            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(estatistica), estatistica);
 
         }
 
@@ -43,7 +43,7 @@ namespace PatrimonioDev.Controllers
 
             var estatistica = await Mediator.Send(new ObterEstatisticaMediaEquipamentoPorFuncionario());
 
-            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(estatistica), estatistica);
 
         }
 
@@ -59,7 +59,7 @@ namespace PatrimonioDev.Controllers
 
             var estatistica = await Mediator.Send(new ObterEstatisticaPatrimonioDisponivel());
 
-            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(estatistica), estatistica);
 
         }
 
@@ -75,7 +75,7 @@ namespace PatrimonioDev.Controllers
 
             var estatistica = await Mediator.Send(new ObterQuantidadeMovimentacao());
 
-            return StatusCode(HTTPStatus.RetornaStatus(estatistica), estatistica);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(estatistica), estatistica);
 
         }
     }

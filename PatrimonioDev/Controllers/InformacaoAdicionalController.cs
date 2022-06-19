@@ -37,7 +37,7 @@ namespace PatrimonioDev.Controllers
 
             var informacaoAdicional = await Mediator.Send(new ObterInformacaoAdicionalPorId { CodigoPatrimonio = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(informacaoAdicional), informacaoAdicional);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(informacaoAdicional), informacaoAdicional);
 
         }
 

@@ -62,7 +62,7 @@ namespace PatrimonioDev.Controllers
         {
             var usuario = await Mediator.Send(new ObterApenasUm { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(usuario), usuario);
 
         }
 
@@ -100,7 +100,7 @@ namespace PatrimonioDev.Controllers
 
             usuario.Token = tokenString;
 
-            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(usuario), usuario);
 
         }
 
@@ -117,7 +117,7 @@ namespace PatrimonioDev.Controllers
         {
             var usuario = await Mediator.Send(new ObterTodosUsuarios());
 
-            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(usuario), usuario);
         }
 
         [SwaggerOperation(Summary = "Método para buscar todos os usuário ")]
@@ -136,7 +136,7 @@ namespace PatrimonioDev.Controllers
             if (usuario is null)
                 return NotFound("Não foi encontrado registro para deletar");
 
-            new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
+            new ImagemUsuarioHelper(usuario.ImagemUrl, _host).ApagarImagem();
 
             return Ok();
         }

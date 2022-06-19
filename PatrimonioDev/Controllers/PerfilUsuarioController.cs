@@ -35,7 +35,7 @@ namespace PatrimonioDev.Controllers
 
             var perfil = await Mediator.Send(new ObterPerfilUsuario { CodigoUsuario = codigoUsuario });
 
-            return StatusCode(HTTPStatus.RetornaStatus(perfil), perfil);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(perfil), perfil);
 
         }
 
@@ -76,7 +76,7 @@ namespace PatrimonioDev.Controllers
 
             if (file.Length > 0)
             {
-                new ImagemUsuario(usuario.ImagemUrl, _host).ApagarImagem();
+                new ImagemUsuarioHelper(usuario.ImagemUrl, _host).ApagarImagem();
 
                 usuario.ImagemUrl = await SalvarImagem(file);
             }
