@@ -24,6 +24,7 @@ namespace PatrimonioDev
             services.AddScoped<IPerfilUsuarioPersistence, PerfilUsuarioPersistence>();
             services.AddScoped<IEstatisticaPersistence, EstatisticaPersistence>();
             services.AddScoped<IRelatorio, RelatorioPersistence>();
+            services.AddScoped<IEmpresaPersistence, EmpresaPersistence>();
 
             services.AddSingleton<DapperContext>();
 

@@ -1,9 +1,6 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+using Aplicacao.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,37 +14,14 @@ namespace Aplicacao.Features.EmpresaFeature.Commands
 
         public class AtualizarEmpresaCommandHandler : IRequestHandler<AtualizarEmpresaCommand, (int CodigoStatus, string NomeEmpresa)>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IEmpresaPersistence _persistence;
 
-            public AtualizarEmpresaCommandHandler(IApplicationDbContext context)
-                => _context = context;
+            public AtualizarEmpresaCommandHandler(IEmpresaPersistence persistence)
+                => _persistence = persistence;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<(int CodigoStatus, string NomeEmpresa)> Handle(AtualizarEmpresaCommand command, CancellationToken cancellationToken)
-            {
-
-                var empresa = await _context.Empresa.Where(x => x.CodigoEmpresa == command.Id).FirstOrDefaultAsync();
-
-                if (empresa == null) return (404, "");
-
-                if (command.Empresa.EmpresaPadraoImpressao) { 
-
-                    var empresaPadrao = await _context.Empresa.Where(x => x.EmpresaPadraoImpressao == true).Select(x => new { x.NomeFantasia, x.CodigoEmpresa }).FirstOrDefaultAsync();
-
-                    if (empresaPadrao.CodigoEmpresa != command.Id)
-                        return (400, empresaPadrao.NomeFantasia);
-                }
-
-                empresa.CNPJ = command.Empresa.CNPJ;
-                empresa.NomeFantasia = command.Empresa.NomeFantasia;
-                empresa.RazaoSocial = command.Empresa.RazaoSocial;
-                empresa.EmpresaPadraoImpressao = command.Empresa.EmpresaPadraoImpressao;
-
-                await _context.SaveChangesAsync();
-
-                return (200, "");
-
-            }
+               =>  await _persistence.AtualizarEmpresa(command.Id, command.Empresa);
+      
         }
     }
 }

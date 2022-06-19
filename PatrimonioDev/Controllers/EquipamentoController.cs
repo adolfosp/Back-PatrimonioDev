@@ -38,7 +38,7 @@ namespace PatrimonioDev.Controllers
         {
             var equipamentos = await Mediator.Send(new ObterTodosEquipamento());
 
-            return StatusCode(HTTPStatus.RetornaStatus(equipamentos), equipamentos);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(equipamentos), equipamentos);
         }
 
 
@@ -54,7 +54,7 @@ namespace PatrimonioDev.Controllers
 
             var equipamento = await Mediator.Send(new ObterApenasUmEquipamento { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(equipamento), equipamento);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(equipamento), equipamento);
 
         }
 

@@ -51,7 +51,7 @@ namespace PatrimonioDev.Controllers
 
             var empresa = await Mediator.Send(new ObterTodasEmpresas());
 
-            return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(empresa), empresa);
 
         }
 
@@ -68,7 +68,7 @@ namespace PatrimonioDev.Controllers
 
             var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(empresa), empresa);
 
         }
 
@@ -85,7 +85,7 @@ namespace PatrimonioDev.Controllers
 
             var empresa = await Mediator.Send(new ObterEmpresaPadrao());
 
-            return StatusCode(HTTPStatus.RetornaStatus(empresa), empresa);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(empresa), empresa);
 
         }
 
@@ -101,7 +101,7 @@ namespace PatrimonioDev.Controllers
         {
 
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, codigoEmpresa))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, codigoEmpresa))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             command.Id = codigoEmpresa;
@@ -130,7 +130,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DeletarEmpresa(int id)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, id))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, id))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             var statusCode = StatusCode(await Mediator.Send(new DeletarEmpresaCommand() { Id = id }));

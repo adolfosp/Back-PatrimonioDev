@@ -39,7 +39,7 @@ namespace PatrimonioDev.Controllers
         {
             var setor = await Mediator.Send(new ObterApenasUmSetor { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(setor), setor);
         }
 
 
@@ -56,7 +56,7 @@ namespace PatrimonioDev.Controllers
 
             var setor = await Mediator.Send(new ObterTodosSetores());
 
-            return StatusCode(HTTPStatus.RetornaStatus(setor), setor);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(setor), setor);
 
         }
 
@@ -72,7 +72,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DeletarSetor(int id)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
@@ -94,7 +94,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarSetor(int codigoSetor, [FromBody] AtualizarSetorCommand command)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, codigoSetor))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, codigoSetor))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             command.Id = codigoSetor;

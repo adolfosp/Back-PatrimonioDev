@@ -38,7 +38,7 @@ namespace PatrimonioDev.Controllers
 
             var fabricante = await Mediator.Send(new ObterTodosFuncionarios());
 
-            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(fabricante), fabricante);
         }
 
 
@@ -54,7 +54,7 @@ namespace PatrimonioDev.Controllers
 
             var fabricante = await Mediator.Send(new ObterFuncionarioPorId { CodigoFuncionario = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(fabricante), fabricante);
         }
 
 
@@ -68,7 +68,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarFuncionario(int codigoFuncionario, [FromBody] AtualizarFuncionarioCommand command)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, codigoFuncionario))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, codigoFuncionario))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             command.CodigoFuncionario = codigoFuncionario;
@@ -92,7 +92,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DesativarFuncionario(int id)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, id))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Funcionario, id))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             var statusCode = StatusCode(await Mediator.Send(new DesativarFuncionarioCommand() { CodigoFuncionario = id }));

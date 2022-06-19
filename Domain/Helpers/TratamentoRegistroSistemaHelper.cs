@@ -2,7 +2,7 @@
 
 namespace Domain.Helpers
 {
-    public static class TratamentoRegistroSistema
+    public static class TratamentoRegistroSistemaHelper
     {
         public static bool EhRegistroPadraoSistema(EntidadesRegistroPadrao entidade, int codigoRegistro)
         {
