@@ -1,49 +1,34 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+using Aplicacao.Interfaces.Persistence;
+using AutoMapper;
 using Domain.Entidades;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Aplicacao.Features.EmpresaFeature.Commands
 {
-    public class CriarEmpresaCommand : IRequest<(Empresa Empresa, bool EmpresaContemOpcaoPadraoImpressao)>
+    public class CriarEmpresaCommand : IRequest<(int CodigoStatus, string NomeEmpresa)>
     {
         public EmpresaDto Empresa { get; set; }
 
-        public class CriarEquipamentoCommandHandler : IRequestHandler<CriarEmpresaCommand, (Empresa Empresa, bool EmpresaContemOpcaoPadraoImpressao)>
+        public class CriarEquipamentoCommandHandler : IRequestHandler<CriarEmpresaCommand, (int CodigoStatus, string NomeEmpresa)>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IEmpresaPersistence _persistence;
+            private readonly IMapper _mapper;
 
-            public CriarEquipamentoCommandHandler(IApplicationDbContext context)
-                 => _context = context;
-
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
-            public async Task<(Empresa Empresa, bool EmpresaContemOpcaoPadraoImpressao)> Handle(CriarEmpresaCommand command, CancellationToken cancellationToken)
+            public CriarEquipamentoCommandHandler(IEmpresaPersistence persistence, IMapper mapper)
             {
-                //TODO: refatorar pois no atualizar tem o mesmo código
-                if (command.Empresa.EmpresaPadraoImpressao)
-                {
+                _persistence = persistence;
+                _mapper = mapper;
 
-                    var empresaPadrao = await _context.Empresa.Where(x => x.EmpresaPadraoImpressao == true).Select(x => x).FirstOrDefaultAsync();
+            }
 
-                    if (empresaPadrao is not null)
-                        return (empresaPadrao, true);
-                }
+            public async Task<(int CodigoStatus, string NomeEmpresa)> Handle(CriarEmpresaCommand command, CancellationToken cancellationToken)
+            {
+                var empresa = _mapper.Map<Empresa>(command.Empresa);
 
-                var empresa = new Empresa();
-                empresa.CNPJ = command.Empresa.CNPJ;
-                empresa.NomeFantasia = command.Empresa.NomeFantasia;
-                empresa.RazaoSocial = command.Empresa.RazaoSocial;
-                empresa.EmpresaPadraoImpressao = command.Empresa.EmpresaPadraoImpressao;
-
-                await _context.Empresa.AddAsync(empresa);
-
-                await _context.SaveChangesAsync();
-
-                return (empresa, false);
+                return await _persistence.Adicionar(empresa);
 
             }
         }

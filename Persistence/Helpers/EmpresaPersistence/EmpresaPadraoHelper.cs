@@ -1,8 +1,6 @@
 ﻿using Aplicacao.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Domain.Helpers.Empresa
 {
@@ -15,15 +13,17 @@ namespace Domain.Helpers.Empresa
             => _context = context;
 
 
-        public async Task<(int StatusCode, string NomeFantasia)> ObterRetornoParaEmpresaPadrao(int codigoEmpresaDaOperacao)
+        public (int StatusCode, string NomeFantasia) ObterRetornoParaEmpresaPadrao(int codigoEmpresaDaOperacao)
         {
-            var nomeFantasia =  await _context.Empresa.Where(x => x.EmpresaPadraoImpressao == true && x.CodigoEmpresa != codigoEmpresaDaOperacao).
+            var nomeFantasia =  _context.Empresa.Where(x => x.EmpresaPadraoImpressao && x.CodigoEmpresa != codigoEmpresaDaOperacao).
                                                           Select(x => x.NomeFantasia).
-                                                          FirstOrDefaultAsync();
+                                                          FirstOrDefault();
             if (!String.IsNullOrEmpty(nomeFantasia))
                 return (400, nomeFantasia);
 
-            return (0,"");
+            return (0, "");
         }
+
+
     }
 }

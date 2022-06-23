@@ -30,8 +30,8 @@ namespace PatrimonioDev.Controllers
 
             var empresa = await Mediator.Send(command);
 
-            if (empresa.EmpresaContemOpcaoPadraoImpressao)
-                return BadRequest(new { mensagem = $"A empresa de nome fantasia '{empresa.Empresa.NomeFantasia}' já está com a opção 'Empresa Padrão Impressão' marcada" });
+            if (empresa.CodigoStatus == 400)
+                return BadRequest(new { mensagem = $"A empresa de nome fantasia '{empresa.NomeEmpresa}' já está com a opção 'Empresa Padrão Impressão' marcada" });
 
             return Ok(empresa);
 
