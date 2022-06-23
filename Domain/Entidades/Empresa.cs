@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Aplicacao.Dtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entidades
 {
