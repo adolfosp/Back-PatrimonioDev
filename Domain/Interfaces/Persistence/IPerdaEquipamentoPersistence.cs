@@ -2,7 +2,7 @@
 using Domain.Entidades;
 using System.Threading.Tasks;
 
-namespace Aplicacao.Interfaces.Persistence
+namespace Domain.Interfaces.Persistence
 {
     public interface IPerdaEquipamentoPersistence
     {

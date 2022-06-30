@@ -1,8 +1,8 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces;
-using Aplicacao.Interfaces.Persistence;
 using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Persistence.Helpers;

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PatrimonioDev.Configuration;
 using Persistence;
 using System;
@@ -34,12 +35,12 @@ namespace PatrimonioDev
             services.AddSwaggerConfiguration();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseSwaggerConfiguration();
-
+            if (env.IsDevelopment())  
+                app.UseSwaggerConfiguration();
+           
             app.UseHttpsRedirection();
 
             app.UseRouting();

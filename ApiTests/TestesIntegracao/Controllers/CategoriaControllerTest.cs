@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Features.CategoriaFeature.Commands;
 using Aplicacao.Features.CategoriaFeature.Queries;
-using Aplicacao.Interfaces.Persistence;
 using AutoFixture;
+using Domain.Interfaces.Persistence;
 using DomainTests.TestesIntegracao.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

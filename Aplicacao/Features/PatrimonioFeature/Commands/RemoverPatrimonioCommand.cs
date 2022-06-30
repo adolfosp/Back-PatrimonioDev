@@ -1,4 +1,4 @@
-﻿using Aplicacao.Interfaces.Persistence;
+﻿using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

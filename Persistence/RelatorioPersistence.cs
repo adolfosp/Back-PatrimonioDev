@@ -1,6 +1,6 @@
 ﻿using Aplicacao.Interfaces;
-using Aplicacao.Interfaces.Persistence;
 using Domain.Dtos;
+using Domain.Interfaces.Persistence;
 using Persistence.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;

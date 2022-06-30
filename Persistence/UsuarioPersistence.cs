@@ -2,6 +2,7 @@
 using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Helper;
 using System.Collections.Generic;

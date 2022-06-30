@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aplicacao.Dtos;
 using Domain.Entidades;
 
-namespace Aplicacao.Interfaces.Persistence
+namespace Domain.Interfaces.Persistence
 {
     public interface IMovimentacaoEquipamentoPersistence
     {

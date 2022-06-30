@@ -1,6 +1,6 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces.Persistence;
 using AutoMapper;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

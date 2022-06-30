@@ -1,5 +1,5 @@
-﻿using Aplicacao.Interfaces.Persistence;
-using Domain.Entidades;
+﻿using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;

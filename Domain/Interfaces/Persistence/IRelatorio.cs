@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Aplicacao.Interfaces.Persistence
+namespace Domain.Interfaces.Persistence
 {
     public interface IRelatorio
     {

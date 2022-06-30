@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces;
-using Aplicacao.Interfaces.Persistence;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Helper;
 using System;

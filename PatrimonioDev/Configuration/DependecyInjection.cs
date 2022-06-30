@@ -1,6 +1,6 @@
 ﻿
 using Aplicacao.Interfaces;
-using Aplicacao.Interfaces.Persistence;
+using Domain.Interfaces;
 using Domain.Interfaces.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;

@@ -1,7 +1,7 @@
-﻿using Aplicacao.Interfaces.Persistence;
-using Dapper;
+﻿using Dapper;
 using Domain.Dtos;
 using Domain.Dtos.Estatisticas;
+using Domain.Interfaces.Persistence;
 using Persistence.Contexts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
