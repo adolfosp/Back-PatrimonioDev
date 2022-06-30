@@ -18,14 +18,14 @@
   "homepage": "https://github.com/adolfosp/Back-PatrimonioDev#readme",
   "dependencies": {
     "commitlint": "^16.2.1",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^19.0.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
     "hooks": "^0.3.2",
     "husky": "^7.0.4",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^19.0.3"
   },
   "release": {
     "branch": "main"
