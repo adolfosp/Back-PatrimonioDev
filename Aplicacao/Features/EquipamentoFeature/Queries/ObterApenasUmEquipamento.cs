@@ -8,7 +8,7 @@ namespace Aplicacao.Features.EquipamentoFeature.Queries
 {
     public class ObterApenasUmEquipamento : IRequest<Equipamento>
     {
-        public int Id { get; set; }
+        public int CodigoEquipamento { get; set; }
 
         public class ObterApenasUmEquipamentoHandler: IRequestHandler<ObterApenasUmEquipamento, Equipamento>
         {
@@ -18,7 +18,7 @@ namespace Aplicacao.Features.EquipamentoFeature.Queries
                 => _persistence = persistence;
 
             public Task<Equipamento> Handle(ObterApenasUmEquipamento request, CancellationToken cancellationToken)
-                => _persistence.ObterEquipamentoPorId(request.Id);
+                => _persistence.ObterEquipamentoPorId(request.CodigoEquipamento);
         }
 
     }
