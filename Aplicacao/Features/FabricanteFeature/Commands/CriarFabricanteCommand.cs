@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,28 +10,26 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
 {
     public class CriarFabricanteCommand : IRequest<Fabricante>
     {
-        public FabricanteDto Fabricante { get; set; }
+        public FabricanteDto FabricanteDto { get; set; }
 
         public class CriarFabricanteHandler : IRequestHandler<CriarFabricanteCommand, Fabricante>
 
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IFabricantePersistence _persistence;
+            private readonly IMapper _mapper;
 
-            public CriarFabricanteHandler(IApplicationDbContext context)
-                => _context = context;
-
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
-            public async Task<Fabricante> Handle(CriarFabricanteCommand request, CancellationToken cancellationToken)
+            public CriarFabricanteHandler(IFabricantePersistence persistence, IMapper mapper)
             {
-                var fabricante = new Fabricante();
+                _persistence = persistence;
+                _mapper = mapper;
 
-                fabricante.NomeFabricante = request.Fabricante.NomeFabricante;
+            }
 
-                await _context.Fabricante.AddAsync(fabricante);
+            public async Task<Fabricante> Handle(CriarFabricanteCommand command, CancellationToken cancellationToken)
+            {
+                var fabricante = _mapper.Map<Fabricante>(command.FabricanteDto);
 
-                await _context.SaveChangesAsync();
-
-                return fabricante;
+                return await _persistence.Adicionar(fabricante);
             }
         }
     }

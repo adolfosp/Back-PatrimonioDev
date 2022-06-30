@@ -1,7 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,29 +7,17 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
 {
     public class DeletarFabricanteCommand : IRequest<int>
     {
-        public int Id { get; set; }
+        public int CodigoFabricante { get; set; }
 
         public class DeletarFabricanteHandler : IRequestHandler<DeletarFabricanteCommand, int>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IFabricantePersistence _persistence;
 
-            public DeletarFabricanteHandler(IApplicationDbContext context)
-                => _context = context;
+            public DeletarFabricanteHandler(IFabricantePersistence persistence)
+                => _persistence = persistence;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(DeletarFabricanteCommand command, CancellationToken cancellationToken)
-            {
-                var fabricante = await _context.Fabricante.Where(x => x.CodigoFabricante == command.Id).FirstOrDefaultAsync();
-
-                if (fabricante == null) return 404;
-
-                _context.Fabricante.Remove(fabricante);
-
-                await _context.SaveChangesAsync();
-
-                return 200;
-
-            }
+                => await _persistence.Remover(command.CodigoFabricante);
         }
     }
 }

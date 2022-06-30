@@ -3,6 +3,7 @@ using Aplicacao.Interfaces.Persistence;
 using Domain.Entidades;
 using Domain.Helpers.Empresa;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,6 +65,51 @@ namespace Persistence
             await _context.SaveChangesAsync();
 
             return (200, "");
+        }
+
+        public async Task<string> ObterEmpresaPadrao()
+        {
+            var empresaPadrao = await _context.Empresa.Where(x => x.EmpresaPadraoImpressao).Select(x => x.NomeFantasia).FirstOrDefaultAsync();
+
+            if (empresaPadrao == null)
+                return string.Empty;
+
+            return empresaPadrao;
+        }
+
+        public async Task<IEnumerable<Empresa>> ObterTodas()
+        {
+            var listaEmpresas = await _context.Empresa.ToListAsync();
+
+            if (listaEmpresas == null)
+            {
+                return null;
+            }
+
+            return listaEmpresas.AsReadOnly();
+        }
+
+        public async Task<Empresa> ObterUma(int codigoEmpresa)
+        {
+            var listaEmpresa = await _context.Empresa.Where(x => x.CodigoEmpresa == codigoEmpresa).FirstOrDefaultAsync();
+
+            if (listaEmpresa == null)
+                return null;
+
+            return listaEmpresa;
+        }
+
+        public async Task<int> Remover(int codigoEmpresa)
+        {
+            var empresa = await _context.Empresa.Where(x => x.CodigoEmpresa == codigoEmpresa).FirstOrDefaultAsync();
+
+            if (empresa == null) return 404;
+
+            _context.Empresa.Remove(empresa);
+
+            await _context.SaveChangesAsync();
+
+            return 200;
         }
     }
 }

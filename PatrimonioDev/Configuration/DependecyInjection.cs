@@ -1,6 +1,7 @@
 ﻿
 using Aplicacao.Interfaces;
 using Aplicacao.Interfaces.Persistence;
+using Domain.Interfaces.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Context;
@@ -25,6 +26,7 @@ namespace PatrimonioDev
             services.AddScoped<IEstatisticaPersistence, EstatisticaPersistence>();
             services.AddScoped<IRelatorio, RelatorioPersistence>();
             services.AddScoped<IEmpresaPersistence, EmpresaPersistence>();
+            services.AddScoped<IFabricantePersistence, FabricantePersistence>();
 
             services.AddSingleton<DapperContext>();
 

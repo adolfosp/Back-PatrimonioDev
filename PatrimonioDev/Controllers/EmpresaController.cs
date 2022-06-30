@@ -66,7 +66,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> ListarEmpresaPorId(int id)
         {
 
-            var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { Id = id });
+            var empresa = await Mediator.Send(new ObterApenasUmaEmpresa { CodigoEmpresa = id });
 
             return StatusCode(HTTPStatusHelper.RetornaStatus(empresa), empresa);
 
@@ -133,7 +133,7 @@ namespace PatrimonioDev.Controllers
             if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Empresa, id))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-            var statusCode = StatusCode(await Mediator.Send(new DeletarEmpresaCommand() { Id = id }));
+            var statusCode = StatusCode(await Mediator.Send(new DeletarEmpresaCommand() { CodigoEmpresa = id }));
 
             if (statusCode.StatusCode == 404)
                 return NotFound("Não foi encontrado registro para deletar");

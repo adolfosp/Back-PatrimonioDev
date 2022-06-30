@@ -1,8 +1,8 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+using AutoMapper;
+using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,31 +10,27 @@ namespace Aplicacao.Features.FabricanteFeature.Commands
 {
     public class AtualizarFabricanteCommand : IRequest<int>
     {
-        public int Id { get; set; }
+        public int CodigoFabricante { get; set; }
 
-        public FabricanteDto Fabricante { get; set; }
+        public FabricanteDto FabricanteDto { get; set; }
 
         public class AtualizarFabricanteHandler : IRequestHandler<AtualizarFabricanteCommand, int>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IFabricantePersistence _persistence;
+            private readonly IMapper _mapper;
 
-            public AtualizarFabricanteHandler(IApplicationDbContext context)
-                => _context = context;
+            public AtualizarFabricanteHandler(IFabricantePersistence persistence, IMapper mapper)
+            {
+                _persistence = persistence;
+                _mapper = mapper;
+            }
 
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<int> Handle(AtualizarFabricanteCommand command, CancellationToken cancellationToken)
             {
+                var fabricante = _mapper.Map<Fabricante>(command.FabricanteDto);
 
-                var fabricante = await _context.Fabricante.Where(x => x.CodigoFabricante == command.Id).FirstOrDefaultAsync();
-
-                if (fabricante == null) return 404;
-
-                fabricante.NomeFabricante = command.Fabricante.NomeFabricante;
-
-                await _context.SaveChangesAsync();
-
-                return 200;
+                return await _persistence.Atualizar(command.CodigoFabricante, fabricante);
 
             }
         }
