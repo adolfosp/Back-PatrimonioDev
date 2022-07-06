@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Persistence
+namespace Persistencia
 {
     public class FuncionarioPersistence : IFuncionarioPersistence
     {
@@ -62,7 +62,7 @@ namespace Persistence
 
         public async Task<Funcionario> ObterFuncionarioPorId(int codigoFuncionario)
         {
-            var funcionario = await _context.Funcionario.Where(x => x.CodigoFuncionario == codigoFuncionario && x.Ativo == true).Select(x => x).FirstOrDefaultAsync();
+            var funcionario = await _context.Funcionario.Where(x => x.CodigoFuncionario == codigoFuncionario && x.Ativo).Select(x => x).FirstOrDefaultAsync();
 
             if (funcionario is null) return null;
 
@@ -71,7 +71,7 @@ namespace Persistence
 
         public async Task<IEnumerable<Funcionario>> ObterTodosFuncionarios()
         {
-            var funcionario = await _context.Funcionario.Where(x => x.Ativo == true).ToListAsync();
+            var funcionario = await _context.Funcionario.Where(x => x.Ativo).ToListAsync();
 
             if (funcionario is null) return null;
 

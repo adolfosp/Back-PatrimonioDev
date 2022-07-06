@@ -17,7 +17,7 @@ namespace Aplicacao.Features.SetorFeature.Commands
 
         public class AtualizarSetorCommandHandler : IRequestHandler<AtualizarSetorCommand, int>
         {
-            private IApplicationDbContext _context;
+            private readonly IApplicationDbContext _context;
 
             public AtualizarSetorCommandHandler(IApplicationDbContext context)
                 => _context = context;

@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Persistence
+namespace Persistencia
 {
     public class PerfilUsuarioPersistence : IPerfilUsuarioPersistence
     {
@@ -47,7 +47,7 @@ namespace Persistence
                     join s in _context.Setor on u.CodigoSetor equals s.CodigoSetor
                     join e in _context.Empresa on u.CodigoEmpresa equals e.CodigoEmpresa
                     join p in _context.UsuarioPermissao on u.CodigoUsuarioPermissao equals p.CodigoUsuarioPermissao
-                    where u.Ativo == true && u.CodigoUsuario == codigoUsuario
+                    where u.Ativo && u.CodigoUsuario == codigoUsuario
                     select new PerfilUsuario
                     {
                         CodigoUsuario = u.CodigoUsuario,

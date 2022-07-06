@@ -5,7 +5,7 @@ using Persistence.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Persistence
+namespace Persistencia
 {
     public class RelatorioPersistence : IRelatorio
     {

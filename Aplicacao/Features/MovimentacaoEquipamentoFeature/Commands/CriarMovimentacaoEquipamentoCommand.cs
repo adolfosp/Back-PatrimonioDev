@@ -10,7 +10,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
 {
     public class CriarMovimentacaoEquipamentoCommand : IRequest<MovimentacaoEquipamento>
     {
-        public MovimentacaoEquipamentoDto Movimentacao { get; set; }
+        public MovimentacaoEquipamentoDto MovimentacaoDto { get; set; }
 
         public class CriarMovimentacaoEquipamentoCommandHandler : IRequestHandler<CriarMovimentacaoEquipamentoCommand, MovimentacaoEquipamento>
         {
@@ -28,7 +28,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Commands
             {
                 var movimentacao = new MovimentacaoEquipamento();
 
-                _mapper.Map(request.Movimentacao, movimentacao);
+                _mapper.Map(request.MovimentacaoDto, movimentacao);
 
                 return _persistence.CriarMovimentacaoEquipamento(movimentacao);
             }

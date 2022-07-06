@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,31 +10,25 @@ namespace Aplicacao.Features.InformacaoAdicionalFeature.Commands
 {
     public class CriarInformacaoAdicionalCommand : IRequest<InformacaoAdicional>
     {
-        public InformacaoAdicionalDto InformacaoAdicional { get; set; }
+        public InformacaoAdicionalDto InformacaoAdicionalDto { get; set; }
 
         public class CriarInformacaoCommandHandler : IRequestHandler<CriarInformacaoAdicionalCommand, InformacaoAdicional>
         {
 
-            private readonly IApplicationDbContext _context;
+            private readonly IInformacaoAdicionalPersistence _persistence;
             private readonly IMapper _mapper;
 
-            public CriarInformacaoCommandHandler(IApplicationDbContext context, IMapper mapper)
+            public CriarInformacaoCommandHandler(IInformacaoAdicionalPersistence persistence, IMapper mapper)
             {
-                _context = context;
+                _persistence = persistence;
                 _mapper = mapper;
             }
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<InformacaoAdicional> Handle(CriarInformacaoAdicionalCommand request, CancellationToken cancellationToken)
             {
-                var informacaoAdicional = new InformacaoAdicional();
-                informacaoAdicional = _mapper.Map<InformacaoAdicional>(request.InformacaoAdicional);
+                InformacaoAdicional informacaoAdicional = _mapper.Map<InformacaoAdicional>(request.InformacaoAdicionalDto);
 
-                await _context.InformacaoAdicional.AddAsync(informacaoAdicional);
-
-                await _context.SaveChangesAsync();
-
-                return informacaoAdicional;
+                return await _persistence.Adicionar(informacaoAdicional);
             }
         }
     }

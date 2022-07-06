@@ -6,7 +6,7 @@ using Persistence.Contexts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Persistence
+namespace Persistencia
 {
     public class EstatisticaPersistence : IEstatisticaPersistence
     {
