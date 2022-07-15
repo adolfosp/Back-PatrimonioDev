@@ -14,7 +14,7 @@ jobs:
       - run: dotnet restore PatrimonioDev.csproj
       - run: dotnet dev-certs https --clean
       - run: dotnet dev-certs https -t
-      - run: dotnet build
+      - run: dotnet build PatrimonioDev.csproj
       
   build-test:
     docker:
