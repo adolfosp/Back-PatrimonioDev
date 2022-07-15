@@ -11,7 +11,7 @@ jobs:
           path: ~/PatrimonioDev
       - run: 
           command: echo "Current directory $(ls)"
-      - run: dotnet restore
+      - run: dotnet restore PatrimonioDev.csproj
       - run: dotnet dev-certs https --clean
       - run: dotnet dev-certs https -t
       - run: dotnet build
@@ -50,7 +50,7 @@ jobs:
           path: ~/PatrimonioDev/Testes
       - run: 
           command: echo "Current directory $(ls)"
-      - run: dotnet restore PatrimonioDev.csproj
+      - run: dotnet restore
       - run: dotnet build
       - run: dotnet test
 
