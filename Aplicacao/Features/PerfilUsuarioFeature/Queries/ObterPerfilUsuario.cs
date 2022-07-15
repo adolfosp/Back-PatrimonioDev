@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aplicacao.Features.PerfilUsuarioFeature.Queries
 {
-    public class ObterPerfilUsuario: IRequest<PerfilUsuario>
+    public class ObterPerfilUsuario : IRequest<PerfilUsuario>
     {
         public int CodigoUsuario { get; set; }
 
@@ -17,7 +17,7 @@ namespace Aplicacao.Features.PerfilUsuarioFeature.Queries
                 => _repository = repository;
 
             public Task<PerfilUsuario> Handle(ObterPerfilUsuario request, CancellationToken cancellationToken)
-            => _repository.ObterInformacaoPerfil(request.CodigoUsuario);
+                => _repository.ObterInformacaoPerfil(request.CodigoUsuario);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+using AutoMapper;
+using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,30 +10,26 @@ namespace Aplicacao.Features.SetorFeature.Commands
 {
     public class AtualizarSetorCommand : IRequest<int>
     {
-        public int Id { get; set; }
-
-        public SetorDto Setor { get; set; }
+        public int CodigoSetor { get; set; }
+        public SetorDto SetorDto { get; set; }
 
 
         public class AtualizarSetorCommandHandler : IRequestHandler<AtualizarSetorCommand, int>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly ISetorPersistence _persistence;
+            private readonly IMapper _mapper;
 
-            public AtualizarSetorCommandHandler(IApplicationDbContext context)
-                => _context = context;
-
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
-            public async Task<int> Handle(AtualizarSetorCommand request, CancellationToken cancellationToken)
+            public AtualizarSetorCommandHandler(ISetorPersistence persistence, IMapper mapper)
             {
-                var setor = await _context.Setor.Where(x => x.CodigoSetor == request.Id).Select(x => x).FirstOrDefaultAsync();
+                _persistence = persistence;
+                _mapper = mapper;
+            }
+               
 
-                if (setor is null) return 404;
-
-                setor.Nome = request.Setor.Nome;
-
-                await _context.SaveChangesAsync();
-
-                return 200;
+            public async Task<int> Handle(AtualizarSetorCommand command, CancellationToken cancellationToken)
+            {
+                var setor = _mapper.Map<Setor>(command.SetorDto);
+                return await _persistence.Atualizar(setor, command.CodigoSetor);
             }
         }
     }

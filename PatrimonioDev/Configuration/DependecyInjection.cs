@@ -28,6 +28,7 @@ namespace PatrimonioDev
             services.AddScoped<IEmpresaPersistence, EmpresaPersistence>();
             services.AddScoped<IFabricantePersistence, FabricantePersistence>();
             services.AddScoped<IInformacaoAdicionalPersistence, InformacaoAdicionalPersistence>();
+            services.AddScoped<ISetorPersistence, SetorPersistence>();
 
             services.AddSingleton<DapperContext>();
 

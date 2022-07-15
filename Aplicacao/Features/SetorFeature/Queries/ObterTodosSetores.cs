@@ -1,7 +1,6 @@
-﻿using Aplicacao.Interfaces;
-using Domain.Entidades;
+﻿using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,25 +9,15 @@ namespace Aplicacao.Features.SetorFeature.Queries
 {
     public class ObterTodosSetores : IRequest<IEnumerable<Setor>>
     {
-
         public class ObterTodosSetoresQueryHandler : IRequestHandler<ObterTodosSetores, IEnumerable<Setor>>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly ISetorPersistence _persistence;
 
-            public ObterTodosSetoresQueryHandler(IApplicationDbContext context)
-                => _context = context;
+            public ObterTodosSetoresQueryHandler(ISetorPersistence persistence)
+                => _persistence = persistence;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<IEnumerable<Setor>> Handle(ObterTodosSetores request, CancellationToken cancellationToken)
-            {
-                var listaSetor = await _context.Setor.ToListAsync();
-
-                if (listaSetor == null) return null;
-
-                return listaSetor.AsReadOnly();
-            }
+                => await _persistence.ObterTodosSetores();
         }
-
-
     }
 }

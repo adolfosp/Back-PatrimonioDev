@@ -9,7 +9,7 @@ namespace Aplicacao.Features.PercaEquipamentoFeature.Commands
 {
     public class CriarPerdaEquipamentoCommand : IRequest<PerdaEquipamento>
     {
-        public PerdaEquipamentoDto PerdaEquipamento { get; set; }
+        public PerdaEquipamentoDto PerdaEquipamentoDto { get; set; }
 
         public class CriarPercaEquipamentoCommandHandler: IRequestHandler<CriarPerdaEquipamentoCommand, PerdaEquipamento>
         {
@@ -21,7 +21,7 @@ namespace Aplicacao.Features.PercaEquipamentoFeature.Commands
 
             public Task<PerdaEquipamento> Handle(CriarPerdaEquipamentoCommand request,
                 CancellationToken cancellationToken)
-                => _persistence.CriarPerdaEquipamento(request.PerdaEquipamento);
+                => _persistence.CriarPerdaEquipamento(request.PerdaEquipamentoDto);
         }
     }
 }

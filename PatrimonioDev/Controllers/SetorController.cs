@@ -37,7 +37,7 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterApenasUm(int id)
         {
-            var setor = await Mediator.Send(new ObterApenasUmSetor { Id = id });
+            var setor = await Mediator.Send(new ObterApenasUmSetor { CodigoSetor = id });
 
             return StatusCode(HTTPStatusHelper.RetornaStatus(setor), setor);
         }
@@ -75,7 +75,7 @@ namespace PatrimonioDev.Controllers
             if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, id))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-            var statusCode = StatusCode(await Mediator.Send(new DeletarSetorCommand { Id = id }));
+            var statusCode = StatusCode(await Mediator.Send(new RemoverSetorCommand { CodigoSetor = id }));
 
             if (statusCode.StatusCode == 404)
                 return NotFound(new { mensagem = "Não foi encontrado registro para excluir" });
@@ -97,7 +97,7 @@ namespace PatrimonioDev.Controllers
             if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Setor, codigoSetor))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
-            command.Id = codigoSetor;
+            command.CodigoSetor = codigoSetor;
 
             var statusCode = StatusCode(await Mediator.Send(command));
 

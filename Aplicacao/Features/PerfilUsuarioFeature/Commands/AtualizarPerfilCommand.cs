@@ -8,7 +8,7 @@ namespace Aplicacao.Features.PerfilUsuarioFeature.Commands
 {
     public class AtualizarPerfilCommand: IRequest<int>
     {
-        public PerfilUsuarioDto Perfil { get; set; }
+        public PerfilUsuarioDto PerfilDto { get; set; }
 
         public class AtualizarPerfilCommandHandler : IRequestHandler<AtualizarPerfilCommand, int>
         {
@@ -19,7 +19,7 @@ namespace Aplicacao.Features.PerfilUsuarioFeature.Commands
 
 
             public Task<int> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
-                => _repository.AtualizarPerfilUsuario(request.Perfil);
+                => _repository.AtualizarPerfilUsuario(request.PerfilDto);
         }
     }
 }

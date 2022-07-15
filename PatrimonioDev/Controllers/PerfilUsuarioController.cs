@@ -82,7 +82,7 @@ namespace PatrimonioDev.Controllers
             }
 
             var novoUsuario = new AtualizarPerfilCommand();
-            novoUsuario.Perfil = usuario;
+            novoUsuario.PerfilDto = usuario;
 
             var usuarioRetorno = await AlterarPerfilUsuario(novoUsuario);
 

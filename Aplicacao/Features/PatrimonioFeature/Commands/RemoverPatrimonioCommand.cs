@@ -7,7 +7,7 @@ namespace Aplicacao.Features.PatrimonioFeature.Commands
 {
     public class RemoverPatrimonioCommand : IRequest<int>
     {
-        public int Id { get; set; }
+        public int CodigoPatrimonio { get; set; }
 
         public class RemoverPatrimonioCommandHandler : IRequestHandler<RemoverPatrimonioCommand, int>
         {
@@ -17,7 +17,7 @@ namespace Aplicacao.Features.PatrimonioFeature.Commands
                 => _persistence = persistence;
 
             public Task<int> Handle(RemoverPatrimonioCommand request, CancellationToken cancellationToken)
-                => _persistence.DeletarPatrimonio(request.Id);
+                => _persistence.DeletarPatrimonio(request.CodigoPatrimonio);
         }
     }
 }
