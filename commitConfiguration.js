@@ -9,12 +9,12 @@ module.exports = {
         'subject-case': [
             2,
             'never',
-            ['start-case', 'pascal-case'],
+            ['sentence-case', 'start-case', 'pascal-case'],
         ],
-        'subject-empty': [2, 'always'],
+        'subject-empty': [2, 'never'],
         'subject-full-stop': [2, 'never', '.'],
         'type-case': [2, 'always', 'lower-case'],
-        'type-empty': [2, 'never'],
+        'type-empty': [2, 'always'],
         'type-enum': [
             2,
             'always',
