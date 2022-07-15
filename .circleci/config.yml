@@ -50,7 +50,7 @@ jobs:
           path: ~/PatrimonioDev/Testes
       - run: 
           command: echo "Current directory $(ls)"
-      - run: dotnet restore
+      - run: dotnet restore PatrimonioDev.csproj
       - run: dotnet build
       - run: dotnet test
 
