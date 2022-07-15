@@ -1,5 +1,5 @@
 module.exports = {
-    extends: {
+    extends: [{
         parserPreset: 'conventional-changelog-conventionalcommits',
         rules: {
             'body-leading-blank': [1, 'always'],
@@ -14,7 +14,7 @@ module.exports = {
             ],
             'subject-empty': [2, 'never'],
             'subject-full-stop': [2, 'never', '.'],
-            'type-case': [2, 'never', 'lower-case'],
+            'type-case': [2, 'always', 'lower-case'],
             'type-empty': [2, 'never'],
             'type-enum': [
                 2,
@@ -125,5 +125,5 @@ module.exports = {
                 },
             },
         },
-    }
+    }]
 }
