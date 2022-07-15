@@ -1,5 +1,5 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces.Persistence;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;

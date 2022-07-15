@@ -1,8 +1,8 @@
 ﻿using ApiTests.TestesIntegracao.Repositories;
 using Aplicacao.Features.EquipamentoFeature.Commands;
 using Aplicacao.Features.EquipamentoFeature.Queries;
-using Aplicacao.Interfaces.Persistence;
 using AutoFixture;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

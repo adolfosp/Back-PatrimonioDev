@@ -1,8 +1,6 @@
-﻿using Aplicacao.Interfaces;
-using Domain.Entidades;
+﻿using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,22 +8,17 @@ namespace Aplicacao.Features.SetorFeature.Queries
 {
     public class ObterApenasUmSetor : IRequest<Setor>
     {
-        public int Id { get; set; }
+        public int CodigoSetor { get; set; }
 
         public class ObterApenasUmSetorHandler : IRequestHandler<ObterApenasUmSetor, Setor>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly ISetorPersistence _persistence;
 
-            public ObterApenasUmSetorHandler(IApplicationDbContext context)
-                 => _context = context;
+            public ObterApenasUmSetorHandler(ISetorPersistence persistence)
+                 => _persistence = persistence;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<Setor> Handle(ObterApenasUmSetor query, CancellationToken cancellationToken)
-            {
-                var setor = await _context.Setor.Where(x => x.CodigoSetor == query.Id).FirstOrDefaultAsync();
-                if (setor == null) return null;
-                return setor;
-            }
+               => await _persistence.ObterPorCodigoSetor(query.CodigoSetor);
         }
     }
 }

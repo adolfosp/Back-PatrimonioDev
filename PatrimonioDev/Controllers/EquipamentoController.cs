@@ -38,7 +38,7 @@ namespace PatrimonioDev.Controllers
         {
             var equipamentos = await Mediator.Send(new ObterTodosEquipamento());
 
-            return StatusCode(HTTPStatus.RetornaStatus(equipamentos), equipamentos);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(equipamentos), equipamentos);
         }
 
 
@@ -52,9 +52,9 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> ListarEquipamentoPorId(int id)
         {
 
-            var equipamento = await Mediator.Send(new ObterApenasUmEquipamento { Id = id });
+            var equipamento = await Mediator.Send(new ObterApenasUmEquipamento { CodigoEquipamento = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(equipamento), equipamento);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(equipamento), equipamento);
 
         }
 
@@ -68,7 +68,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarEquipamento(int codigoEquipamento, [FromBody] AtualizarEquipamentoCommand command)
         {
 
-            command.Id = codigoEquipamento;
+            command.CodigoEquipamento = codigoEquipamento;
 
             var statusCode = StatusCode(await Mediator.Send(command));
 
@@ -90,7 +90,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DeletarEquipamento(int id)
         {
 
-            var statusCode = StatusCode(await Mediator.Send(new DeletarEquipamentoCommand() { Id = id }));
+            var statusCode = StatusCode(await Mediator.Send(new DeletarEquipamentoCommand() { CodigoEquipamento = id }));
 
             if (statusCode.StatusCode == 404)
                 return NotFound("Não foi encontrado registro para deletar");

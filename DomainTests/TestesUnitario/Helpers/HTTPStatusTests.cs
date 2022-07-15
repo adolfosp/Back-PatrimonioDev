@@ -11,7 +11,7 @@ namespace DomainTests.TestesUnitario.Helpers
         public void Retorna_status_204_se_classe_for_nula()
         {
             //Arrange & Act
-            var sut = HTTPStatus.RetornaStatus(null);
+            var sut = HTTPStatusHelper.RetornaStatus(null);
 
             //Assert
             Assert.AreEqual(204, sut);
@@ -21,7 +21,7 @@ namespace DomainTests.TestesUnitario.Helpers
         public void Retorna_status_200_se_classe_nao_for_nula()
         {
             //Arrange & Act
-            var sut = HTTPStatus.RetornaStatus(new Patrimonio());
+            var sut = HTTPStatusHelper.RetornaStatus(new Patrimonio());
 
             //Assert
             Assert.AreEqual(200, sut);

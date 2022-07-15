@@ -1,5 +1,5 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces.Persistence;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,8 +8,8 @@ namespace Aplicacao.Features.EquipamentoFeature.Commands
 {
     public class AtualizarEquipamentoCommand : IRequest<int>
     {
-        public int Id { get; set; }
-        public EquipamentoDto Equipamento { get; set; }
+        public int CodigoEquipamento { get; set; }
+        public EquipamentoDto EquipamentoDto { get; set; }
 
         public class AtualizarEquipamentoCommandHandler : IRequestHandler<AtualizarEquipamentoCommand, int>
         {
@@ -19,7 +19,7 @@ namespace Aplicacao.Features.EquipamentoFeature.Commands
                 => _persistence = persistence;
 
             public Task<int> Handle(AtualizarEquipamentoCommand request, CancellationToken cancellationToken)
-                => _persistence.AtualizarEquipamento(request.Id, request.Equipamento);
+                => _persistence.AtualizarEquipamento(request.CodigoEquipamento, request.EquipamentoDto);
         }
     }
 }

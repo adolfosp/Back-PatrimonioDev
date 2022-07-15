@@ -3,12 +3,12 @@ using System.IO;
 
 namespace Domain.Helpers
 {
-    public class ImagemUsuario
+    public class ImagemUsuarioHelper
     {
         private string _nomeImagem;
         private IHostEnvironment _host;
 
-        public ImagemUsuario(string nomeImagem, IHostEnvironment host)
+        public ImagemUsuarioHelper(string nomeImagem, IHostEnvironment host)
         {
             _nomeImagem = nomeImagem;
             _host = host;

@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,27 +10,23 @@ namespace Aplicacao.Features.SetorFeature.Commands
 {
     public class CriarSetorCommand : IRequest<Setor>
     {
-        public SetorDto Setor { get; set; }
+        public SetorDto SetorDto { get; set; }
 
         public class CriarSetorCommandHandler : IRequestHandler<CriarSetorCommand, Setor>
         {
-            private readonly IApplicationDbContext _context;
-            public CriarSetorCommandHandler(IApplicationDbContext context)
-                => _context = context;
+            private readonly ISetorPersistence _persistence;
+            private readonly IMapper _mapper;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
-            public async Task<Setor> Handle(CriarSetorCommand request, CancellationToken cancellationToken)
+            public CriarSetorCommandHandler(ISetorPersistence persistence, IMapper mapper)
             {
-                var setor = new Setor();
-
-                setor.Nome = request.Setor.Nome;
-
-                _context.Setor.Add(setor);
-
-                await _context.SaveChangesAsync();
-
-                return setor;
-
+                _persistence = persistence;
+                _mapper = mapper;
+            }
+                
+            public async Task<Setor> Handle(CriarSetorCommand command, CancellationToken cancellationToken)
+            {
+                var novoSetor = _mapper.Map<Setor>(command.SetorDto);
+                return await _persistence.Adicionar(novoSetor);
             }
         }
     }

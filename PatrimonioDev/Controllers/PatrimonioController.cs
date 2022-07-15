@@ -37,7 +37,7 @@ namespace PatrimonioDev.Controllers
 
             var patrimonio = await Mediator.Send(new ObterPatrimonioPorId() { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(patrimonio), patrimonio);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(patrimonio), patrimonio);
         }
 
         [SwaggerOperation(Summary = "Método para buscar todos patrimônios ")]
@@ -51,7 +51,7 @@ namespace PatrimonioDev.Controllers
         {
             var patrimonios = await Mediator.Send(new ObterTodosPatrimonios());
 
-            return StatusCode(HTTPStatus.RetornaStatus(patrimonios), patrimonios);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(patrimonios), patrimonios);
         }
 
         [SwaggerOperation(Summary = "Método para atualizar patrimonio específico")]
@@ -64,7 +64,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarPatrimonio(int codigoPatrimonio, [FromBody] AtualizarPatrimonioCommand command)
         {
 
-            command.Id = codigoPatrimonio;
+            command.CodigoPatrimonio = codigoPatrimonio;
 
             var statusCode = StatusCode(await Mediator.Send(command));
 
@@ -84,7 +84,7 @@ namespace PatrimonioDev.Controllers
         [HttpDelete("{codigoPatrimonio}")]
         public async Task<IActionResult> DeletarPatrimonio(int codigoPatrimonio)
         {
-            var statusCode = StatusCode(await Mediator.Send(new RemoverPatrimonioCommand() { Id = codigoPatrimonio }));
+            var statusCode = StatusCode(await Mediator.Send(new RemoverPatrimonioCommand() { CodigoPatrimonio = codigoPatrimonio }));
 
             if (statusCode.StatusCode == 404)
                 return NotFound("Não foi encontrado registro para deletar");

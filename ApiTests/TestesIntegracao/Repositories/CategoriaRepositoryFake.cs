@@ -1,6 +1,5 @@
-﻿using Aplicacao.Interfaces.Persistence;
-using Domain.Entidades;
-using System;
+﻿using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

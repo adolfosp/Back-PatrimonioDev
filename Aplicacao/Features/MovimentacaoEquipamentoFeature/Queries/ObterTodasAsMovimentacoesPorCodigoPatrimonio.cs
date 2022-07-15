@@ -1,5 +1,5 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces.Persistence;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,7 +9,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Queries
 {
     public class ObterTodasAsMovimentacoesPorCodigoPatrimonio: IRequest<IEnumerable<MovimentacaoEquipamentoDto>>
     {
-        public int Id { get; set; }
+        public int CodigoPatrimonio { get; set; }
 
         public class ObterTodasAsMovimentacoesPorCodigoPatrimonioHandler:
             IRequestHandler<ObterTodasAsMovimentacoesPorCodigoPatrimonio, IEnumerable<MovimentacaoEquipamentoDto>>
@@ -21,7 +21,7 @@ namespace Aplicacao.Features.MovimentacaoEquipamentoFeature.Queries
 
             public Task<IEnumerable<MovimentacaoEquipamentoDto>> Handle(
                 ObterTodasAsMovimentacoesPorCodigoPatrimonio request, CancellationToken cancellationToken)
-                => _persistence.ObterTodasAsMovimentacoesPorCodigoPatrimonio(request.Id);
+                => _persistence.ObterTodasAsMovimentacoesPorCodigoPatrimonio(request.CodigoPatrimonio);
         }
     }
 }

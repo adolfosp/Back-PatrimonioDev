@@ -1,6 +1,6 @@
 ﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces.Persistence;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using System.Threading.Tasks;
 
 namespace DomainTests.TestesIntegracao.Repositories

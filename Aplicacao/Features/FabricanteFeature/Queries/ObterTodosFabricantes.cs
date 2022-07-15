@@ -1,7 +1,6 @@
-﻿using Aplicacao.Interfaces;
-using Domain.Entidades;
+﻿using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,24 +9,15 @@ namespace Aplicacao.Features.FabricanteFeature.Queries
 {
     public class ObterTodosFabricantes : IRequest<IEnumerable<Fabricante>>
     {
-
         public class ObterTodosFabricantesHanlder : IRequestHandler<ObterTodosFabricantes, IEnumerable<Fabricante>>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IFabricantePersistence _persistence;
 
-            public ObterTodosFabricantesHanlder(IApplicationDbContext context)
-                => _context = context;
+            public ObterTodosFabricantesHanlder(IFabricantePersistence persistence)
+                => _persistence = persistence;
 
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
             public async Task<IEnumerable<Fabricante>> Handle(ObterTodosFabricantes request, CancellationToken cancellationToken)
-            {
-                var listaDeFabricantes = await _context.Fabricante.ToListAsync();
-
-                if (listaDeFabricantes == null)
-                    return null;
-                
-                return listaDeFabricantes.AsReadOnly();
-            }
+                => await _persistence.ObterTodos();
         }
     }
 }

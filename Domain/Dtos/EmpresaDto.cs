@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Entidades;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aplicacao.Dtos
 {
@@ -18,5 +19,6 @@ namespace Aplicacao.Dtos
 
         public bool EmpresaPadraoImpressao { get; set; }
 
+       
     }
 }

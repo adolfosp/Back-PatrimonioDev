@@ -1,7 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Domain.Interfaces.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,24 +9,13 @@ namespace Aplicacao.Features.EmpresaFeature.Queries
     {
         public class ObterEmpresaPadraoHandler : IRequestHandler<ObterEmpresaPadrao, string>
         {
-            private readonly IApplicationDbContext _context;
+            private readonly IEmpresaPersistence _persistence;
 
-            public ObterEmpresaPadraoHandler(IApplicationDbContext context)
-            {
-                _context = context;
-            }
-
-            //REFATORAR: criar interface e tirar a responsabilidade da classe
+            public ObterEmpresaPadraoHandler(IEmpresaPersistence persistence)
+               => _persistence = persistence;
+            
             public async Task<string> Handle(ObterEmpresaPadrao query, CancellationToken cancellationToken)
-            {
-
-                var empresaPadrao = await _context.Empresa.Where(x => x.EmpresaPadraoImpressao == true).Select(x => x.NomeFantasia).FirstOrDefaultAsync();
-
-                if (empresaPadrao == null)
-                    return string.Empty;
-                
-                return empresaPadrao;
-            }
+                => await _persistence.ObterEmpresaPadrao();
         }
     }
 }

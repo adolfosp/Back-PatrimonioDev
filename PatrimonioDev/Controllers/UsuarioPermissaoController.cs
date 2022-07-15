@@ -42,7 +42,7 @@ namespace PatrimonioDev.Controllers
 
             var permissoes = await Mediator.Send(new ObterTodasPermissoes());
 
-            return StatusCode(HTTPStatus.RetornaStatus(permissoes), permissoes);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(permissoes), permissoes);
         }
 
         [SwaggerOperation(Summary = "Método para buscar uma permissão específica")]
@@ -59,7 +59,7 @@ namespace PatrimonioDev.Controllers
 
             var usuario = await Mediator.Send(new ObterApenasUmaPermissao { Id = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(usuario), usuario);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(usuario), usuario);
         }
 
         [SwaggerOperation(Summary = "Método para deletar permissão")]
@@ -74,7 +74,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DeletarUsuarioPermissao(int id)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, id))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, id))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             var statusCode = StatusCode(await Mediator.Send(new DeletarUsuarioPermissaoCommand() { Id = id }));
@@ -97,7 +97,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarPermissaoUsuario(int codigoPermissao, [FromBody] AtualizarPermissaoCommand command)
         {
 
-            if (TratamentoRegistroSistema.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, codigoPermissao))
+            if (TratamentoRegistroSistemaHelper.EhRegistroPadraoSistema(EntidadesRegistroPadrao.Permissao, codigoPermissao))
                 return BadRequest(new { mensagem = "Não é possível realizar essa operação com registro padrão." });
 
             command.Id = codigoPermissao;

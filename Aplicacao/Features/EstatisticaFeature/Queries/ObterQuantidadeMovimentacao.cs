@@ -1,5 +1,5 @@
-﻿using Aplicacao.Interfaces.Persistence;
-using Domain.Dtos.Estatisticas;
+﻿using Domain.Dtos.Estatisticas;
+using Domain.Interfaces.Persistence;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

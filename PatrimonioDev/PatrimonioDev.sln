@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aplicacao", "..\Aplicacao\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{C69D4FEC-E76C-4CDB-8053-0B336A09645B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "..\Persistence\Persistence.csproj", "{27F8AABF-A075-40CD-A923-0A436E7EDE76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistencia", "..\Persistence\Persistencia.csproj", "{27F8AABF-A075-40CD-A923-0A436E7EDE76}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainTests", "..\DomainTests\DomainTests.csproj", "{1402F88C-27BA-4F6E-9404-3A9B4B77D3A5}"
 EndProject

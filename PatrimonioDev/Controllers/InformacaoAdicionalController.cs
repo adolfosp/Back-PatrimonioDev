@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace PatrimonioDev.Controllers
 {
     [Route("api/informacoes")]
+    [Obsolete]
     public class InformacaoAdicionalController : BaseApiController
     {
 
@@ -35,9 +36,9 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> ObterApenasUm(int id)
         {
 
-            var informacaoAdicional = await Mediator.Send(new ObterInformacaoAdicionalPorId { CodigoPatrimonio = id });
+            var informacaoAdicional = await Mediator.Send(new ObterInformacaoAdicionalPorId { CodigoInformacaoAdicional = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(informacaoAdicional), informacaoAdicional);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(informacaoAdicional), informacaoAdicional);
 
         }
 
@@ -51,7 +52,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DeletarInformacaoAdicional(int id)
         {
 
-            var statusCode = StatusCode(await Mediator.Send(new RemoverInformacaoAdicionalCommand { Id = id }));
+            var statusCode = StatusCode(await Mediator.Send(new RemoverInformacaoAdicionalCommand { CodigoInformacaoAdicional = id }));
 
             if (statusCode.StatusCode == 404)
                 return NotFound("Não foi encontrado registro para deletar");
@@ -69,7 +70,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarInformacao(int codigoInfo, [FromBody] AtualizarInformacaoAdicionalCommand command)
         {
 
-            command.Id = codigoInfo;
+            command.CodigoInformacaoAdicional = codigoInfo;
 
             var statusCode = StatusCode(await Mediator.Send(command));
 

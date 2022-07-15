@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Features.PerfilUsuarioFeature.Commands;
 using Aplicacao.Features.PerfilUsuarioFeature.Queries;
-using Aplicacao.Interfaces.Persistence;
 using AutoFixture;
+using Domain.Interfaces.Persistence;
 using DomainTests.TestesIntegracao.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;

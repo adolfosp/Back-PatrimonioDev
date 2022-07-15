@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Aplicacao.Dtos;
 using System.Collections.Generic;
 
-namespace Aplicacao.Interfaces.Persistence
+namespace Domain.Interfaces.Persistence
 {
     public interface IPatrimonioPersistence
     {

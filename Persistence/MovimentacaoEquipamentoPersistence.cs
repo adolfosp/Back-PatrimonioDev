@@ -1,15 +1,15 @@
 ﻿using Aplicacao.Dtos;
 using Aplicacao.Interfaces;
-using Aplicacao.Interfaces.Persistence;
 using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Persistence
+namespace Persistencia
 {
     public class MovimentacaoEquipamentoPersistence : IMovimentacaoEquipamentoPersistence
     {

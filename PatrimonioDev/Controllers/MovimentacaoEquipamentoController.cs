@@ -35,9 +35,9 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> ObterTodasMovimentacoesPorCodigoPatrimonio(int codigoPatrimonio)
         {
 
-            var movimentacao = await Mediator.Send(new ObterTodasAsMovimentacoesPorCodigoPatrimonio() { Id = codigoPatrimonio });
+            var movimentacao = await Mediator.Send(new ObterTodasAsMovimentacoesPorCodigoPatrimonio() { CodigoPatrimonio = codigoPatrimonio });
 
-            return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(movimentacao), movimentacao);
 
         }
 
@@ -74,7 +74,7 @@ namespace PatrimonioDev.Controllers
         {
             var movimentacao = await Mediator.Send(new ObterApenasUmaMovimentacao() { CodigoMovimentacao = codigoMovimentacao });
 
-            return StatusCode(HTTPStatus.RetornaStatus(movimentacao), movimentacao);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(movimentacao), movimentacao);
 
         }
     }

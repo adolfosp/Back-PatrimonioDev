@@ -35,7 +35,7 @@ namespace PatrimonioDev.Controllers
         {
             var fabricante = await Mediator.Send(new ObterTodosFabricantes());
 
-            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(fabricante), fabricante);
         }
 
 
@@ -48,9 +48,9 @@ namespace PatrimonioDev.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarFabricantePorId(int id)
         {
-            var fabricante = await Mediator.Send(new ObterApenasUmFabricante { Id = id });
+            var fabricante = await Mediator.Send(new ObterApenasUmFabricante { CodigoFabricante = id });
 
-            return StatusCode(HTTPStatus.RetornaStatus(fabricante), fabricante);
+            return StatusCode(HTTPStatusHelper.RetornaStatus(fabricante), fabricante);
 
         }
 
@@ -65,7 +65,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarFabricante(int codigoFabricante, [FromBody] AtualizarFabricanteCommand command)
         {
 
-            command.Id = codigoFabricante;
+            command.CodigoFabricante = codigoFabricante;
 
             var statusCode = StatusCode(await Mediator.Send(command));
 
@@ -86,7 +86,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> DeletarTipoEquipamento(int id)
         {
 
-            var statusCode = StatusCode(await Mediator.Send(new DeletarFabricanteCommand() { Id = id }));
+            var statusCode = StatusCode(await Mediator.Send(new DeletarFabricanteCommand() { CodigoFabricante = id }));
 
             if (statusCode.StatusCode == 404)
                 return NotFound(new { mensagem = "Não foi encontrado registro para deletar" });

@@ -1,5 +1,5 @@
-﻿using Aplicacao.Interfaces;
-using Domain.Entidades;
+﻿using Domain.Entidades;
+using Domain.Interfaces;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;

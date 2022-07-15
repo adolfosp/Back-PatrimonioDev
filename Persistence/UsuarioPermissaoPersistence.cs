@@ -1,13 +1,14 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
+using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Aplicacao.Dtos;
 
-namespace Persistence
+namespace Persistencia
 {
     public class UsuarioPermissaoPersistence : IUsuarioPermissaoPersistence
     {

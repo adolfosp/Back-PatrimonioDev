@@ -2,13 +2,14 @@
 using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entidades;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Persistence
+namespace Persistencia
 {
     public class UsuarioPersistence : IUsuarioPersistence
     {
