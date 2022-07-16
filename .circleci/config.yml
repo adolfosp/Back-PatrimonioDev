@@ -1,6 +1,10 @@
 version: 2.1
 
 build-api:
+  filters:
+    branches:
+      only:
+        - main
   docker:
     - image: mcr.microsoft.com/dotnet/sdk:6.0
   working_directory: ~/PatrimonioDev/PatrimonioDev
@@ -94,12 +98,6 @@ publish-package:
 workflows:
   sample: 
     jobs:
-      - build:
-          filters:
-            branches:
-             only:
-              - main
-              
       - build-api
       - build-test-domain
       - build-test-api
