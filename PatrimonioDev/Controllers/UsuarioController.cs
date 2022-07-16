@@ -37,7 +37,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
         {
 
-            var usuario = await ObterUsuarioPorEmail(command.Usuario.Email);
+            var usuario = await ObterUsuarioPorEmail(command.UsuarioDto.Email);
 
             if (usuario)
                 return StatusCode(500, new { mensagem = $"Não é possível realizar o cadastro pois o e-mail já foi utilizado em outro registro." });
@@ -152,7 +152,7 @@ namespace PatrimonioDev.Controllers
         public async Task<IActionResult> AtualizarUsuario(int codigoFuncionario, [FromBody] AtualizarUsuarioCommand command)
         {
 
-            command.Id = codigoFuncionario;
+            command.CodigoUsuario = codigoFuncionario;
 
             var statusCode = StatusCode(await Mediator.Send(command));
 

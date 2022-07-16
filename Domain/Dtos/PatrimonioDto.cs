@@ -2,22 +2,22 @@
 
 namespace Aplicacao.Dtos
 {
-    public class PatrimonioDto
+    public record PatrimonioDto
     {
-        public int CodigoPatrimonio { get; set; }
-        public string? Modelo { get; set; }
-        public string? ServiceTag { get; set; }
-        public string? Armazenamento { get; set; }
-        public string? Processador { get; set; }
-        public string? PlacaDeVideo { get; set; }
-        public string? MAC { get; set; }
-        public string? MemoriaRAM { get; set; }
-        public SituacaoEquipamento SituacaoEquipamento { get; set; }
-        public int CodigoTipoEquipamento { get; set; }
-        public string? TipoEquipamento { get; set; }
-        public int CodigoUsuario { get; set; }
-        public int CodigoFuncionario { get; set; }
-        public string? NomeFuncionario { get; set; }
+        public int CodigoPatrimonio { get; init; }
+        public string? Modelo { get; init; }
+        public string? ServiceTag { get; init; }
+        public string? Armazenamento { get; init; }
+        public string? Processador { get; init; }
+        public string? PlacaDeVideo { get; init; }
+        public string? MAC { get; init; }
+        public string? MemoriaRAM { get; init; }
+        public SituacaoEquipamento SituacaoEquipamento { get; init; }
+        public int CodigoTipoEquipamento { get; init; }
+        public string? TipoEquipamento { get; init; }
+        public int CodigoUsuario { get; init; }
+        public int CodigoFuncionario { get; init; }
+        public string? NomeFuncionario { get; init; }
     }
 }
 

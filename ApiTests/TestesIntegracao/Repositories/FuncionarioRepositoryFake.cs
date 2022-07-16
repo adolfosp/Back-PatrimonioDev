@@ -8,17 +8,17 @@ namespace ApiTests.TestesIntegracao.Repositories
 {
     public class FuncionarioRepositoryFake : IFuncionarioPersistence
     {
-        public Task<int> AtualizarFuncionario(int codigoFuncionario, FuncionarioDto funcionario)
+        public Task<int> Atualizar(int codigoFuncionario, FuncionarioDto funcionario)
         {
             return Task.FromResult<int>(200);
         }
 
-        public Task<Funcionario> CriarFuncionario(FuncionarioDto funcionario)
+        public Task<Funcionario> Adicionar(Funcionario funcionario)
         {
             return Task.FromResult<Funcionario>(new Funcionario());
         }
 
-        public Task<int> DesativarFuncionario(int codigoFuncionario)
+        public Task<int> Desativar(int codigoFuncionario)
         {
             return Task.FromResult<int>(200);
         }
@@ -28,7 +28,7 @@ namespace ApiTests.TestesIntegracao.Repositories
             return Task.FromResult<Funcionario>(new Funcionario());
         }
 
-        public Task<IEnumerable<Funcionario>> ObterTodosFuncionarios()
+        public Task<IEnumerable<Funcionario>> ObterTodos()
         {
             return Task.FromResult<IEnumerable<Funcionario>>(new List<Funcionario>());
         }

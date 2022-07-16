@@ -1,14 +1,12 @@
 ﻿namespace Aplicacao.Dtos
 {
-    public class EquipamentoDto
+    public record EquipamentoDto
     {
-        public int CodigoTipoEquipamento { get; set; }
-        public string TipoEquipamento { get; set; }
-        public int CodigoFabricante { get; set; }
-        public string? NomeFabricante { get; set; }
-        public int CodigoCategoria { get; set; }
-        public string? NomeCategoria { get; set; }
-
-
+        public int CodigoTipoEquipamento { get; init; }
+        public string TipoEquipamento { get; init; }
+        public int CodigoFabricante { get; init; }
+        public string? NomeFabricante { get; init; }
+        public int CodigoCategoria { get; init; }
+        public string? NomeCategoria { get; init; }
     }
 }

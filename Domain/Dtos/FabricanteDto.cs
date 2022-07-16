@@ -1,7 +1,7 @@
 ﻿namespace Aplicacao.Dtos
 {
-    public class FabricanteDto
+    public record FabricanteDto
    {
-       public string NomeFabricante { get; set; }
+       public string NomeFabricante { get; init; }
     }
 }

@@ -17,7 +17,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
                 => _persistence = persistence;
 
             public Task<int> Handle(DesativarFuncionarioCommand request, CancellationToken cancellationToken)
-                => _persistence.DesativarFuncionario(request.CodigoFuncionario);
+                => _persistence.Desativar(request.CodigoFuncionario);
         }
     }
 }

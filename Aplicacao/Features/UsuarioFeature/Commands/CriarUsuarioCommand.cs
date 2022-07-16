@@ -10,7 +10,7 @@ namespace Aplicacao.Features.UsuarioFeature.Commands
 {
     public class CriarUsuarioCommand : IRequest<Usuario>
     {
-        public UsuarioDto Usuario { get; set; }
+        public UsuarioDto UsuarioDto { get; set; }
 
         public class CriarUsuarioHandler : IRequestHandler<CriarUsuarioCommand, Usuario>
         {
@@ -27,9 +27,9 @@ namespace Aplicacao.Features.UsuarioFeature.Commands
 
             public Task<Usuario> Handle(CriarUsuarioCommand request, CancellationToken cancellationToken)
             {
-                var usuario = _mapper.Map<Usuario>(request.Usuario);
+                var usuario = _mapper.Map<Usuario>(request.UsuarioDto);
 
-                return _persistence.CriarUsuario(usuario);
+                return _persistence.Adicionar(usuario);
 
             }
         }

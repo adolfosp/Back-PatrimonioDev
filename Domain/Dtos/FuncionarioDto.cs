@@ -1,9 +1,9 @@
 ﻿namespace Aplicacao.Dtos
 {
-    public class FuncionarioDto
+    public record FuncionarioDto
     {
-        public string NomeFuncionario { get; set; }
-        public bool Ativo { get; set; }
-        public string Observacao { get; set; }
+        public string NomeFuncionario { get; init; }
+        public bool Ativo { get; init; }
+        public string Observacao { get; init; }
     }
 }

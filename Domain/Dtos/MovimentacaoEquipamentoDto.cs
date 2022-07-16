@@ -3,19 +3,19 @@ using System;
 
 namespace Aplicacao.Dtos
 {
-    public class MovimentacaoEquipamentoDto
+    public record MovimentacaoEquipamentoDto
     {
 
-        public int CodigoMovimentacao { get; set; }
-        public DateTime DataApropriacao { get; set; }
-        public DateTime? DataDevolucao { get; set; }
-        public string Observacao { get; set; }
-        public SituacaoMovimentacaoEquipamento MovimentacaoDoEquipamento { get; set; }
-        public int CodigoUsuario { get; set; }
-        public int CodigoPatrimonio { get; set; }
-        public string NomeUsuario { get; set; }
-        public string TipoEquipamento { get; set; }
-        public string NomeFuncionario { get; set; }
+        public int CodigoMovimentacao { get; init; }
+        public DateTime DataApropriacao { get; init; }
+        public DateTime? DataDevolucao { get; init; }
+        public string Observacao { get; init; }
+        public SituacaoMovimentacaoEquipamento MovimentacaoDoEquipamento { get; init; }
+        public int CodigoUsuario { get; init; }
+        public int CodigoPatrimonio { get; init; }
+        public string NomeUsuario { get; init; }
+        public string TipoEquipamento { get; init; }
+        public string NomeFuncionario { get; init; }
 
     }
 }

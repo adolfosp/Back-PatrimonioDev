@@ -1,19 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Aplicacao.Dtos
+﻿namespace Aplicacao.Dtos
 {
-    public class UsuarioDto
+    public record UsuarioDto
     {
-
-        public string Nome { get; set; }
-        public bool Ativo { get; set; }
-        public string Senha { get; set; }
-        [EmailAddress(ErrorMessage ="É preciso informar um e-mail válido")]
-        public string Email { get; set; }
-        public string ImagemUrl { get; set; }
-        public int? CodigoEmpresa { get; set; }
-        public int? CodigoSetor { get; set; }
-        public int CodigoUsuarioPermissao { get; set; }
+        public string Nome { get; init; }
+        public bool Ativo { get; init; }
+        public string Senha { get; init; }
+        public string Email { get; init; }
+        public string ImagemUrl { get; init; }
+        public int? CodigoEmpresa { get; init; }
+        public int? CodigoSetor { get; init; }
+        public int CodigoUsuarioPermissao { get; init; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Domain.Dtos
 {
-    public class EstatisticaPatrimonioDisponivelDto
+    public record EstatisticaPatrimonioDisponivelDto
     {
-        public int QuantidadePatrimonioDisponivel { get; set; }
-        public int QuantidadeTotalPatrimonio { get; set; }
+        public int QuantidadePatrimonioDisponivel { get; init; }
+        public int QuantidadeTotalPatrimonio { get; init; }
     }
 }

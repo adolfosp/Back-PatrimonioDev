@@ -19,7 +19,7 @@ namespace Aplicacao.Features.UsuarioFeature.Commands
                 => _persistence = persistence;
 
             public Task<Usuario> Handle(RemoverUsuarioCommand request, CancellationToken cancellationToken)
-                => _persistence.DeletarUsuario(request.Id);
+                => _persistence.Deletar(request.Id);
         }
     }
 }

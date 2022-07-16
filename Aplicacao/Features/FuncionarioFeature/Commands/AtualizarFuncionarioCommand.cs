@@ -20,7 +20,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
                 => _persistence = persistence;
 
             public Task<int> Handle(AtualizarFuncionarioCommand request, CancellationToken cancellationToken)
-                => _persistence.AtualizarFuncionario(request.CodigoFuncionario, request.Funcionario);
+                => _persistence.Atualizar(request.CodigoFuncionario, request.Funcionario);
         }
     }
 }

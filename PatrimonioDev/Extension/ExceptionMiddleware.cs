@@ -23,13 +23,15 @@ namespace PatrimonioDev.Extension
             }
             catch (Exception ex)
             {
-                await RetornarStatusCodeException(ex.Message, ex.InnerException.ToString());
+                RetornarStatusCodeException(httpContext, ex.Message, ex.InnerException.ToString());
             }
         }
 
-        private async Task<IActionResult> RetornarStatusCodeException(string mensagemErro, string innerException)
+        private void RetornarStatusCodeException(HttpContext httpContext, string mensagemErro, string innerException)
         {
-           return  StatusCode(500, new { mensagem = $"Não foi possível realizar a operação! Mensagem: {mensagemErro}{innerException}" });
+            httpContext.Response.StatusCode = 500;
+            httpContext.Response.WriteAsJsonAsync( new { mensagem = $"Não foi possível realizar a operação! Mensagem: {mensagemErro}{innerException}"});
+
         }
     }
 }

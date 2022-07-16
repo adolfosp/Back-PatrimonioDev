@@ -1,5 +1,4 @@
-﻿using Aplicacao.Dtos;
-using Aplicacao.Interfaces;
+﻿using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entidades;
 using Domain.Interfaces;
@@ -14,31 +13,33 @@ namespace Persistencia
     public class UsuarioPersistence : IUsuarioPersistence
     {
         private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
 
         public UsuarioPersistence(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = mapper;
         }
 
 
-        public async Task<int> AtualizarUsuario(UsuarioDto usuarioDto, int id)
+        public async Task<int> Atualizar(Usuario usuario, int codigoUsuario)
         {
-            var usuario = await _context.Usuario.Where(x => x.CodigoUsuario == id && x.Ativo == true).Select(x => x).FirstOrDefaultAsync();
+            var usuarioBusca = await _context.Usuario.Where(x => x.CodigoUsuario == codigoUsuario && x.Ativo)
+                                                     .Select(x => x)
+                                                     .AsNoTrackingWithIdentityResolution()
+                                                     .FirstOrDefaultAsync();
 
-            if (usuario is null) return 404;
+            if (usuarioBusca is null) return 404;
 
-            usuarioDto.Senha = CriptografiaHelper.Criptografar(usuarioDto.Senha);
+            usuario.CodigoUsuario = codigoUsuario;
+            usuario.Senha = CriptografiaHelper.Criptografar(usuarioBusca.Senha);
 
-            _mapper.Map(usuarioDto, usuario);
+            _context.Usuario.Update(usuario);
 
             await _context.SaveChangesAsync();
 
             return 200;
         }
 
-        public async Task<Usuario> DeletarUsuario(int id)
+        public async Task<Usuario> Deletar(int id)
         {
             var usuario = await _context.Usuario.Where(x => x.CodigoUsuario == id).FirstOrDefaultAsync();
 
@@ -85,17 +86,17 @@ namespace Persistencia
         }
 
 
-        public async Task<Usuario> CriarUsuario(Usuario usuarioCadastrar)
+        public async Task<Usuario> Adicionar(Usuario usuario)
         {
 
-            usuarioCadastrar.Senha = CriptografiaHelper.Criptografar(usuarioCadastrar.Senha);
-            usuarioCadastrar.Ativo = true;
+            usuario.Senha = CriptografiaHelper.Criptografar(usuario.Senha);
+            usuario.Ativo = true;
 
-            _context.Usuario.Add(usuarioCadastrar);
+            _context.Usuario.Add(usuario);
 
             await _context.SaveChangesAsync();
 
-            return usuarioCadastrar;
+            return usuario;
         }
 
         public async Task<bool> ObterUsuarioPorEmail(string email)

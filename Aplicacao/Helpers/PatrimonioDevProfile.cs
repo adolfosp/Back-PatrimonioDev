@@ -19,6 +19,8 @@ namespace Aplicacao.Helpers
             CreateMap<Domain.Entidades.UsuarioPermissao, Dtos.UsuarioPermissaoDto>().ReverseMap();
             CreateMap<Domain.Entidades.Fabricante, Dtos.FabricanteDto>().ReverseMap();
             CreateMap<Domain.Entidades.Setor, Dtos.SetorDto>().ReverseMap();
+            CreateMap<Domain.Entidades.Usuario, Dtos.UsuarioDto>().ReverseMap();
+
 
 
         }

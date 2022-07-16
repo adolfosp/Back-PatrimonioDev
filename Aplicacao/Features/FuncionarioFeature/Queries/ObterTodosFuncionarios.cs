@@ -18,7 +18,7 @@ namespace Aplicacao.Features.FuncionarioFeature.Queries
                 => _persistence = persistence;
 
             public Task<IEnumerable<Funcionario>> Handle(ObterTodosFuncionarios request, CancellationToken cancellationToken)
-                => _persistence.ObterTodosFuncionarios();
+                => _persistence.ObterTodos();
         }
     }
 }

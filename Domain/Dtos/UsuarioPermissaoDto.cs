@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aplicacao.Dtos
+﻿namespace Aplicacao.Dtos
 {
-    public class UsuarioPermissaoDto
+    public record UsuarioPermissaoDto
     {
-        public string DescricaoPermissao { get; set; }
-
-        public bool Ativo { get; set; }
+        public string DescricaoPermissao { get; init; }
+        public bool Ativo { get; init; }
     }
 }

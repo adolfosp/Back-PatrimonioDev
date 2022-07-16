@@ -7,10 +7,10 @@ namespace Domain.Interfaces.Persistence
 {
     public interface IFuncionarioPersistence
     {
-        Task<int> DesativarFuncionario(int codigoFuncionario);
-        Task<Funcionario> CriarFuncionario(FuncionarioDto funcionario);
-        Task<IEnumerable<Funcionario>> ObterTodosFuncionarios();
+        Task<int> Desativar(int codigoFuncionario);
+        Task<Funcionario> Adicionar(Funcionario funcionario);
+        Task<IEnumerable<Funcionario>> ObterTodos();
         Task<Funcionario> ObterFuncionarioPorId(int codigoFuncionario);
-        Task<int> AtualizarFuncionario(int codigoFuncionario, FuncionarioDto funcionario);
+        Task<int> Atualizar(int codigoFuncionario, FuncionarioDto funcionario);
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Aplicacao.Dtos
 {
-    public class SetorDto
+    public record SetorDto
     {
-        public string Nome { get; set; }
+        public string Nome { get; init; }
     }
 }

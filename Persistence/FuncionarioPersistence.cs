@@ -21,7 +21,7 @@ namespace Persistencia
             _mapper = mapper;
         }
 
-        public async Task<int> AtualizarFuncionario(int codigoFuncionario, FuncionarioDto funcionarioDto)
+        public async Task<int> Atualizar(int codigoFuncionario, FuncionarioDto funcionarioDto)
         {
             var funcionario = await _context.Funcionario.Where(x => x.CodigoFuncionario == codigoFuncionario).Select(x => x).FirstOrDefaultAsync();
 
@@ -34,20 +34,18 @@ namespace Persistencia
             return 200;
         }
 
-        public async Task<Funcionario> CriarFuncionario(FuncionarioDto funcionario)
+        public async Task<Funcionario> Adicionar(Funcionario funcionario)
         {
             funcionario.Ativo = true;
 
-            var funcionarioDominio = _mapper.Map<Funcionario>(funcionario);
-
-            _context.Funcionario.Add(funcionarioDominio);
+            _context.Funcionario.Add(funcionario);
 
             await _context.SaveChangesAsync();
 
-            return funcionarioDominio;
+            return funcionario;
         }
 
-        public async Task<int> DesativarFuncionario(int codigoFuncionario)
+        public async Task<int> Desativar(int codigoFuncionario)
         {
             var funcionario = await _context.Funcionario.Where(x => x.CodigoFuncionario == codigoFuncionario).Select(x => x).FirstOrDefaultAsync();
 
@@ -69,7 +67,7 @@ namespace Persistencia
             return funcionario;
         }
 
-        public async Task<IEnumerable<Funcionario>> ObterTodosFuncionarios()
+        public async Task<IEnumerable<Funcionario>> ObterTodos()
         {
             var funcionario = await _context.Funcionario.Where(x => x.Ativo).ToListAsync();
 

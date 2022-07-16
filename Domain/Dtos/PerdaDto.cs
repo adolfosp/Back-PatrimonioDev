@@ -1,11 +1,11 @@
 ﻿namespace Domain.Dtos
 {
-    public class PerdaDto
+    public record PerdaDto
     {
-        public int CodigoPerda { get; set; }
-        public string TipoEquipamento { get; set; }
-        public string MotivoDaPerda { get; set; }
-        public string NomeFuncionario { get; set; }
-        public string NomeUsuario { get; set; }
+        public int CodigoPerda { get; init; }
+        public string TipoEquipamento { get; init; }
+        public string MotivoDaPerda { get; init; }
+        public string NomeFuncionario { get; init; }
+        public string NomeUsuario { get; init; }
     }
 }

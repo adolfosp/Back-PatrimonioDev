@@ -2,12 +2,12 @@
 
 namespace Aplicacao.Dtos
 {
-    public class PerfilUsuarioDto
+    public record PerfilUsuarioDto
     {
-        public int CodigoUsuario { get; set; }
-        public string NomeUsuario { get; set; }
-        public string Senha { get; set; }
-        public string ImagemUrl { get; set; }
+        public int CodigoUsuario { get; init; }
+        public string NomeUsuario { get; init; }
+        public string Senha { get; init; }
+        public string ImagemUrl { get; init; }
 
         public static implicit operator PerfilUsuarioDto(PerfilUsuario perfil)
         {

@@ -1,4 +1,5 @@
 ﻿using Aplicacao.Dtos;
+using AutoMapper;
 using Domain.Entidades;
 using Domain.Interfaces.Persistence;
 using MediatR;
@@ -9,17 +10,26 @@ namespace Aplicacao.Features.FuncionarioFeature.Commands
 {
     public class CriarFuncionarioCommand : IRequest<Funcionario>
     {
-        public FuncionarioDto Funcionario { get; set; }
+        public FuncionarioDto FuncionarioDto { get; set; }
 
         public class CriarFuncionarioCommandHandler : IRequestHandler<CriarFuncionarioCommand, Funcionario>
         {
 
             private readonly IFuncionarioPersistence _persistence;
-            public CriarFuncionarioCommandHandler(IFuncionarioPersistence persistence)
-                => _persistence = persistence;
+            private readonly IMapper _mapper;
 
-            public Task<Funcionario> Handle(CriarFuncionarioCommand request, CancellationToken cancellationToken)
-                => _persistence.CriarFuncionario(request.Funcionario);
+            public CriarFuncionarioCommandHandler(IFuncionarioPersistence persistence, IMapper mapper)
+            {
+                _persistence = persistence;
+                _mapper = mapper;
+            }
+
+
+            public async Task<Funcionario> Handle(CriarFuncionarioCommand command, CancellationToken cancellationToken)
+            {
+                var funcionario = _mapper.Map<Funcionario>(command.FuncionarioDto);
+                return await _persistence.Adicionar(funcionario);
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using ApiTests.TestesIntegracao.Repositories;
 using Aplicacao.Features.FuncionarioFeature.Commands;
 using Aplicacao.Features.FuncionarioFeature.Queries;
+using Aplicacao.Helpers;
 using AutoFixture;
+using AutoMapper;
 using Domain.Interfaces.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,7 @@ namespace ApiTests.TestesIntegracao.Controllers
     {
         private Mock<IMediator> _service;
         private readonly IFuncionarioPersistence _funcionario;
+        private IMapper _mapper;
         
 
         public FuncionarioControllerTest()
@@ -29,6 +32,20 @@ namespace ApiTests.TestesIntegracao.Controllers
             _service = new Mock<IMediator>();
             _funcionario = new FuncionarioRepositoryFake();
 
+            ObterMockMapper();
+        }
+
+        private void ObterMockMapper()
+        {
+            if (_mapper == null)
+            {
+                var mappingConfig = new MapperConfiguration(mc =>
+                {
+                    mc.AddProfile(new PatrimonioDevProfile());
+                });
+                IMapper mapper = mappingConfig.CreateMapper();
+                _mapper = mapper;
+            }
         }
 
 
@@ -117,7 +134,7 @@ namespace ApiTests.TestesIntegracao.Controllers
         public void Retorna_status_code_500_caso_haja_erro_ao_chamar_criarFuncionario_com_context_nulo()
         {
             //Arrange
-            var funcionarioHandler = new CriarFuncionarioCommandHandler(null);
+            var funcionarioHandler = new CriarFuncionarioCommandHandler(null,null);
             var fixture = new Fixture();
 
             var handlerMoq = fixture.Create<CriarFuncionarioCommand>();
@@ -136,7 +153,7 @@ namespace ApiTests.TestesIntegracao.Controllers
         public void Retorna_status_code_200_caso_grave_informacao()
         {
             //Arrange
-            var funcionarioHandler = new CriarFuncionarioCommandHandler(_funcionario);
+            var funcionarioHandler = new CriarFuncionarioCommandHandler(_funcionario, _mapper);
             var fixture = new Fixture();
 
             var handlerMoq = fixture.Create<CriarFuncionarioCommand>();
