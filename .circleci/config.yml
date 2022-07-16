@@ -1,6 +1,10 @@
 version: 2.1
 
 jobs:
+  filters:
+    branches:
+      only:
+        - main
 
   build-api:
     docker:
