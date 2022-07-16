@@ -8,12 +8,17 @@ jobs:
     steps:
       - checkout:
           path: ~/PatrimonioDev
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore PatrimonioDev.csproj
-      - run: dotnet dev-certs https --clean
-      - run: dotnet dev-certs https -t
-      - run: dotnet build PatrimonioDev.csproj 
+
+      - when:
+          condition:
+            equal: [ main, << pipeline.git.branch >> ]
+          steps:
+            - run: 
+                command: echo "Current directory $(ls)"
+            - run: dotnet restore PatrimonioDev.csproj
+            - run: dotnet dev-certs https --clean
+            - run: dotnet dev-certs https -t
+            - run: dotnet build PatrimonioDev.csproj 
 
   build-test:
     docker:
