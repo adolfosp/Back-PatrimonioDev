@@ -27,10 +27,14 @@ jobs:
     steps:
       - checkout:
           path: ~/PatrimonioDev/Testes
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore
-      - run: dotnet build
+      - when:
+          condition:
+            equal: [ main, << pipeline.git.branch >> ]
+          steps:
+            - run: 
+                command: echo "Current directory $(ls)"
+            - run: dotnet restore
+            - run: dotnet build
 
   build-test-domain:
     docker:
@@ -39,11 +43,15 @@ jobs:
     steps:
       - checkout:
           path: ~/PatrimonioDev/Testes
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test
+      - when:
+          condition:
+            equal: [ main, << pipeline.git.branch >> ]
+          steps:
+            - run: 
+                command: echo "Current directory $(ls)"
+            - run: dotnet restore
+            - run: dotnet build
+            - run: dotnet test
 
   build-test-api:
     docker:
@@ -52,50 +60,58 @@ jobs:
     steps:
       - checkout:
           path: ~/PatrimonioDev/Testes
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test
+      - when:
+          condition:
+            equal: [ main, << pipeline.git.branch >> ]
+          steps:
+            - run: 
+                command: echo "Current directory $(ls)"
+            - run: dotnet restore
+            - run: dotnet build
+            - run: dotnet test
 
   publish-package:
     docker:
       - image: circleci/node:latest
     steps:
       - checkout
-      - restore_cache:
-          key: deps-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install all Dependecies
-          command: npm install
-      - save_cache:
-          key: deps-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
+      - when:
+          condition:
+            equal: [ main, << pipeline.git.branch >> ]
+          steps:
+            - restore_cache:
+                key: deps-{{ checksum "yarn.lock" }}
+            - run:
+                name: Install all Dependecies
+                command: npm install
+            - save_cache:
+                key: deps-{{ checksum "yarn.lock" }}
+                paths:
+                  - node_modules
 
-      - run:
-          name: Install dependence commitlint-circle 
-          command: yarn add @timbeyer/commitlint-circle --dev
+            - run:
+                name: Install dependence commitlint-circle 
+                command: yarn add @timbeyer/commitlint-circle --dev
 
-      - run:
-          name: Install dependence semantic-release 
-          command: yarn add semantic-release --dev
+            - run:
+                name: Install dependence semantic-release 
+                command: yarn add semantic-release --dev
 
-      - run:
-          name: Run commitlint
-          command: yarn commitlint-circle
+            - run:
+                name: Run commitlint
+                command: yarn commitlint-circle
 
-      - run:
-          name: WHOAMI 
-          command: npm config set _auth $NPM_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=email@email.com
+            - run:
+                name: WHOAMI 
+                command: npm config set _auth $NPM_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=email@email.com
 
-      - run: 
-          name: Auth With NPM
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+            - run: 
+                name: Auth With NPM
+                command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
 
-      - run:
-          name: Release
-          command: yarn run semantic-release || true 
+            - run:
+                name: Release
+                command: yarn run semantic-release || true 
 
 workflows:
   sample: 
