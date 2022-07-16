@@ -1,108 +1,105 @@
 version: 2.1
 
-jobs:
-  build:
-    filters:
-      branches:
-        only:
-          - main
+build-api:
+  docker:
+    - image: mcr.microsoft.com/dotnet/sdk:6.0
+  working_directory: ~/PatrimonioDev/PatrimonioDev
+  steps:
+    - checkout:
+        path: ~/PatrimonioDev
+    - run: 
+        command: echo "Current directory $(ls)"
+    - run: dotnet restore PatrimonioDev.csproj
+    - run: dotnet dev-certs https --clean
+    - run: dotnet dev-certs https -t
+    - run: dotnet build PatrimonioDev.csproj 
 
-  build-api:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:6.0
-    working_directory: ~/PatrimonioDev/PatrimonioDev
-    steps:
-      - checkout:
-          path: ~/PatrimonioDev
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore PatrimonioDev.csproj
-      - run: dotnet dev-certs https --clean
-      - run: dotnet dev-certs https -t
-      - run: dotnet build PatrimonioDev.csproj
-      
-  build-test:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
-    working_directory: ~/PatrimonioDev/Testes
-    steps:
-      - checkout:
-          path: ~/PatrimonioDev/Testes
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore
-      - run: dotnet build
+build-test:
+  docker:
+    - image: mcr.microsoft.com/dotnet/sdk:5.0
+  working_directory: ~/PatrimonioDev/Testes
+  steps:
+    - checkout:
+        path: ~/PatrimonioDev/Testes
+    - run: 
+        command: echo "Current directory $(ls)"
+    - run: dotnet restore
+    - run: dotnet build
 
-  build-test-domain:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:6.0
-    working_directory: ~/PatrimonioDev/Testes/DomainTests
-    steps:
-      - checkout:
-          path: ~/PatrimonioDev/Testes
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test
+build-test-domain:
+  docker:
+    - image: mcr.microsoft.com/dotnet/sdk:6.0
+  working_directory: ~/PatrimonioDev/Testes/DomainTests
+  steps:
+    - checkout:
+        path: ~/PatrimonioDev/Testes
+    - run: 
+        command: echo "Current directory $(ls)"
+    - run: dotnet restore
+    - run: dotnet build
+    - run: dotnet test
 
-  build-test-api:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:6.0
-    working_directory: ~/PatrimonioDev/Testes/ApiTests
-    steps:
-      - checkout:
-          path: ~/PatrimonioDev/Testes
-      - run: 
-          command: echo "Current directory $(ls)"
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test
+build-test-api:
+  docker:
+    - image: mcr.microsoft.com/dotnet/sdk:6.0
+  working_directory: ~/PatrimonioDev/Testes/ApiTests
+  steps:
+    - checkout:
+        path: ~/PatrimonioDev/Testes
+    - run: 
+        command: echo "Current directory $(ls)"
+    - run: dotnet restore
+    - run: dotnet build
+    - run: dotnet test
 
-  publish-package:
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps-{{ checksum "yarn.lock" }}
+publish-package:
+  docker:
+    - image: circleci/node:latest
+  steps:
+    - checkout
+    - restore_cache:
+        key: deps-{{ checksum "yarn.lock" }}
+    - run:
+        name: Install all Dependecies
+        command: npm install
+    - save_cache:
+        key: deps-{{ checksum "yarn.lock" }}
+        paths:
+          - node_modules
 
-      - run:
-          name: Install all Dependecies
-          command: npm install
+    - run:
+        name: Install dependence commitlint-circle 
+        command: yarn add @timbeyer/commitlint-circle --dev
 
-      - save_cache:
-          key: deps-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
+    - run:
+        name: Install dependence semantic-release 
+        command: yarn add semantic-release --dev
 
-      - run:
-          name: Install dependence commitlint-circle 
-          command: yarn add @timbeyer/commitlint-circle --dev
+    - run:
+        name: Run commitlint
+        command: yarn commitlint-circle
 
-      - run:
-          name: Install dependence semantic-release 
-          command: yarn add semantic-release --dev
+    - run:
+        name: WHOAMI 
+        command: npm config set _auth $NPM_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=email@email.com
 
-      - run:
-          name: Run commitlint
-          command: yarn commitlint-circle
+    - run: 
+        name: Auth With NPM
+        command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
 
-      - run:
-          name: WHOAMI 
-          command: npm config set _auth $NPM_TOKEN && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=email@email.com
-
-      - run: 
-          name: Auth With NPM
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-
-      - run:
-          name: Release
-          command: yarn run semantic-release || true 
+    - run:
+        name: Release
+        command: yarn run semantic-release || true 
 
 workflows:
   sample: 
     jobs:
+      - build:
+          filters:
+            branches:
+             only:
+              - main
+              
       - build-api
       - build-test-domain
       - build-test-api
