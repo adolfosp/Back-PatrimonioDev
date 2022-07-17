@@ -1,6 +1,6 @@
 # Patrimônio PS
 
-[![CircleCI](https://circleci.com/gh/adolfosp/Back-PatrimonioDev/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/adolfosp)
+[![CircleCI](https://circleci.com/gh/adolfosp/Back-PatrimonioDev/tree/main.svg?style=svg)](https://app.circleci.com/pipelines/github/adolfosp)
 ## Introdução
 
 > Esse é um projeto realizado para o gerenciamento de patrimônios voltado à equipamentos tecnológicos da empresa. O projeto foi desenvolvido com intuito de facilitar o gerenciamento dos equipamentos disponibilizados pelas empresa para os seus funcionários.
