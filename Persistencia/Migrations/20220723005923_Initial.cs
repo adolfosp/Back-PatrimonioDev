@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Persistence.Migrations
+#nullable disable
+
+namespace Persistencia.Migrations
 {
     public partial class Initial : Migration
     {
@@ -13,7 +15,7 @@ namespace Persistence.Migrations
                 {
                     CodigoCategoria = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Descricao = table.Column<string>(type: "VARCHAR(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,10 +28,10 @@ namespace Persistence.Migrations
                 {
                     CodigoEmpresa = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CNPJ = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
-                    RazaoSocial = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    NomeFantasia = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    EmpresaPadraoImpressao = table.Column<bool>(type: "bit", nullable: false)
+                    CNPJ = table.Column<string>(type: "VARCHAR(18)", maxLength: 18, nullable: false),
+                    RazaoSocial = table.Column<string>(type: "VARCHAR(70)", maxLength: 70, nullable: false),
+                    NomeFantasia = table.Column<string>(type: "VARCHAR(70)", maxLength: 70, nullable: false),
+                    EmpresaPadraoImpressao = table.Column<bool>(type: "BIT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +44,7 @@ namespace Persistence.Migrations
                 {
                     CodigoFabricante = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeFabricante = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false)
+                    NomeFabricante = table.Column<string>(type: "VARCHAR(60)", maxLength: 60, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,9 +57,9 @@ namespace Persistence.Migrations
                 {
                     CodigoFuncionario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeFuncionario = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NomeFuncionario = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false),
+                    Ativo = table.Column<bool>(type: "BIT", nullable: false),
+                    Observacao = table.Column<string>(type: "VARCHAR(250)", maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,7 +72,7 @@ namespace Persistence.Migrations
                 {
                     CodigoSetor = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Nome = table.Column<string>(type: "VARCHAR(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +85,7 @@ namespace Persistence.Migrations
                 {
                     CodigoUsuarioPermissao = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DescricaoPermissao = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DescricaoPermissao = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -97,7 +99,7 @@ namespace Persistence.Migrations
                 {
                     CodigoTipoEquipamento = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoEquipamento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TipoEquipamento = table.Column<string>(type: "VARCHAR(50)", maxLength: 50, nullable: false),
                     CodigoFabricante = table.Column<int>(type: "int", nullable: false),
                     CodigoCategoria = table.Column<int>(type: "int", nullable: false)
                 },
@@ -124,9 +126,9 @@ namespace Persistence.Migrations
                 {
                     CodigoUsuario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    Ativo = table.Column<bool>(type: "BIT", nullable: false),
+                    Nome = table.Column<string>(type: "VARCHAR(50)", maxLength: 50, nullable: false),
+                    Senha = table.Column<string>(type: "VARCHAR(350)", maxLength: 350, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CodigoEmpresa = table.Column<int>(type: "int", nullable: true),
@@ -140,14 +142,12 @@ namespace Persistence.Migrations
                         name: "FK_Usuario_Empresa_CodigoEmpresa",
                         column: x => x.CodigoEmpresa,
                         principalTable: "Empresa",
-                        principalColumn: "CodigoEmpresa",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CodigoEmpresa");
                     table.ForeignKey(
                         name: "FK_Usuario_Setor_CodigoSetor",
                         column: x => x.CodigoSetor,
                         principalTable: "Setor",
-                        principalColumn: "CodigoSetor",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CodigoSetor");
                     table.ForeignKey(
                         name: "FK_Usuario_UsuarioPermissao_CodigoUsuarioPermissao",
                         column: x => x.CodigoUsuarioPermissao,
@@ -162,13 +162,13 @@ namespace Persistence.Migrations
                 {
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ServiceTag = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Armazenamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Processador = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PlacaDeVideo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MAC = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MemoriaRAM = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modelo = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false),
+                    ServiceTag = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false),
+                    Armazenamento = table.Column<string>(type: "VARCHAR(60)", maxLength: 60, nullable: true),
+                    Processador = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: true),
+                    PlacaDeVideo = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: true),
+                    MAC = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: true),
+                    MemoriaRAM = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: true),
                     SituacaoEquipamento = table.Column<int>(type: "int", nullable: false),
                     CodigoTipoEquipamento = table.Column<int>(type: "int", nullable: false),
                     CodigoUsuario = table.Column<int>(type: "int", nullable: false),
@@ -227,7 +227,7 @@ namespace Persistence.Migrations
                 {
                     CodigoMovimentacao = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DataApropriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataApropriacao = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     DataDevolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MovimentacaoDoEquipamento = table.Column<int>(type: "int", nullable: false),
@@ -257,7 +257,7 @@ namespace Persistence.Migrations
                 {
                     CodigoPerda = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MotivoDaPerda = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    MotivoDaPerda = table.Column<string>(type: "VARCHAR(300)", maxLength: 300, nullable: false),
                     CodigoPatrimonio = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -270,6 +270,36 @@ namespace Persistence.Migrations
                         principalColumn: "CodigoPatrimonio",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Empresa",
+                columns: new[] { "CodigoEmpresa", "CNPJ", "EmpresaPadraoImpressao", "NomeFantasia", "RazaoSocial" },
+                values: new object[] { 1, "00.000.000/0000-00", false, "SEM EMPRESA", "SEM EMPRESA" });
+
+            migrationBuilder.InsertData(
+                table: "Funcionario",
+                columns: new[] { "CodigoFuncionario", "Ativo", "NomeFuncionario", "Observacao" },
+                values: new object[] { 1, true, "SEM FUNCIONÁRIO", "" });
+
+            migrationBuilder.InsertData(
+                table: "Setor",
+                columns: new[] { "CodigoSetor", "Nome" },
+                values: new object[] { 1, "SEM SETOR" });
+
+            migrationBuilder.InsertData(
+                table: "UsuarioPermissao",
+                columns: new[] { "CodigoUsuarioPermissao", "Ativo", "DescricaoPermissao" },
+                values: new object[,]
+                {
+                    { 1, true, "Administrador" },
+                    { 2, true, "Gestor" },
+                    { 3, true, "Usuário" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "CodigoUsuario", "Ativo", "CodigoEmpresa", "CodigoSetor", "CodigoUsuarioPermissao", "Email", "ImagemUrl", "Nome", "Senha" },
+                values: new object[] { 1, true, 1, 1, 1, "adolfo8799@gmail.com", "3f7143f59c222954756.jpg", "ADOLFO", "MTIzNDU2" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipamento_CodigoCategoria",

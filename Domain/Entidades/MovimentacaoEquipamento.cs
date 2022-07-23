@@ -10,13 +10,12 @@ namespace Domain.Entidades
         [Key]
         public int CodigoMovimentacao { get; set; }
 
-        [Display(Name = "Data de apropriação")]
-        [Required(ErrorMessage = "É necessário informar a {0} do equipamento")]
+        [Column(TypeName = "DATETIME"), Required]
         public DateTime DataApropriacao { get; set; }
         public DateTime? DataDevolucao { get; set; }
         public string? Observacao { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar qual movimentação foi realizada")]
+        [Required]
         public SituacaoMovimentacaoEquipamento MovimentacaoDoEquipamento { get; set; }
 
         public int CodigoUsuario { get; set; }

@@ -3,7 +3,7 @@ using Aplicacao.Interfaces;
 using Domain.Entidades;
 using Domain.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Helper;
+using Persistencia.Helpers;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

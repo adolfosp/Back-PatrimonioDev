@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
 {
@@ -7,9 +8,7 @@ namespace Domain.Entidades
         [Key]
         public int CodigoFabricante { get; set; }
 
-        [Required]
-        [MinLength(2)]
-        [MaxLength(60)]
+        [Column(TypeName = "VARCHAR"), StringLength(60), Required]
         public string NomeFabricante { get; set; }
     }
 }

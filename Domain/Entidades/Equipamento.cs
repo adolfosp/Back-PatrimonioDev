@@ -8,12 +8,11 @@ namespace Domain.Entidades
         [Key]
         public int CodigoTipoEquipamento { get; set; }
 
-        [Required]
-        [MinLength(5)]
-        [MaxLength(50)]
+        [Column(TypeName = "VARCHAR"), StringLength(50), Required]
         public string TipoEquipamento { get; set; }
 
         public int CodigoFabricante { get; set; }
+
         [ForeignKey("CodigoFabricante")]
         public Fabricante Fabricante { get; set; }
 

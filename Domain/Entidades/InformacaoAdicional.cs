@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
@@ -8,16 +7,17 @@ namespace Domain.Entidades
     {
         [Key]
         public int CodigoInformacao { get; set; }
-        [Required]
-        [Column(TypeName = "decimal(10, 2)")]
+
+        [Column(TypeName = "decimal(10, 2)"), Required]
         public decimal ValorPago { get; set; }
+
         [Required]
         public string DataCompra { get; set; }
         public string? DataExpiracaoGarantia { get; set; }
         public string? Antivirus { get; set; }
         public string? VersaoWindows { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar o patrimonio")]
+        [Required]
         public int CodigoPatrimonio { get; set; }
         [ForeignKey("CodigoPatrimonio")]
         public Patrimonio Patrimonio { get; set; }

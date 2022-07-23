@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Enums;
 
 namespace Domain.Entidades
 {
@@ -8,31 +8,45 @@ namespace Domain.Entidades
     {
         [Key]
         public int CodigoPatrimonio { get; set; }
-        [Required(ErrorMessage = "É necessário informar o modelo")]
+
+        [Required, Column(TypeName = "VARCHAR"), StringLength(100)]
         public string Modelo { get; set; }
-        [Required(ErrorMessage = "É necessário informar a service tag")]
-        [MaxLength(20)]
-        [MinLength(4)]
+
+        [Required, Column(TypeName = "VARCHAR"), StringLength(20)]
         public string ServiceTag { get; set; }
+
+        [Column(TypeName = "VARCHAR"), StringLength(60)]
         public string? Armazenamento { get; set; }
+
+        [Column(TypeName = "VARCHAR"), StringLength(100)]
         public string? Processador { get; set; }
+
+        [Column(TypeName = "VARCHAR"), StringLength(100)]
         public string? PlacaDeVideo { get; set; }
+
+        [Column(TypeName = "VARCHAR"), StringLength(100)]
         public string? MAC { get; set; }
+
+        [Column(TypeName = "VARCHAR"), StringLength(100)]
         public string? MemoriaRAM { get; set; }
-        [Display(Name = "Situação do equipamento")]
-        [Required(ErrorMessage = "É necessário informar a {0}")]
+
+        [Required]
         public SituacaoEquipamento SituacaoEquipamento { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar o equipamento")]
+        [Required]
         public int CodigoTipoEquipamento { get; set; }
         [ForeignKey("CodigoTipoEquipamento")]
         public Equipamento Equipamento { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar o usuário vinculado a este equipamento")]
+        [Required]
         public int CodigoUsuario { get; set; }
+
         [ForeignKey("CodigoUsuario")]
         public Usuario Usuario { get; set; }
+
+        [Required]
         public int CodigoFuncionario { get; set; }
+
         [ForeignKey("CodigoFuncionario")]
         public Funcionario Funcionario { get; set; }
     }

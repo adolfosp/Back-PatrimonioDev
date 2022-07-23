@@ -1,5 +1,6 @@
 ﻿using Aplicacao.Dtos;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
 {
@@ -8,7 +9,7 @@ namespace Domain.Entidades
         [Key]
         public int CodigoCategoria { get; set; }
 
-        [Required(ErrorMessage = "A descrição é obrigatória"),MinLength(2), MaxLength(50)]
+        [Column(TypeName = "VARCHAR"), StringLength(50), Required]
         public string Descricao { get; set; }
 
         public static implicit operator CategoriaEquipamento(CategoriaDto categoria)

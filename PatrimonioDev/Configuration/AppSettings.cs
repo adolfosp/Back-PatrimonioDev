@@ -1,4 +1,4 @@
-﻿namespace PatrimonioDev.Extensions
+﻿namespace PatrimonioDev.Configuration
 {
     public class AppSettings
     {

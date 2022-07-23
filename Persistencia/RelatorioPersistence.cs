@@ -1,7 +1,7 @@
 ﻿using Aplicacao.Interfaces;
 using Domain.Dtos;
 using Domain.Interfaces.Persistence;
-using Persistence.Helpers;
+using Persistencia.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

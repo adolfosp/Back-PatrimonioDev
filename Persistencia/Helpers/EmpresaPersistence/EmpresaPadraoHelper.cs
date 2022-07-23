@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Domain.Helpers.Empresa
+namespace Persistencia.Helpers.EmpresaPersistence
 {
     public class EmpresaPadraoHelper
     {
@@ -15,10 +15,10 @@ namespace Domain.Helpers.Empresa
 
         public (int StatusCode, string NomeFantasia) ObterRetornoParaEmpresaPadrao(int codigoEmpresaDaOperacao)
         {
-            var nomeFantasia =  _context.Empresa.Where(x => x.EmpresaPadraoImpressao && x.CodigoEmpresa != codigoEmpresaDaOperacao).
+            var nomeFantasia = _context.Empresa.Where(x => x.EmpresaPadraoImpressao && x.CodigoEmpresa != codigoEmpresaDaOperacao).
                                                           Select(x => x.NomeFantasia).
                                                           FirstOrDefault();
-            if (!String.IsNullOrEmpty(nomeFantasia))
+            if (!string.IsNullOrEmpty(nomeFantasia))
                 return (400, nomeFantasia);
 
             return (0, "");

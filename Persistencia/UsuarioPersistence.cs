@@ -4,7 +4,7 @@ using AutoMapper;
 using Domain.Entidades;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Helper;
+using Persistencia.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

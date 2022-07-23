@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.Context;
+using Persistencia.Contexts;
 
-namespace Persistence
+namespace PatrimonioDev.Configuration
 {
     public static class ConnectionString
     {
@@ -15,7 +15,7 @@ namespace Persistence
                     configuration.GetConnectionString("DefaultConnection"),
                     b =>
                     {
-                        b.MigrationsAssembly("Persistence");
+                        b.MigrationsAssembly("Persistencia");
                     }));
 
             services.AddHealthChecks()
@@ -26,7 +26,7 @@ namespace Persistence
                 options.SetEvaluationTimeInSeconds(5);
                 options.MaximumHistoryEntriesPerEndpoint(10);
                 options.AddHealthCheckEndpoint("API com Health Checks", "/health");
-            }).AddInMemoryStorage(); 
+            }).AddInMemoryStorage();
 
         }
     }

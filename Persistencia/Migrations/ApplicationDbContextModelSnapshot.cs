@@ -3,35 +3,37 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Persistence.Context;
+using Persistencia.Contexts;
 
-namespace Persistence.Migrations
+#nullable disable
+
+namespace Persistencia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220413025514_Initial2")]
-    partial class Initial2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.13")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Domain.Entidades.CategoriaEquipamento", b =>
                 {
                     b.Property<int>("CodigoCategoria")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoCategoria"), 1L, 1);
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("VARCHAR(50)");
 
                     b.HasKey("CodigoCategoria");
 
@@ -42,38 +44,50 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoEmpresa")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoEmpresa"), 1L, 1);
 
                     b.Property<string>("CNPJ")
                         .IsRequired()
                         .HasMaxLength(18)
-                        .HasColumnType("nvarchar(18)");
+                        .HasColumnType("VARCHAR(18)");
 
                     b.Property<bool>("EmpresaPadraoImpressao")
-                        .HasColumnType("bit");
+                        .HasColumnType("BIT");
 
                     b.Property<string>("NomeFantasia")
                         .IsRequired()
                         .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("VARCHAR(70)");
 
                     b.Property<string>("RazaoSocial")
                         .IsRequired()
                         .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("VARCHAR(70)");
 
                     b.HasKey("CodigoEmpresa");
 
                     b.ToTable("Empresa");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoEmpresa = 1,
+                            CNPJ = "00.000.000/0000-00",
+                            EmpresaPadraoImpressao = false,
+                            NomeFantasia = "SEM EMPRESA",
+                            RazaoSocial = "SEM EMPRESA"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entidades.Equipamento", b =>
                 {
                     b.Property<int>("CodigoTipoEquipamento")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoTipoEquipamento"), 1L, 1);
 
                     b.Property<int>("CodigoCategoria")
                         .HasColumnType("int");
@@ -84,7 +98,7 @@ namespace Persistence.Migrations
                     b.Property<string>("TipoEquipamento")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("VARCHAR(50)");
 
                     b.HasKey("CodigoTipoEquipamento");
 
@@ -99,13 +113,14 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoFabricante")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoFabricante"), 1L, 1);
 
                     b.Property<string>("NomeFabricante")
                         .IsRequired()
                         .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("VARCHAR(60)");
 
                     b.HasKey("CodigoFabricante");
 
@@ -116,31 +131,43 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoFuncionario")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoFuncionario"), 1L, 1);
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("BIT");
 
                     b.Property<string>("NomeFuncionario")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("Observacao")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("VARCHAR(250)");
 
                     b.HasKey("CodigoFuncionario");
 
                     b.ToTable("Funcionario");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoFuncionario = 1,
+                            Ativo = true,
+                            NomeFuncionario = "SEM FUNCIONÁRIO",
+                            Observacao = ""
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entidades.InformacaoAdicional", b =>
                 {
                     b.Property<int>("CodigoInformacao")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoInformacao"), 1L, 1);
 
                     b.Property<string>("Antivirus")
                         .HasColumnType("nvarchar(max)");
@@ -172,8 +199,9 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoMovimentacao")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoMovimentacao"), 1L, 1);
 
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
@@ -182,9 +210,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataApropriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
-                    b.Property<DateTime>("DataDevolucao")
+                    b.Property<DateTime?>("DataDevolucao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MovimentacaoDoEquipamento")
@@ -206,11 +234,13 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoPatrimonio")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoPatrimonio"), 1L, 1);
 
                     b.Property<string>("Armazenamento")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("VARCHAR(60)");
 
                     b.Property<int>("CodigoFuncionario")
                         .HasColumnType("int");
@@ -222,25 +252,30 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MAC")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("MemoriaRAM")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("Modelo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("PlacaDeVideo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("Processador")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("ServiceTag")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("VARCHAR(20)");
 
                     b.Property<int>("SituacaoEquipamento")
                         .HasColumnType("int");
@@ -260,8 +295,9 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoPerda")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoPerda"), 1L, 1);
 
                     b.Property<int>("CodigoPatrimonio")
                         .HasColumnType("int");
@@ -269,7 +305,7 @@ namespace Persistence.Migrations
                     b.Property<string>("MotivoDaPerda")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("VARCHAR(300)");
 
                     b.HasKey("CodigoPerda");
 
@@ -282,28 +318,37 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("CodigoSetor")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoSetor"), 1L, 1);
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("VARCHAR(50)");
 
                     b.HasKey("CodigoSetor");
 
                     b.ToTable("Setor");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoSetor = 1,
+                            Nome = "SEM SETOR"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entidades.Usuario", b =>
                 {
                     b.Property<int>("CodigoUsuario")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoUsuario"), 1L, 1);
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("BIT");
 
                     b.Property<int?>("CodigoEmpresa")
                         .HasColumnType("int");
@@ -324,12 +369,12 @@ namespace Persistence.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("VARCHAR(50)");
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
+                        .HasColumnType("VARCHAR(350)");
 
                     b.HasKey("CodigoUsuario");
 
@@ -340,14 +385,29 @@ namespace Persistence.Migrations
                     b.HasIndex("CodigoUsuarioPermissao");
 
                     b.ToTable("Usuario");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoUsuario = 1,
+                            Ativo = true,
+                            CodigoEmpresa = 1,
+                            CodigoSetor = 1,
+                            CodigoUsuarioPermissao = 1,
+                            Email = "adolfo8799@gmail.com",
+                            ImagemUrl = "3f7143f59c222954756.jpg",
+                            Nome = "ADOLFO",
+                            Senha = "MTIzNDU2"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entidades.UsuarioPermissao", b =>
                 {
                     b.Property<int>("CodigoUsuarioPermissao")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoUsuarioPermissao"), 1L, 1);
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
@@ -355,11 +415,31 @@ namespace Persistence.Migrations
                     b.Property<string>("DescricaoPermissao")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("CodigoUsuarioPermissao");
 
                     b.ToTable("UsuarioPermissao");
+
+                    b.HasData(
+                        new
+                        {
+                            CodigoUsuarioPermissao = 1,
+                            Ativo = true,
+                            DescricaoPermissao = "Administrador"
+                        },
+                        new
+                        {
+                            CodigoUsuarioPermissao = 2,
+                            Ativo = true,
+                            DescricaoPermissao = "Gestor"
+                        },
+                        new
+                        {
+                            CodigoUsuarioPermissao = 3,
+                            Ativo = true,
+                            DescricaoPermissao = "Usuário"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entidades.Equipamento", b =>
@@ -367,13 +447,13 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entidades.CategoriaEquipamento", "Categoria")
                         .WithMany()
                         .HasForeignKey("CodigoCategoria")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entidades.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("CodigoFabricante")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Categoria");
@@ -386,7 +466,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()
                         .HasForeignKey("CodigoPatrimonio")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Patrimonio");
@@ -397,13 +477,13 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()
                         .HasForeignKey("CodigoPatrimonio")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entidades.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("CodigoUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Patrimonio");
@@ -416,19 +496,19 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entidades.Funcionario", "Funcionario")
                         .WithMany()
                         .HasForeignKey("CodigoFuncionario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entidades.Equipamento", "Equipamento")
                         .WithMany()
                         .HasForeignKey("CodigoTipoEquipamento")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entidades.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("CodigoUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Equipamento");
@@ -443,7 +523,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entidades.Patrimonio", "Patrimonio")
                         .WithMany()
                         .HasForeignKey("CodigoPatrimonio")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Patrimonio");
@@ -462,7 +542,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entidades.UsuarioPermissao", "UsuarioPermissao")
                         .WithMany()
                         .HasForeignKey("CodigoUsuarioPermissao")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Empresa");

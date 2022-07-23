@@ -2,7 +2,7 @@
 using Domain.Dtos;
 using Domain.Dtos.Estatisticas;
 using Domain.Interfaces.Persistence;
-using Persistence.Contexts;
+using Persistencia.Contexts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

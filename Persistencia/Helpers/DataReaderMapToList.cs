@@ -4,12 +4,12 @@ using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 
-namespace Persistence.Helpers
+namespace Persistencia.Helpers
 {
     public class DataReaderMapToList
     {
 
-        [Obsolete(message:"Utilizar Dapper ao invés desse método")]
+        [Obsolete(message: "Utilizar Dapper ao invés desse método")]
         public static List<Tdto> DataReaderToList<Tdto>(DbDataReader dr)
         {
             List<Tdto> list = new List<Tdto>();
@@ -40,7 +40,7 @@ namespace Persistence.Helpers
         public static Tdto DataReader<Tdto>(DbDataReader dr)
         {
             var dto = Activator.CreateInstance<Tdto>();
-          
+
 
             if (dr.HasRows)
             {

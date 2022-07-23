@@ -3,11 +3,10 @@ using Aplicacao.Interfaces;
 using Domain.Interfaces;
 using Domain.Interfaces.Persistence;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.Context;
-using Persistence.Contexts;
 using Persistencia;
+using Persistencia.Contexts;
 
-namespace PatrimonioDev
+namespace PatrimonioDev.Configuration
 {
     public static class DependecyInjection
     {
@@ -32,6 +31,7 @@ namespace PatrimonioDev
 
             services.AddSingleton<DapperContext>();
 
+            //TODO: remover dependencias e colocar no projeto de INFRA
 
         }
     }

@@ -1,7 +1,6 @@
-﻿
-using System;
+﻿using System;
 
-namespace Persistence.Helper
+namespace Persistencia.Helpers
 {
     public static class CriptografiaHelper
     {
@@ -34,7 +33,7 @@ namespace Persistence.Helper
 
             utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
 
-            return new String(decoded_char);
+            return new string(decoded_char);
         }
 
     }

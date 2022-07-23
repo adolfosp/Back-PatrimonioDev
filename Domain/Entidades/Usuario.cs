@@ -5,18 +5,35 @@ namespace Domain.Entidades
 {
     public class Usuario
     {
+
+        public Usuario()
+        {
+        }
+
+        public Usuario(int codigoUsuario, bool ativo, string nome, string senha, string email, string imagemUrl, int? codigoEmpresa,int? codigoSetor, int codigoUsuarioPermissao)
+        {
+            CodigoUsuario = codigoUsuario;
+            Ativo = ativo;
+            Nome = nome;
+            Senha = senha;
+            Email = email;
+            ImagemUrl = imagemUrl;
+            CodigoEmpresa = codigoEmpresa;
+            CodigoSetor = codigoSetor;
+            CodigoUsuarioPermissao = codigoUsuarioPermissao;
+        }
+
         [Key]
         public int CodigoUsuario { get; set; }
+
+        [Column(TypeName = "BIT")]
         public bool Ativo { get; set; }
 
-        [Required]
-        [MinLength(4)]
-        [MaxLength(50)]
+        [Required,Column(TypeName = "VARCHAR"), StringLength(50)]
         public string Nome { get; set; }
 
-        [Required]
-        [MinLength(5)]
-        [MaxLength(350)]
+
+        [Required,Column(TypeName = "VARCHAR"), StringLength(350)]
         public string Senha { get; set; }
 
         [NotMapped]

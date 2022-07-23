@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-namespace Persistence.Context
+namespace Persistencia.Contexts
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
@@ -15,7 +15,11 @@ namespace Persistence.Context
             Database.SetCommandTimeout(60);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.AdicionarInformacoesPadrao();
+            modelBuilder.AdicionarRelacionamento();
+        }
 
         public DbSet<Equipamento> Equipamento { get; set; }
         public DbSet<Empresa> Empresa { get; set; }

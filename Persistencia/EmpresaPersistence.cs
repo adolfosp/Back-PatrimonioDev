@@ -1,8 +1,8 @@
 ﻿using Aplicacao.Interfaces;
 using Domain.Entidades;
-using Domain.Helpers.Empresa;
 using Domain.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Persistencia.Helpers.EmpresaPersistence;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
